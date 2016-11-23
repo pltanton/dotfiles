@@ -27,7 +27,7 @@ touchpad.sh -d # Disable touchpad
 ######################################################################
 
 pidgin &
-urxvtd &
+#urxvtd &
 compton -c &
 xsetroot -cursor_name left_ptr
 hsetroot -solid '#202020'

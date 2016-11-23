@@ -37,7 +37,7 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import qualified XMonad.Actions.FlexibleResize as Flex
 
-myTerminal      = "urxvtc"
+myTerminal = "termite"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool

@@ -9,11 +9,16 @@ ZSH_THEME="robbyrussell"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(zsh-syntax-highlighting git archlinux common-aliaces lol sudo systemd
-tmux wd cp)
+plugins=(zsh-syntax-highlighting git archlinux common-aliaces lol sudo systemd 
+tmux wd cp history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 # User configuration
+# Substring histor search
+zmodload zsh/terminfo
+bindkey "\e[A" history-substring-search-up
+bindkey "\e[B" history-substring-search-down
+
 # RVM
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 source $HOME/.rvm/scripts/rvm

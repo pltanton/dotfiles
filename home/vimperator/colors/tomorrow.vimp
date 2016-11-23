@@ -1,0 +1,46 @@
+highlight! CmdLine color: #E0E0E0; background: #1D1F21;
+highlight! CmdLine>* font-family: "Hack"; font-size: 10pt; height: 24px;
+highlight! Normal color: #B4B7B4; /*background: #1D1F21;*/ font-family: "Hack"; font-size: 10pt;
+highlight! StatusLine color: #B4B7B4; background: #1D1F21; font-family: "Hack"; font-size: 10pt;
+
+highlight! Bell border: none; background: #1D1F21;
+highlight! Boolean color: #B4B7B4;
+highlight! CompDesc width: auto; color: #B4B7B4;
+highlight! CompItem>* height: auto; padding: 0 8px;
+highlight! CompItem background: #1D1F21;
+highlight! CompItem[selected] color: #E0E0E0; background: #17181A;
+highlight! CompTitle background: #1D1F21; font-family: "Hack"; font-size: 10pt;
+highlight! CompTitle>* color: #E0E0E0; padding: 2px 8px;
+
+highlight! Disabled color: #B4B7B4;
+highlight! Enabled color: #B4B7B4;
+highlight! ErrorMsg color: #CC6666; font-family: "Hack"; font-size: 10pt;
+highlight! Filter color: #E0E0E0; background: #17181A;
+highlight! FrameIndicator background: #B4B7B4; opacity: 0.5; z-index: 999; position: fixed; top: 0; bottom: 0; left: 0; right: 0;
+
+highlight! HelpNote color: #B294BB;
+highlight! HelpWarning color: #B359A4;
+
+highlight! Hint font-family: "Hack"; font-size: 10pt; color: #E0E0E0; background: #17181A; padding: 1px;
+highlight! HintActive color: #B4B7B4; background: #1D1F21;
+highlight! HintElem background: transparent;
+highlight! HintImage opacity: 0.5;
+
+highlight! InfoMsg color: #B4B7B4;
+highlight! Keyword color: #B4B7B4;
+highlight! LineNr color: #B4B7B4;
+highlight! NonText color: #B4B7B4;
+
+highlight! ModeMsg color: #B4B7B4; background: transparent; padding: 0 8px; font-family: "Hack"; font-size: 10pt;
+highlight! MoreMsg color: #B4B7B4; font-family: "Hack"; font-size: 10pt;
+
+highlight! PromptText color: #B4B7B4; padding-top: 4px;
+highlight! Question color: #B4B7B4;
+
+highlight! Title color: #E0E0E0;
+highlight! WarningMsg color: #B4B7B4;
+
+
+
+
+

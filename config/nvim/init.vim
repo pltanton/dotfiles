@@ -139,6 +139,7 @@ Plug 'vim-airline/vim-airline-themes' " Fancy themes for fancy status line
 Plug 'majutsushi/tagbar'              " Tagbar
 Plug 'Raimondi/delimitMate'           " Auto close quotes and etc.
 Plug 'SirVer/ultisnips'               " Ultisnippets configuration
+Plug 'lilydjwg/colorizer'
 
 " Themes
 Plug 'tomasr/molokai'
