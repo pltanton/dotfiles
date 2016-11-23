@@ -1,0 +1,47 @@
+!/bin/sh
+######################################################################
+# Pulseaudio
+######################################################################
+# start-pulseaudio-x11 &
+
+######################################################################
+# Keyboard settings
+######################################################################
+#kbd.sh -d
+kbdd &
+
+######################################################################
+# Trackpoint and TouchPad configuration
+######################################################################
+touchpad.sh -d # Disable touchpad
+
+#tpointset() { xinput set-prop "AlpsPS/2 ALPS DualPoint Stick" "$@"; }
+#tpointset "Device Accel Profile" 2 # Set polynomic acceleration profile
+#tpointset "Device Accel Velocity Scaling" 90 # Let accelerate faster
+
+#tpadset() { xinput set-prop "AlpsPS/2 ALPS DualPoint TouchPad" "$@"; }
+#tpadset "Device Accel Constant Deceleration" 1 # Speedup a bit
+
+######################################################################
+# Autostart # TODO: Move to systemd --user
+######################################################################
+
+pidgin &
+urxvtd &
+compton -c &
+xsetroot -cursor_name left_ptr
+hsetroot -solid '#202020'
+/scripts/wallaper.sh
+xautolock -time 10 -locker 'lock.sh' &
+#stalonetray &
+udiskie --no-tray --use-udisks2 --quiet --no-file-manager &
+twmnd &
+redshift &
+unclutter -b &
+
+ruby /scripts/monitor-hotplug.rb
+
+######################################################################
+# Exec WM
+######################################################################
+exec xmonad > ~/.xmonad/pipe

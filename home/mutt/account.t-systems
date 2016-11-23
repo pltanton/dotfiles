@@ -1,0 +1,9 @@
+set folder      = ~/.mail/tsystems
+set spoolfile   = "+INBOX"
+# set mbox        = "+[Gmail]/All Mail"
+set postponed   = "+Drafts"
+mailboxes +INBOX
+
+set realname   = "Plotnikov Anton"
+set from       = "aplotnik@t-systems.ru"
+set mail_check = 0

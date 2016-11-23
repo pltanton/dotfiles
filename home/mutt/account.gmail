@@ -1,0 +1,11 @@
+set folder      = ~/.mail/gmail
+set spoolfile   = "+INBOX"
+set mbox        = "+[Gmail]/All Mail"
+set postponed   = "+[Gmail]/Drafts"
+mailboxes +INBOX
+
+set realname   = "Plotnikov Anton"
+set from       = "plotnikovanton@gmail.com"
+set mail_check = 0
+
+

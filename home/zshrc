@@ -1,0 +1,45 @@
+# OhMyZSH things
+
+export ZSH=$HOME/.oh-my-zsh
+
+
+#ZSH_THEME="dieter"
+ZSH_THEME="robbyrussell"
+#ZSH_THEME="lukerandall"
+ENABLE_CORRECTION="true"
+COMPLETION_WAITING_DOTS="true"
+
+plugins=(zsh-syntax-highlighting git archlinux common-aliaces lol sudo systemd
+tmux wd cp)
+
+source $ZSH/oh-my-zsh.sh
+# User configuration
+# RVM
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+source $HOME/.rvm/scripts/rvm
+
+export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
+export LESS=' -R '
+export EDITOR='nvim'
+
+export GOPATH=$HOME/workdir/gocode
+export STEAM_RUNTIME=0
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/oracle/instantclient_12_1
+
+export PATH="$PATH:/bin:$GOPATH/bin:/usr/local/sbin:\
+/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl\
+:/usr/bin/core_perl:$HOME/.cabal/bin:/scripts:$HOME/.local/bin"
+
+export TERM=rxvt-unicode-256color
+
+# Importh path for systemd
+systemctl --user set-environment PATH=$PATH
+
+# Aliaces
+alias winmv='convmv -f cp1252 -t cp850 * --notest  && convmv -f cp866 -t utf-8 * --notest'
+alias vpn-kaliwe='sudo openvpn ~/.openvpn/kaliwe.ovpn'
+alias qutebrowser-we='qutbrowser --backend webengine'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+

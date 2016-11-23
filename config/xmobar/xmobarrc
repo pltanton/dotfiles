@@ -1,0 +1,59 @@
+-- vim: syntax=haskell
+Config { font = "xft:Terminus:size=8,FontAwesome:size=10"
+       , bgColor =      "#1d1f21"
+       , fgColor =      "#c5c8c6"
+       , position =     TopP 4 4
+       --, position =     TopSize C 100 25
+       , iconRoot =     ".xmonad/icons/"
+       , allDesktops = True
+       , overrideRedirect = True
+       , pickBroadest = False
+
+       , template = "%UnsafeStdinReader% }{ \
+                    \<action=`urxvtc -e mutt`><fc=#81a2be>%gmail%</fc></action> \
+                    \<action=`urxvtc -e mutt`><fc=#cd2688>%tsystems%</fc></action> \
+                    \%default:Master%  %wlp3s0wi%  %cpu%  \
+                    \<action=`bat-time-remaining.sh`>%battery%</action>  \
+                    \%date% <action=`xkb-switch -n`>%kbd%</action> "
+
+       , commands = [ Run BatteryP ["BAT0"] [ "--template" , "<acstatus>"
+                                , "--Low"       , "13"        -- units: %
+                                , "--High"      , "70"        -- units: %
+                                , "-w"          , "3"
+                                , "--"
+                                , "-o"          , "\xf241 <left>%" -- AC off
+                                , "-O"          , "\xf0e7 <left>%" -- AC idle
+                                , "-i"          , "\xf0e7 <left>%" -- AC on
+                                ] 15
+                    , Run Wireless "wlp3s0" [ "--template"
+                                            , "<action=`wifi-notify.py wlp3s0`>\xf1eb <quality>%</action>"
+                                            , "-w"
+                                            , "3"
+                                            ] 5
+                    , Run Cpu [ "--template"
+                              , "<action=`urxvtc -e htop`>\xf1fe<total>%</action>"
+                              , "-w", "3"] 15
+    		        , Run Date "<fc=#c5c8c6>%b %_d %H:%M:%S</fc>" "date" 10
+                    , Run Kbd [("prog(dvorak)", "en"), ("prog(diktor)", "ru")]
+                    , Run Volume "default" "Master" [ "--template" , "<action=`pactl set-sink-mute 1 toggle`><status></action>"
+                                        , "-w"          , "3"
+                                        , "--"
+                                        , "-c"          , "#d14548"
+                                        , "-o"          , "\xf026<volume>%"
+                                        , "-C"          , "#d2c5bc"
+                                        , "-O"          , "\xf028<volume>%"
+                                        ] 1
+                    , Run UnsafeStdinReader
+                    , Run Mail [("  \xf0e0 ", "~/.mail/gmail/INBOX")] "gmail"
+                    , Run Mail [("  \xf0e0 ", "~/.mail/tsystems/INBOX")] "tsystems"
+                    -- , Run MPD ["-t", "<action=`mpc toggle`><statei></action> \
+                    --                  \<action=`urxvt -e ncmpcpp`><artist> \
+                    --                  \- <title></action> [<flags>]"
+                    --           , "--"
+                    --           , "-P", "<fc=#8abeb7>\xf04b</fc>"
+                    --           , "-Z", "\xf04c"
+                    --           , "-S", "\xf04d"] 10
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       }

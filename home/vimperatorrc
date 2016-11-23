@@ -1,0 +1,23 @@
+colorscheme twily
+
+set animations=true
+set hintmatching=fuzzy
+set complete="lS"
+set defsearch=duckduckgo
+"set hintchars=htnnsdueoaipyfg
+set gui=nonavigation
+set hc="hutenosagpc.bkwj"
+
+noremap K gt
+noremap J gT
+noremap j <down>
+noremap k <up>
+"noremap O t
+
+com vk open vk.com
+com lor open linux.org.ru
+
+com toron proxy manual -socks localhost:9050
+com toroff proxy direct
+
+inoremap <C-a> <Insert><C-a><Insert>
