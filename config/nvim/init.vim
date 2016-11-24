@@ -102,7 +102,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Shift-Enter
-"imap  <CR><CR><Esc>-cc
+"imap  <CR><CR><Esc>-cc
 
 " Expand visual region by pressing v
 vmap v <Plug>(expand_region_expand)
@@ -112,79 +112,67 @@ vmap <C-v> <Plug>(expand_region_shrink)
 " Plugins
 "======================================================================
 
-" Install vimplug if not exists
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
+" Install dein if not exists
+let conf_dir = '~/.config/nvim/'
+let plugin_base = conf_dir . 'repos/'
+let dein_path = plugin_base . 'github.com/Shougo/dein.vim'
+if empty(glob(dein_path))
+  silent execute '!curl
+\ https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh |
+\ bash -s' conf_dir
 endif
+exe 'set rtp+=' . dein_path
 
-call plug#begin('~/.config/nvim/plugged')
-
-" Markdown WYSIWYG
-"function! BuildComposer(info)
-  "if a:info.status != 'unchanged' || a:info.force
-    "!cargo build --release
-    "UpdateRemotePlugins
-  "endif
-"endfunction
-"Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+call dein#begin(plugin_base)
+call dein#add('Shougo/dein')
 
 " Better feeling
-Plug 'easymotion/vim-easymotion'      " Fast navigation using shortcuts
-Plug 'terryma/vim-expand-region'      " Expanding visual mode using v
-Plug 'godlygeek/tabular'              " Easy aligning
-Plug 'vim-airline/vim-airline'        " Fancy status line as fuck
-Plug 'vim-airline/vim-airline-themes' " Fancy themes for fancy status line
-Plug 'majutsushi/tagbar'              " Tagbar
-Plug 'Raimondi/delimitMate'           " Auto close quotes and etc.
-Plug 'SirVer/ultisnips'               " Ultisnippets configuration
-Plug 'lilydjwg/colorizer'
+call dein#add('easymotion/vim-easymotion')      " Fast navigation using shortcuts
+call dein#add('godlygeek/tabular')              " Easy aligning
+call dein#add('vim-airline/vim-airline')        " Fancy status line as fuck
+call dein#add('vim-airline/vim-airline-themes') " Fancy themes for fancy status line
+call dein#add('Raimondi/delimitMate')           " Auto close quotes and etc.
+call dein#add('SirVer/ultisnips')               " Ultisnippets configuration
+call dein#add('lilydjwg/colorizer')             " Hilight hex colors
 
 " Themes
-Plug 'tomasr/molokai'
-Plug 'squarefrog/tomorrow-night.vim'
+call dein#add('squarefrog/tomorrow-night.vim')
 
 " Deoplete as comletion engine
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-Plug 'Shougo/vimproc.vim', { 'do': 'make'}
-Plug 'zchee/deoplete-jedi'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+call dein#add('Shougo/deoplete.nvim', { 'do': function('DoRemote') })
+call dein#add('zchee/deoplete-jedi')
+call dein#add('zchee/deoplete-go', { 'do': 'make'})
 
 " Languages extensions
-Plug 'neomake/neomake'
-Plug 'eagletmt/neco-ghc'                  " Haskell completion
-Plug 'jvirtanen/vim-octave'               " Octave completion support
-Plug 'vim-scripts/dbext.vim'              " Databases support
-Plug 'lervag/vimtex'                      " LaTeX
-Plug 'vim-ruby/vim-ruby'                  " Ruby
-Plug 'tpope/vim-rails'                    " Ruby on Rails support
-"Plug 'osyo-manga/vim-monster'             " Really cool ruby completion
-Plug 'tpope/vim-endwise'                  " wisely add 'end' in ruby
-Plug 'kchmck/vim-coffee-script'           " Support of Coffee script
-Plug 'cakebaker/scss-syntax.vim'          " Sass syntax files
-Plug 'mattn/emmet-vim'                    " Make HTML usable
-Plug 'fatih/vim-go'                       " Full feature GO support
-Plug 'slim-template/vim-slim'             " Slim for vim
-Plug 'davidhalter/jedi'                   " Jedi smart completion for python
-Plug 'vim-scripts/dbext.vim'              " SQL Support
+call dein#add('neomake/neomake')                    " Advanced linter
+call dein#add('eagletmt/neco-ghc')                  " Haskell completion
+call dein#add('jvirtanen/vim-octave')               " Octave completion support
+call dein#add('vim-scripts/dbext.vim')              " Databases support
+call dein#add('lervag/vimtex')                      " LaTeX
+call dein#add('vim-ruby/vim-ruby')                  " Ruby
+call dein#add('tpope/vim-rails')                    " Ruby on Rails support
+call dein#add('tpope/vim-endwise')                  " wisely add 'end' in ruby
+call dein#add('kchmck/vim-coffee-script')           " Support of Coffee script
+call dein#add('cakebaker/scss-syntax.vim')          " Sass syntax files
+call dein#add('mattn/emmet-vim')                    " Make HTML usable
+call dein#add('fatih/vim-go')                       " Full feature GO support
+call dein#add('slim-template/vim-slim')             " Slim for vim
 
 " Navigation
-Plug 'scrooloose/nerdtree' " File explorer
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'   " Fuzzy search for everything
+call dein#add('scrooloose/nerdtree') " File explorer
+call dein#add('junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' })
 
 " Uncategorized
-Plug 'airblade/vim-gitgutter'          " Git command supports
-Plug 'bronson/vim-trailing-whitespace' " Removes useless whitespaces
-Plug 'tpope/vim-surround'              " Surround quotes, tags and other
-Plug 'scrooloose/nerdcommenter'        " Comment tool
+call dein#add('airblade/vim-gitgutter')          " Git command supports
+call dein#add('bronson/vim-trailing-whitespace') " Removes useless whitespaces
+call dein#add('tpope/vim-surround')              " Surround quotes, tags and other
+call dein#add('scrooloose/nerdcommenter')        " Comment tool
+call dein#add('Xuyuanp/nerdtree-git-plugin')     " Git support for NERDTree
 
-
-call plug#end()
+call dein#end()
 
 colorscheme tomorrow-night
 
