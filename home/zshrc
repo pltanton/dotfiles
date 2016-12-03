@@ -3,7 +3,7 @@
 export ZSH=$HOME/.oh-my-zsh
 
 
-ZSH_THEME="pure"
+ZSH_THEME="robbyrussell"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
@@ -25,7 +25,7 @@ export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
 export LESS=' -R '
 export EDITOR='nvim'
 
-export GOPATH=$HOME/workdir/gocode
+export GOPATH=$HOME/workdir/go
 export STEAM_RUNTIME=0
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/oracle/instantclient_12_1

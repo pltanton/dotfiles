@@ -239,8 +239,8 @@ myLogHook xmproc = dynamicLogWithPP $ xmobarPP
 ------------------------------------------------------------------------
 -- Scratchpads
 ------------------------------------------------------------------------
-myScratchPads = [ NS "terminal" "urxvtc -name 'scratchpad' -e bash -c 'tmux a -t scratchpad || tmux new -s scratchpad'" (resource =? "scratchpad") floatingTerm
-                , NS "torrent" "urxvtc -name 'torrent' -e bash -c 'transmission-remote-cli'" (resource =? "torrent") floatingTerm
+myScratchPads = [ NS "terminal" "termite --name 'scratchpad' -e 'sh -c \"tmux a -t scratchpad || tmux new -s scratchpad\"'" (resource =? "scratchpad") floatingTerm
+                , NS "torrent" "termite --name 'torrent' -e 'sh -c transmission-remote-cli'" (resource =? "torrent") floatingTerm
                 --, NS "torrent" "transmission-gtk" (stringProperty "WM_NAME" =? "Transmission") floatingRt
                 ]
                 where

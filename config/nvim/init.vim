@@ -27,10 +27,6 @@ set modeline
 set modelines=5
 
 let mapleader="\<Space>"
-syntax on
-filetype on
-filetype indent on
-filetype plugin on
 
 " Indents
 set tabstop=4
@@ -114,8 +110,7 @@ vmap <C-v> <Plug>(expand_region_shrink)
 
 " Install dein if not exists
 let conf_dir = '~/.config/nvim/'
-let plugin_base = conf_dir . 'repos/'
-let dein_path = plugin_base . 'github.com/Shougo/dein.vim'
+let dein_path = conf_dir . 'repos/' . 'github.com/Shougo/dein.vim'
 if empty(glob(dein_path))
   silent execute '!curl
 \ https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh |
@@ -123,7 +118,7 @@ if empty(glob(dein_path))
 endif
 exe 'set rtp+=' . dein_path
 
-call dein#begin(plugin_base)
+call dein#begin(conf_dir)
 call dein#add('Shougo/dein')
 
 " Better feeling
@@ -174,6 +169,12 @@ call dein#add('Xuyuanp/nerdtree-git-plugin')     " Git support for NERDTree
 
 call dein#end()
 
+syntax on
+filetype on
+filetype indent on
+filetype plugin on
+filetype plugin indent on
+syntax enable
 colorscheme tomorrow-night
 
 "======================================================================
