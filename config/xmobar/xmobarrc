@@ -1,5 +1,5 @@
 -- vim: syntax=haskell
-Config { font = "xft:Terminus:size=8,FontAwesome:size=10"
+Config { font = "xft:xos4 Terminus:size=8,FontAwesome:size=10"
        , bgColor =      "#1d1f21"
        , fgColor =      "#c5c8c6"
        , position =     TopP 4 4
@@ -11,22 +11,13 @@ Config { font = "xft:Terminus:size=8,FontAwesome:size=10"
 
        , template = "%UnsafeStdinReader% }{ \
                     \<action=`urxvtc -e mutt`><fc=#81a2be>%gmail%</fc></action> \
-                    \<action=`urxvtc -e mutt`><fc=#cd2688>%tsystems%</fc></action> \
-                    \%default:Master%  %wlp3s0wi%  %cpu%  \
-                    \<action=`bat-time-remaining.sh`>%battery%</action>  \
+                    \%pulse:Master%  %wlp4s0wi%  %cpu%  \
+                    \%acpi-bat% \
                     \%date% <action=`xkb-switch -n`>%kbd%</action> "
 
-       , commands = [ Run BatteryP ["BAT0"] [ "--template" , "<acstatus>"
-                                , "--Low"       , "13"        -- units: %
-                                , "--High"      , "70"        -- units: %
-                                , "-w"          , "3"
-                                , "--"
-                                , "-o"          , "\xf241 <left>%" -- AC off
-                                , "-O"          , "\xf0e7 <left>%" -- AC idle
-                                , "-i"          , "\xf0e7 <left>%" -- AC on
-                                ] 15
-                    , Run Wireless "wlp3s0" [ "--template"
-                                            , "<action=`wifi-notify.py wlp3s0`>\xf1eb <quality>%</action>"
+       , commands = [ Run Com "bat.sh" [] "acpi-bat" 30
+                    , Run Wireless "wlp4s0" [ "--template"
+                                            , "<action=`wifi-notify.py wlp4s0`>\xf1eb <quality>%</action>"
                                             , "-w"
                                             , "3"
                                             ] 5
@@ -35,7 +26,7 @@ Config { font = "xft:Terminus:size=8,FontAwesome:size=10"
                               , "-w", "3"] 15
     		        , Run Date "<fc=#c5c8c6>%b %_d %H:%M:%S</fc>" "date" 10
                     , Run Kbd [("prog(dvorak)", "en"), ("prog(diktor)", "ru")]
-                    , Run Volume "default" "Master" [ "--template" , "<action=`pactl set-sink-mute 1 toggle`><status></action>"
+                    , Run Volume "pulse" "Master" [ "--template" , "<action=`pactl set-sink-mute 1 toggle`><status></action>"
                                         , "-w"          , "3"
                                         , "--"
                                         , "-c"          , "#d14548"
@@ -44,7 +35,7 @@ Config { font = "xft:Terminus:size=8,FontAwesome:size=10"
                                         , "-O"          , "\xf028<volume>%"
                                         ] 1
                     , Run UnsafeStdinReader
-                    , Run Mail [("  \xf0e0 ", "~/.mail/gmail/INBOX")] "gmail"
+                    , Run Mail [("  \xf01c ", "~/mail/gmail/INBOX")] "gmail"
                     , Run Mail [("  \xf0e0 ", "~/.mail/tsystems/INBOX")] "tsystems"
                     -- , Run MPD ["-t", "<action=`mpc toggle`><statei></action> \
                     --                  \<action=`urxvt -e ncmpcpp`><artist> \

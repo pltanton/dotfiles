@@ -1,7 +1,7 @@
-set folder      = ~/.mail/gmail
+set folder      = ~/mail/gmail
 set spoolfile   = "+INBOX"
-set mbox        = "+[Gmail]/All Mail"
-set postponed   = "+[Gmail]/Drafts"
+set mbox        = "archive"
+set postponed   = "drafts"
 mailboxes +INBOX
 
 set realname   = "Plotnikov Anton"

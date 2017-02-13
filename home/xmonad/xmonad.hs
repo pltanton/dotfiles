@@ -1,5 +1,6 @@
 import XMonad
 import Data.Monoid
+import Data.Default
 
 import XMonad.Hooks.SetWMName                   -- to fix java's grey windows
 import XMonad.Hooks.EwmhDesktops                -- to automaticly expand fullscreen apps
@@ -9,8 +10,8 @@ import XMonad.Util.EZConfig                     -- ez shortcuts
 import XMonad.Hooks.DynamicLog                  -- for bar
 import XMonad.Hooks.ManageDocks
 import XMonad.Actions.CycleWS
+import XMonad.Hooks.EwmhDesktops
 
-import XMonad.Layout.IM                         -- layout for pidgin
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Reflect
 import XMonad.Layout.HintedGrid
@@ -49,12 +50,16 @@ myClickJustFocuses = False
 
 myBorderWidth   = 2
 myModMask       = mod4Mask
-myBrowser       = "firefox"
+{-myBrowser       = "firefox"-}
+{-myBrowserClass  = "firefox"-}
+myBrowser       = "qutebrowser-we"
+myBrowserClass  = "qutebrowser"
 
-myWorkspaces = clickable ["\xf0ac","\xf044","\xf120","4","5","6","7","\xf26c","\xf086"]
-    where clickable l = ["<action=`xdotool key super+" ++ i ++ "`>" ++ ws ++ "</action>" | (i,ws) <- zip keymap l ]
-          keymap = ["U26", "U5B", "U7B", "U7D", "U28", "U3D", "U2A", "U29", "U2B"]
-
+iconFont     = "FontAwesome:size=9"
+defaultFont  = "xos4 Terminus:size=8"
+icoFont      = (++ ("^fn()")) . (++) ("^fn(" ++ iconFont ++ ")")
+myWorkspaces = [ icoFont "\xf0ac", icoFont"\xf121", icoFont "\xf120"
+               , "4", "5", "6", "7", "8", icoFont "\xf26c" ]
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -62,7 +67,7 @@ myWorkspaces = clickable ["\xf0ac","\xf044","\xf120","4","5","6","7","\xf26c","\
 myKeys = [ ("M-f",                      sendMessage $ Toggle NBFULL)
          , ("M-m",                      sendMessage ToggleStruts)
          , ("M1-<F4>",                  kill)
-         , ("M-r",                      spawn "pkill -KILL xmobar || xmonad --recompile && xmonad --restart")
+         , ("M-r",                      spawn "pkill -KILL yags || pkill -KILL dzen2 || xmonad --recompile && xmonad --restart")
          , ("M-<F12>",                  spawn "xautolock -locknow")
          , ("M-<F11>",                  spawn "/scripts/monitor-hotplug.rb")
          ---------------------------------------------------------------
@@ -98,14 +103,15 @@ myKeys = [ ("M-f",                      sendMessage $ Toggle NBFULL)
          -- Run applications
          ---------------------------------------------------------------
          , ("M-<Return>",               spawn "dmenu.sh")
-         , ("M-a",                      runOrRaise myBrowser (className =? myBrowser))
-         , ("<XF86HomePage>",           runOrRaise myBrowser (className =? myBrowser))
+         , ("M-a",                      runOrRaise myBrowser (className =? myBrowserClass))
+         , ("<XF86HomePage>",           runOrRaise myBrowser (className =? myBrowserClass))
          , ("M-e",                      spawn "spacefm")
          , ("M-u",                      spawn $ myTerminal ++ " -e ranger")
          , ("<XF86MyComputer>",         spawn $ myTerminal ++ " -e ranger")
          , ("M-o",                      spawn $ myTerminal ++ " -e nvim")
          , ("M-'",                      namedScratchpadAction myScratchPads "terminal")
          , ("M-q",                      namedScratchpadAction myScratchPads "torrent")
+         , ("M-<Tab>",                  namedScratchpadAction myScratchPads "telegram")
 
          ---------------------------------------------------------------
          -- MPD
@@ -122,9 +128,9 @@ myKeys = [ ("M-f",                      sendMessage $ Toggle NBFULL)
          , ("M-<Print>",                spawn "/scripts/screenshot.sh -e")
          , ("<XF86MonBrightnessUp>",    spawn "light -A 10")
          , ("<XF86MonBrightnessDown>",  spawn "light -U 10")
-         , ("<XF86AudioRaiseVolume>",   spawn "pactl set-sink-mute 1 false ; pactl set-sink-volume 1 +2%")
-         , ("<XF86AudioLowerVolume>",   spawn "pactl set-sink-mute 1 false ; pactl set-sink-volume 1 -2%")
-         , ("<XF86AudioMute>",          spawn "pactl set-sink-mute 1 toggle")
+         , ("<XF86AudioRaiseVolume>",   spawn "pamixer -i 2")
+         , ("<XF86AudioLowerVolume>",   spawn "pamixer -d  2")
+         , ("<XF86AudioMute>",          spawn "pamixer -t")
          , ("<XF86Explorer>",           spawn "touchpad.sh -t")
          , ("<XF86LaunchA>",            spawn "kbd.sh -t")
 
@@ -157,16 +163,14 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 ------------------------------------------------------------------------
 -- Layouts
 ------------------------------------------------------------------------
+layoutIcon name = "^i(/home/anton/.xmonad/icons/" ++ name ++ ".xpm)"
 myLayout
     = smartBorders
-    -- $ mkToggle (single NBFULL)
-    $ onWorkspace (myWorkspaces !! 8) pidginLayot
-    $ named "<icon=tiled.xpm/>" tiled |||
-      named "<icon=mirror-tiled.xpm/>" (Mirror tiled) |||
-      named "<icon=grid.xpm/>" grid |||
-      named "<icon=full.xpm/>" full
+    $ named (layoutIcon "tiled") tiled |||
+      named (layoutIcon "mirror-tiled") (Mirror tiled) |||
+      named (layoutIcon "grid") grid |||
+      named (layoutIcon "full") full
     where
-        pidginLayot = named "<icon=im.xpm/>" $ spaces $ withIM (1%7) (Role "buddy_list") $ GridRatio (3/4) True
         tiled       = spaces $ ResizableTall nmaster delta ratio []
         grid        = spaces $ Grid False
         spaces      = spacing 4
@@ -181,12 +185,13 @@ myLayout
 myManageHook = composeAll
     [ manageDocks
     , namedScratchpadManageHook myScratchPads
+    , isFullscreen                      --> doFullFloat
     , className =? myBrowser            --> doShift (head myWorkspaces)
     , className =? "Plugin-container"   --> doFloat
     , className =? "gnuplot_qt"         --> doFloat
     , className =? "Octave-gui"         --> doFloat
     , className =? "NeercGame"          --> doFloat
-    , className =? "Pidgin"             --> doShift (myWorkspaces !! 8)
+    , className =? "TelegramDesktop"    --> doFloat <+> doShift "NSP"
     , className =? "mpv"                --> doFloat
     , isDialog                          --> doFloat
     , resource  =? "desktop_window"     --> doIgnore
@@ -198,7 +203,7 @@ myManageHook = composeAll
 ------------------------------------------------------------------------
 -- Event handling
 ------------------------------------------------------------------------
-myEventHook = docksEventHook
+myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 
 ------------------------------------------------------------------------
 -- Colors
@@ -223,24 +228,37 @@ myDarkRed       = "#a3685a"
 ------------------------------------------------------------------------
 -- Status bars and logging
 ------------------------------------------------------------------------
-myLogHook xmproc = dynamicLogWithPP $ xmobarPP
-                   { ppOutput = hPutStrLn xmproc
-                   , ppCurrent = xmobarColor myBlue myBlack
-                   , ppHiddenNoWindows = xmobarColor myDarkGray myBlack
-                   , ppUrgent = xmobarColor myDarkGray myDarkRed
-                   , ppVisible = xmobarColor "#90a959" "#151515"
-                   , ppSep = " : "
-                   , ppLayout = xmobarColor myLighterGray ""
-                   , ppOrder = \(ws:l:t:_) -> [" " ++ l,ws,t]
-                   , ppTitle = xmobarColor myLighterGray "" . shorten 140
-                   , ppSort = (. namedScratchpadFilterOutWorkspace) <$> ppSort defaultPP
-                   }
+wrapFillSquare = wrap "^p(_TOP)^r(4x4)^p(-6)^p()^ib(1)" "^ib(0)"
+wrapEmptySquare = wrap "^p(_TOP)^ro(4x4)^p(-6)^p()^ib(1)" "^ib(0)"
+
+myLogHook h = dynamicLogWithPP $ dzenPP
+    {
+        ppCurrent         = dzenColor myBlue myBlack . wrapFillSquare . pad
+      , ppVisible         = dzenColor myLighterstGray myBlack . wrapEmptySquare . pad
+      , ppHidden          = dzenColor myLighterstGray myBlack . wrapEmptySquare . pad
+      , ppHiddenNoWindows = dzenColor myGray myBlack . pad
+      , ppUrgent          = dzenColor myDarkRed myBlack
+      , ppSep             = ":"
+      , ppOrder           = \(ws:l:t:_) -> [" " ++ l,ws,t]
+      , ppLayout          = dzenColor myLighterstGray myBlack . pad
+      , ppTitle           = dzenColor myLighterstGray myBlack . shorten 140 . dzenEscape
+      , ppOutput          = hPutStrLn h
+      , ppSort            = (. namedScratchpadFilterOutWorkspace) <$> ppSort def
+    }
+
+myDzenStyle  = " -y 0 -h 18 -xs 1" ++
+               " -fg '" ++ myLighterstGray ++ "' -bg '" ++ myBlack ++ "'" ++
+               " -fn '" ++ defaultFont ++ "'"
+myDzenStatus = "LC_ALL=ru_RU.UTF-8 dzen2 -x 4 -w 862 -ta 'l'" ++ myDzenStyle
+{-myDzenConky  = "conky -c ~/.conkyrc | dzen2 -x '866' -w '496' -ta 'r'" ++ myDzenStyle-}
+myDzenConky = "yags ~/.xmonad/yags.yml | dzen2 -x '866' -w '496' -ta 'r'" ++ myDzenStyle
 
 ------------------------------------------------------------------------
 -- Scratchpads
 ------------------------------------------------------------------------
 myScratchPads = [ NS "terminal" "termite --name 'scratchpad' -e 'sh -c \"tmux a -t scratchpad || tmux new -s scratchpad\"'" (resource =? "scratchpad") floatingTerm
-                , NS "torrent" "termite --name 'torrent' -e 'sh -c transmission-remote-cli'" (resource =? "torrent") floatingTerm
+                , NS "torrent" "termite --name 'torrent' -e 'sh -c \"tmux -L rt attach -t rt\"'" (resource =? "torrent") floatingTerm
+                , NS "telegram" "telegram-desktop" (resource =? "telegram-desktop") floatingRight
                 --, NS "torrent" "transmission-gtk" (stringProperty "WM_NAME" =? "Transmission") floatingRt
                 ]
                 where
@@ -249,20 +267,16 @@ myScratchPads = [ NS "terminal" "termite --name 'scratchpad' -e 'sh -c \"tmux a 
                         w = 1
                         t = 1 - h
                         l = 1 - w
-                    floatingRt = customFloating $ W.RationalRect l t w h where
+                    floatingRight = customFloating $ W.RationalRect l t w h where
                         h = 1
                         w = 0.3
                         t = 1 - h
-                        l = 0
-------------------------------------------------------------------------
--- Startup hook
-------------------------------------------------------------------------
-myStartupHook = setWMName "LG3D"
+                        l = 1 - w
 
 ------------------------------------------------------------------------
 -- Navigation 2D config
 ------------------------------------------------------------------------
-myNavigation2DConfig = defaultNavigation2DConfig {
+myNavigation2DConfig = def {
     defaultTiledNavigation = centerNavigation
 }
 
@@ -271,25 +285,26 @@ myNavigation2DConfig = defaultNavigation2DConfig {
 ------------------------------------------------------------------------
 
 main = do
-    xmproc <- spawnPipe "LC_ALL=ru_RU.UTF-8 .cabal/bin/xmobar 2> ~/err"
+    status <- spawnPipe myDzenStatus
+    conky  <- spawnPipe myDzenConky
     xmonad $ withNavigation2DConfig myNavigation2DConfig
-           $ defaults xmproc
+           $ defaults status
 
-defaults xmproc = defaultConfig
+defaults xmproc = def
     { terminal            = myTerminal
       ,focusFollowsMouse  = myFocusFollowsMouse
       ,clickJustFocuses   = myClickJustFocuses
       ,borderWidth        = myBorderWidth
       ,modMask            = myModMask
       ,workspaces         = myWorkspaces
-      ,normalBorderColor  = myDarkGray
+      ,normalBorderColor  = myDarkestGray
       ,focusedBorderColor = myGray
       ,mouseBindings      = myMouseBindings
       ,layoutHook         = mkToggle (single NBFULL) $ avoidStruts myLayout
       ,manageHook         = fullscreenManageHook <+> myManageHook
-      ,handleEventHook    = XMonad.Hooks.EwmhDesktops.fullscreenEventHook <+> myEventHook
+      ,handleEventHook    = myEventHook
       ,logHook            = myLogHook xmproc
-      ,startupHook        = myStartupHook
+      ,startupHook        = setWMName "LG3D"
       --,keys               = myKeys
     } `additionalKeysP` myKeys
 

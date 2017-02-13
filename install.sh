@@ -34,6 +34,6 @@ echo -n "Going to $DIR ..."
 (cd "$DIR" || exit) && echo "done"
 
 for cur_dir in $WORKDIRS; do
-    create_dir "$OLDDIR/$cur_dir"
+    mkdir "$OLDDIR/$cur_dir"
     backup_and_link "$cur_dir"
 done

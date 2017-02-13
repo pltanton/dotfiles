@@ -26,7 +26,8 @@ touchpad.sh -d # Disable touchpad
 # Autostart # TODO: Move to systemd --user
 ######################################################################
 
-pidgin &
+#pidgin &
+#telegram-desktop &
 #urxvtd &
 compton -c &
 xsetroot -cursor_name left_ptr
@@ -37,11 +38,12 @@ xautolock -time 10 -locker 'lock.sh' &
 udiskie --no-tray --use-udisks2 --quiet --no-file-manager &
 twmnd &
 #redshift &
-unclutter -b &
+#unclutter &
 
-ruby /scripts/monitor-hotplug.rb
+/scripts/monitor-hotplug.sh
 
 ######################################################################
 # Exec WM
 ######################################################################
+export _JAVA_AWT_WM_NONREPARENTING=1
 exec xmonad > ~/.xmonad/pipe

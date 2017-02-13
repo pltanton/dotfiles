@@ -139,6 +139,7 @@ function! DoRemote(arg)
 endfunction
 call dein#add('Shougo/deoplete.nvim', { 'do': function('DoRemote') })
 call dein#add('zchee/deoplete-jedi')
+call dein#add('fishbullet/deoplete-ruby')
 call dein#add('zchee/deoplete-go', { 'do': 'make'})
 
 " Languages extensions
@@ -155,6 +156,10 @@ call dein#add('cakebaker/scss-syntax.vim')          " Sass syntax files
 call dein#add('mattn/emmet-vim')                    " Make HTML usable
 call dein#add('fatih/vim-go')                       " Full feature GO support
 call dein#add('slim-template/vim-slim')             " Slim for vim
+call dein#add('yosssi/vim-ace')
+call dein#add('critiqjo/lldb.nvim')
+call dein#add('isRuslan/vim-es6')                   " New javascript ES6
+call dein#add('hail2u/vim-css3-syntax')             " CSS3 support
 
 " Navigation
 call dein#add('scrooloose/nerdtree') " File explorer
@@ -266,15 +271,15 @@ let  NERDTreeIgnore=['.yardoc', 'pkg']
 " Golang
 "======================================================================
 
+let g:go_term_mode = "split"
+let g:go_term_enabled = 1
+
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_interfaces = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']

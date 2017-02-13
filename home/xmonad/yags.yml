@@ -1,0 +1,32 @@
+# vim: ts=2:sw=2
+
+# varSeps: "{}" # default
+format: "{volume} {bat1} {wifi} {time} {layout} "
+plugins:
+  volume:
+    type: "volume"
+    high: "^fn(FontAwesome:size=9)^fn() {vol}%"
+    medium: "^fn(FontAwesome:size=9)^fn() {vol}%"
+    low: "^fn(FontAwesome:size=9)^fn() {vol}%"
+    muted: "^fn(FontAwesome:size=9)^fg(#cc6666)^fg()^fn() ^fg(#969896){vol}%^fg()"
+  bat1:
+    type: "battery"
+    name: "BAT1"
+    high: "^fn(FontAwesome:size=9)^fn() {lvl}%"
+    medium: "^fn(FontAwesome:size=9)^fn() {lvl}%"
+    low: "^fn(FontAwesome:size=9)^fn() {lvl}%"
+    empty: "^fg(#cc6666)^fn(FontAwesome:size=9)^fn() {lvl}%^fg()"
+    ac: "^fn(FontAwesome:size=9)^fn() {lvl}%"
+  time:
+    type: "time"
+    # timeFormat: "Jan 2 15:04:05" # default
+    # pause: 1000 # default
+  layout:
+    type: "kbdd"
+    names: ["en", "ru"]
+  wifi:
+    type: "wifi"
+    connected: "^fn(FontAwesome:size=9)^fn() {lvl}%"
+    disconnected: "^fn(FontAwesome:size=9)^fn() N/A"
+    interface: "wlp4s0"
+    pause: 2000

@@ -8,8 +8,8 @@ set defsearch=duckduckgo
 set gui=nonavigation
 set hc="hutenosagpc.bkwj"
 
-noremap K gt
-noremap J gT
+noremap J gt
+noremap K gT
 noremap j <down>
 noremap k <up>
 "noremap O t

@@ -1,55 +1,30 @@
+source ~/.mutt/colors.tommorownight
+
 set mbox_type   = Maildir
 set sendmail    = /usr/bin/msmtp
 
 # Multiple mailboxes
 macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/account.gmail<enter><change-folder>!<enter>'
-macro index <f3> '<sync-mailbox><enter-command>source ~/.mutt/account.t-systems<enter><change-folder>!<enter>'
-
 # Default box
 source ~/.mutt/account.gmail
 
-unset record
+macro index E "<change-folder>+archive<enter><limit>~B " "search everything"
+macro index,pager A "<save-message>+archive<enter>" "move message to the archive"
+macro index,pager I "<save-message>+INBOX<enter>" "move message to the archive"
+macro index D "<save-message>+trash<enter>" "move message to the trash"
+macro index S "<save-message>+spam<enter>" "mark message as spam"
 
-mailboxes +INBOX
-
-set envelope_from
-
-unset move           # gmail does that
-set delete           # don't ask, just do
-unset confirmappend  # don't ask, just do!
-set quit             # don't ask, just do!!
-unset mark_old       # read/new is good enough for me
-
-# sort/threading
-set sort     = threads
-set sort_aux = reverse-last-date-received
-set sort_re
-
-# look and feel
-source ~/.mutt/colors.tommorownight
-
-set pager_index_lines = 8
-set pager_context     = 5
-set pager_stop
-set menu_scroll
-set smart_wrap
-set tilde
-unset markers
-
-# composing
-set fcc_attach
-unset mime_forward
-set forward_format = "Fwd: %s"
-set include
-set forward_quote
-
-ignore *                               # first, ignore all headers
-unignore from: to: cc: date: subject:  # then, show only these
-hdr_order from: to: cc: date: subject: # and in this order
-
+unset mark_old
 
 # view html
 auto_view text/html                                      # view html automatically
 alternative_order text/plain text/enriched text/html     # save html for last
 
+# drop idiotic confirmations
+set delete
+unset confirmappend
 
+# sorting
+set sort     = threads
+set sort_aux = reverse-last-date-received
+set sort_re
