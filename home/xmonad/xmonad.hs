@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.Config.Desktop
 import Data.Monoid
 import Data.Default
 
@@ -58,8 +59,8 @@ myBrowserClass  = "qutebrowser"
 iconFont     = "FontAwesome:size=9"
 defaultFont  = "xos4 Terminus:size=8"
 icoFont      = (++ ("^fn()")) . (++) ("^fn(" ++ iconFont ++ ")")
-myWorkspaces = [ icoFont "\xf0ac", icoFont"\xf121", icoFont "\xf120"
-               , "4", "5", "6", "7", "8", icoFont "\xf26c" ]
+myWorkspaces = [ "\xf0ac", "\xf121", "\xf120"
+               , "4", "5", "6", "7", "8", "\xf26c" ]
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -67,7 +68,7 @@ myWorkspaces = [ icoFont "\xf0ac", icoFont"\xf121", icoFont "\xf120"
 myKeys = [ ("M-f",                      sendMessage $ Toggle NBFULL)
          , ("M-m",                      sendMessage ToggleStruts)
          , ("M1-<F4>",                  kill)
-         , ("M-r",                      spawn "pkill -KILL yags || pkill -KILL dzen2 || xmonad --recompile && xmonad --restart")
+         , ("M-r",                      spawn "pkill -KILL yags || pkill -KILL lemonbar || xmonad --recompile && xmonad --restart")
          , ("M-<F12>",                  spawn "xautolock -locknow")
          , ("M-<F11>",                  spawn "/scripts/monitor-hotplug.rb")
          ---------------------------------------------------------------
@@ -166,10 +167,10 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 layoutIcon name = "^i(/home/anton/.xmonad/icons/" ++ name ++ ".xpm)"
 myLayout
     = smartBorders
-    $ named (layoutIcon "tiled") tiled |||
-      named (layoutIcon "mirror-tiled") (Mirror tiled) |||
-      named (layoutIcon "grid") grid |||
-      named (layoutIcon "full") full
+    $ named "T" tiled |||
+      named "M" (Mirror tiled) |||
+      named "G" grid |||
+      named "F" full
     where
         tiled       = spaces $ ResizableTall nmaster delta ratio []
         grid        = spaces $ Grid False
@@ -184,6 +185,7 @@ myLayout
 ------------------------------------------------------------------------
 myManageHook = composeAll
     [ manageDocks
+    , fullscreenManageHook
     , namedScratchpadManageHook myScratchPads
     , isFullscreen                      --> doFullFloat
     , className =? myBrowser            --> doShift (head myWorkspaces)
@@ -193,12 +195,10 @@ myManageHook = composeAll
     , className =? "NeercGame"          --> doFloat
     , className =? "TelegramDesktop"    --> doFloat <+> doShift "NSP"
     , className =? "mpv"                --> doFloat
-    , isDialog                          --> doFloat
+    , isDialog                          --> doCenterFloat
     , resource  =? "desktop_window"     --> doIgnore
     , className =? "steam"              --> doShift (myWorkspaces !! 6)
-    ]
-    <+>
-    composeOne [isFullscreen -?> doFullFloat]
+    , isFullscreen                      --> doFullFloat]
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -228,10 +228,11 @@ myDarkRed       = "#a3685a"
 ------------------------------------------------------------------------
 -- Status bars and logging
 ------------------------------------------------------------------------
+
+-- Dzen2
 wrapFillSquare = wrap "^p(_TOP)^r(4x4)^p(-6)^p()^ib(1)" "^ib(0)"
 wrapEmptySquare = wrap "^p(_TOP)^ro(4x4)^p(-6)^p()^ib(1)" "^ib(0)"
-
-myLogHook h = dynamicLogWithPP $ dzenPP
+dzenLogHook h = dynamicLogWithPP $ dzenPP
     {
         ppCurrent         = dzenColor myBlue myBlack . wrapFillSquare . pad
       , ppVisible         = dzenColor myLighterstGray myBlack . wrapEmptySquare . pad
@@ -246,12 +247,29 @@ myLogHook h = dynamicLogWithPP $ dzenPP
       , ppSort            = (. namedScratchpadFilterOutWorkspace) <$> ppSort def
     }
 
-myDzenStyle  = " -y 0 -h 18 -xs 1" ++
-               " -fg '" ++ myLighterstGray ++ "' -bg '" ++ myBlack ++ "'" ++
-               " -fn '" ++ defaultFont ++ "'"
-myDzenStatus = "LC_ALL=ru_RU.UTF-8 dzen2 -x 4 -w 862 -ta 'l'" ++ myDzenStyle
-{-myDzenConky  = "conky -c ~/.conkyrc | dzen2 -x '866' -w '496' -ta 'r'" ++ myDzenStyle-}
-myDzenConky = "yags ~/.xmonad/yags.yml | dzen2 -x '866' -w '496' -ta 'r'" ++ myDzenStyle
+-- Lemonbar
+lemonbarFG color str = "%{F" ++ color ++ "}" ++ str ++ "%{F-}"
+lemonbarBG color str = "%{B" ++ color ++ "}" ++ str ++ "%{B-}"
+lemonbarColor color  = lemonbarFG color . lemonbarBG color
+lemonbarU str        = "%{u}" ++ str ++ "%{u-}"
+
+lemonbarLogHook h = dynamicLogWithPP $ def
+    { ppCurrent         = lemonbarU . lemonbarFG myBlue
+    , ppVisible         = lemonbarFG myLighterstGray
+    , ppHidden          = lemonbarFG myLighterstGray
+    , ppHiddenNoWindows = lemonbarFG myGray
+    , ppTitle           = shorten 140
+
+    , ppOutput          = hPutStrLn h
+    , ppSort            = (. namedScratchpadFilterOutWorkspace) <$> ppSort def
+    , ppOrder           = \(ws:l:t:_) -> [" " ++ l,ws,t]
+    }
+
+myLemonBar = "yags ~/.config/yags/lemonbar.yml | LC_ALL=ru_RU.UTF-8 lemonbar" ++
+    " -B '" ++ myBlack ++ "' -F '" ++ myLighterstGray ++ "'" ++
+    " -f 'xos4 Terminus:size=9' -f 'FontAwesome:size=10'" ++
+    " -u 3" ++
+    " -g 1358x18+4+0"
 
 ------------------------------------------------------------------------
 -- Scratchpads
@@ -285,12 +303,12 @@ myNavigation2DConfig = def {
 ------------------------------------------------------------------------
 
 main = do
-    status <- spawnPipe myDzenStatus
-    conky  <- spawnPipe myDzenConky
+    status <- spawnPipe myLemonBar
+    {-conky  <- spawnPipe myDzenConky-}
     xmonad $ withNavigation2DConfig myNavigation2DConfig
            $ defaults status
 
-defaults xmproc = def
+defaults xmproc = desktopConfig
     { terminal            = myTerminal
       ,focusFollowsMouse  = myFocusFollowsMouse
       ,clickJustFocuses   = myClickJustFocuses
@@ -301,10 +319,10 @@ defaults xmproc = def
       ,focusedBorderColor = myGray
       ,mouseBindings      = myMouseBindings
       ,layoutHook         = mkToggle (single NBFULL) $ avoidStruts myLayout
-      ,manageHook         = fullscreenManageHook <+> myManageHook
+      ,manageHook         = myManageHook <+> manageHook desktopConfig
       ,handleEventHook    = myEventHook
-      ,logHook            = myLogHook xmproc
-      ,startupHook        = setWMName "LG3D"
+      ,logHook            = lemonbarLogHook xmproc
+      ,startupHook        = docksStartupHook <+> setWMName "LG3D"
       --,keys               = myKeys
     } `additionalKeysP` myKeys
 
