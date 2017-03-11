@@ -29,7 +29,7 @@ touchpad.sh -d # Disable touchpad
 #pidgin &
 #telegram-desktop &
 #urxvtd &
-compton -c &
+compton &
 xsetroot -cursor_name left_ptr
 hsetroot -solid '#202020'
 /scripts/wallaper.sh

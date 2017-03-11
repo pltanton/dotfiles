@@ -158,7 +158,7 @@ call dein#add('fatih/vim-go')                       " Full feature GO support
 call dein#add('slim-template/vim-slim')             " Slim for vim
 call dein#add('yosssi/vim-ace')
 call dein#add('critiqjo/lldb.nvim')
-call dein#add('isRuslan/vim-es6')                   " New javascript ES6
+call dein#add('othree/yajs.vim')                   " New javascript ES6
 call dein#add('hail2u/vim-css3-syntax')             " CSS3 support
 
 " Navigation
@@ -290,6 +290,7 @@ let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const
 
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype coffee setlocal ts=2 sts=2 sw=2
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 autocmd Filetype slim setlocal ts=2 sts=2 sw=2
 
 let g:rubycomplete_buffer_loading = 1

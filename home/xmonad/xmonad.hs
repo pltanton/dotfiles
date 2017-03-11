@@ -1,7 +1,5 @@
 import XMonad
 import XMonad.Config.Desktop
-import Data.Monoid
-import Data.Default
 
 import XMonad.Hooks.SetWMName                   -- to fix java's grey windows
 import XMonad.Hooks.EwmhDesktops                -- to automaticly expand fullscreen apps
@@ -11,30 +9,22 @@ import XMonad.Util.EZConfig                     -- ez shortcuts
 import XMonad.Hooks.DynamicLog                  -- for bar
 import XMonad.Hooks.ManageDocks
 import XMonad.Actions.CycleWS
-import XMonad.Hooks.EwmhDesktops
 
 import XMonad.Layout.ResizableTile
-import XMonad.Layout.Reflect
 import XMonad.Layout.HintedGrid
-import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Spacing
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
-import XMonad.Layout.SimplestFloat
-
-import XMonad.Actions.FloatKeys                 -- move windows by keyboard
 
 import XMonad.Util.Run
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.WorkspaceCompare
 import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.InsertPosition
 
 import XMonad.Actions.WindowGo
 import XMonad.Actions.Navigation2D
 
-import Data.Ratio ((%))
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import qualified XMonad.Actions.FlexibleResize as Flex
@@ -68,7 +58,7 @@ myWorkspaces = [ "\xf0ac", "\xf121", "\xf120"
 myKeys = [ ("M-f",                      sendMessage $ Toggle NBFULL)
          , ("M-m",                      sendMessage ToggleStruts)
          , ("M1-<F4>",                  kill)
-         , ("M-r",                      spawn "pkill -KILL yags || pkill -KILL lemonbar || xmonad --recompile && xmonad --restart")
+         , ("M-r",                      spawn "/scripts/xmonad-restart.sh")
          , ("M-<F12>",                  spawn "xautolock -locknow")
          , ("M-<F11>",                  spawn "/scripts/monitor-hotplug.rb")
          ---------------------------------------------------------------
@@ -255,7 +245,7 @@ lemonbarU str        = "%{u}" ++ str ++ "%{u-}"
 
 lemonbarLogHook h = dynamicLogWithPP $ def
     { ppCurrent         = lemonbarU . lemonbarFG myBlue
-    , ppVisible         = lemonbarFG myLighterstGray
+    , ppVisible         = lemonbarFG myYellow
     , ppHidden          = lemonbarFG myLighterstGray
     , ppHiddenNoWindows = lemonbarFG myGray
     , ppTitle           = shorten 140
@@ -265,11 +255,12 @@ lemonbarLogHook h = dynamicLogWithPP $ def
     , ppOrder           = \(ws:l:t:_) -> [" " ++ l,ws,t]
     }
 
-myLemonBar = "yags ~/.config/yags/lemonbar.yml | LC_ALL=ru_RU.UTF-8 lemonbar" ++
+myLemonBar = "yags ~/.config/yags/lemonbar.yml | LC_ALL=ru_RU.UTF-8 lemonbar -d " ++
     " -B '" ++ myBlack ++ "' -F '" ++ myLighterstGray ++ "'" ++
     " -f 'xos4 Terminus:size=9' -f 'FontAwesome:size=10'" ++
-    " -u 3" ++
-    " -g 1358x18+4+0"
+    " -g $(/scripts/geometry-for-lemonbar.sh)" ++
+    {-" -g 1358x18+4+0" ++-}
+    " -u 3"
 
 ------------------------------------------------------------------------
 -- Scratchpads
@@ -304,7 +295,6 @@ myNavigation2DConfig = def {
 
 main = do
     status <- spawnPipe myLemonBar
-    {-conky  <- spawnPipe myDzenConky-}
     xmonad $ withNavigation2DConfig myNavigation2DConfig
            $ defaults status
 
