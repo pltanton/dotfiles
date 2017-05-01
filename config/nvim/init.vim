@@ -6,7 +6,6 @@ syntax on
 set background=dark
 set shell=/bin/zsh
 set encoding=utf-8
-"set spell                  " Spell check
 set spelllang=en_us,ru_ru
 set showcmd                " Shows which command is printed yet
 set mouse=a                " Adds a mouse support to
@@ -21,7 +20,6 @@ set scrolljump=4           " Minimal number of lines to scroll whet the cursor g
 set scrolloff=4            " Minimal number of screen lines to keep above and below the cursor
 set ruler                  " Shows the line and column number of cursor position
 set hidden
-set tw=79                  " Text width
 set colorcolumn=80         " Column to prevent long lines in code
 set modeline
 set modelines=5
@@ -120,6 +118,7 @@ exe 'set rtp+=' . dein_path
 
 call dein#begin(conf_dir)
 call dein#add('Shougo/dein')
+call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 
 " Better feeling
 call dein#add('easymotion/vim-easymotion')      " Fast navigation using shortcuts
@@ -144,6 +143,7 @@ call dein#add('zchee/deoplete-go', { 'do': 'make'})
 
 " Languages extensions
 call dein#add('neomake/neomake')                    " Advanced linter
+call dein#add('eagletmt/ghcmod-vim')                " Haskell
 call dein#add('eagletmt/neco-ghc')                  " Haskell completion
 call dein#add('jvirtanen/vim-octave')               " Octave completion support
 call dein#add('vim-scripts/dbext.vim')              " Databases support
@@ -158,8 +158,17 @@ call dein#add('fatih/vim-go')                       " Full feature GO support
 call dein#add('slim-template/vim-slim')             " Slim for vim
 call dein#add('yosssi/vim-ace')
 call dein#add('critiqjo/lldb.nvim')
-call dein#add('othree/yajs.vim')                   " New javascript ES6
+call dein#add('othree/yajs.vim')                    " New javascript ES6
 call dein#add('hail2u/vim-css3-syntax')             " CSS3 support
+call dein#add('joukevandermaas/vim-ember-hbs')      " Handlebars
+call dein#add('elzr/vim-json')
+
+function! BuildComposer(info)
+  if a:info.status != 'unchanged' || a:info.force
+    !cargo build --release
+  endif
+endfunction
+call dein#add('euclio/vim-markdown-composer', { 'do': function('BuildComposer') })
 
 " Navigation
 call dein#add('scrooloose/nerdtree') " File explorer
@@ -181,6 +190,16 @@ filetype plugin on
 filetype plugin indent on
 syntax enable
 colorscheme tomorrow-night
+
+"======================================================================
+" Filetype related
+"======================================================================
+
+autocmd Filetype json setlocal ts=2 sts=2 sw=2
+autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+autocmd Filetype coffee setlocal ts=2 sts=2 sw=2
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype slim setlocal ts=2 sts=2 sw=2
 
 "======================================================================
 " EasyAlign
@@ -257,7 +276,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 "======================================================================
 
 autocmd! BufWritePost * Neomake
-let g:neomake_ruby_enabled_makers = ['rubocop']
 
 "======================================================================
 " NERDTree
@@ -288,11 +306,6 @@ let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const
 " Ruby
 "======================================================================
 
-autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
-autocmd Filetype coffee setlocal ts=2 sts=2 sw=2
-autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
-autocmd Filetype slim setlocal ts=2 sts=2 sw=2
-
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_rails = 1
 
@@ -300,6 +313,28 @@ let g:monster#completion#rcodetools#backend = "async_rct_complete"
 let g:deoplete#sources#omni#input_patterns = {
 \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
 \}
+
+"======================================================================
+" Haskell
+"======================================================================
+
+let g:neomake_haskell_enabled_makers = ['ghcmod']
+
+" Add extra source directory if editing xmonad files
+autocmd BufRead,BufNewFile */xmonad/*.hs call s:add_xmonad_path()
+function! s:add_xmonad_path()
+    let lib_path = resolve(expand('~/.xmonad/lib'))
+    " For ghcmod-vim plugin
+    if !exists('b:ghcmod_ghc_options')
+        let b:ghcmod_ghc_options = []
+    endif
+    call add(b:ghcmod_ghc_options, '-i' . lib_path)
+
+    " For neomake
+    let cur = neomake#makers#ft#haskell#ghcmod()
+    let cur.args = ['-g', '-i' . lib_path, 'check']
+    let b:neomake_haskell_ghcmod_maker = cur
+endfunction
 
 "======================================================================
 " Airline
@@ -317,4 +352,21 @@ endif
 let g:airline_symbols.space = "\ua0"
 
 set showcmd
+
+"======================================================================
+" Tabularize
+"======================================================================
+
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+    Tabularize/|/l1
+    normal! 0
+    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+endfunction
 

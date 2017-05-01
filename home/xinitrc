@@ -1,4 +1,4 @@
-!/bin/sh
+#!/bin/sh
 ######################################################################
 # Pulseaudio
 ######################################################################
@@ -31,16 +31,16 @@ touchpad.sh -d # Disable touchpad
 #urxvtd &
 compton &
 xsetroot -cursor_name left_ptr
-hsetroot -solid '#202020'
+#hsetroot -solid '#202020'
 /scripts/wallaper.sh
-xautolock -time 10 -locker 'lock.sh' &
+xautolock -time 10 -locker 'i3lock-fancy' &
 #stalonetray &
-udiskie --no-tray --use-udisks2 --quiet --no-file-manager &
+#udiskie --no-tray --use-udisks2 --quiet --no-file-manager &
 twmnd &
 #redshift &
 #unclutter &
 
-/scripts/monitor-hotplug.sh
+#/scripts/monitor-hotplug.sh
 
 ######################################################################
 # Exec WM

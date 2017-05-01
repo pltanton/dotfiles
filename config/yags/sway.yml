@@ -1,0 +1,37 @@
+# vim: ts=2:sw=2
+
+varSeps: "{}"
+format: "{gmail} {volume} {wifi} {bat1} {time} {layout}"
+plugins:
+  volume:
+    type: "volume"
+    high: " {vol}%"
+    medium: " {vol}%"
+    low: " {vol}%"
+    muted: "<span color='#373b41'> {vol}%</span>"
+  bat1:
+    type: "battery"
+    name: "BAT1"
+    high: " {lvl}%"
+    medium: " {lvl}%"
+    low: " {lvl}%"
+    empty: "<span color='#a3685a'> {lvl}%</span>"
+    ac: "<span color='#b5bd68'> {lvl}%</span>"
+  time:
+    type: "time"
+    # timeFormat: "Jan 2 15:04:05" # default
+    # pause: 1000 # default
+  layout:
+    type: "kbdd"
+    names: ["en", "ru"]
+  wifi:
+    type: "wifi"
+    connected: " {lvl}%"
+    disconnected: " N/A"
+    interface: "wlp4s0"
+    pause: 2000
+  gmail:
+    type: "maildir"
+    dir: "/home/anton/mail/gmail/INBOX/"
+    filled: "<span color='#81a2be'></span> {new}"
+    empty: "<span color='#373b41'> {new}</span>"

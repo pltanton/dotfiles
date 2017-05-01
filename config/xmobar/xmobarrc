@@ -9,42 +9,11 @@ Config { font = "xft:xos4 Terminus:size=8,FontAwesome:size=10"
        , overrideRedirect = True
        , pickBroadest = False
 
-       , template = "%UnsafeStdinReader% }{ \
-                    \<action=`urxvtc -e mutt`><fc=#81a2be>%gmail%</fc></action> \
-                    \%pulse:Master%  %wlp4s0wi%  %cpu%  \
-                    \%acpi-bat% \
-                    \%date% <action=`xkb-switch -n`>%kbd%</action> "
+       , template = "`UnsafeStdinReader` }{ `yags` "
 
-       , commands = [ Run Com "bat.sh" [] "acpi-bat" 30
-                    , Run Wireless "wlp4s0" [ "--template"
-                                            , "<action=`wifi-notify.py wlp4s0`>\xf1eb <quality>%</action>"
-                                            , "-w"
-                                            , "3"
-                                            ] 5
-                    , Run Cpu [ "--template"
-                              , "<action=`urxvtc -e htop`>\xf1fe<total>%</action>"
-                              , "-w", "3"] 15
-    		        , Run Date "<fc=#c5c8c6>%b %_d %H:%M:%S</fc>" "date" 10
-                    , Run Kbd [("prog(dvorak)", "en"), ("prog(diktor)", "ru")]
-                    , Run Volume "pulse" "Master" [ "--template" , "<action=`pactl set-sink-mute 1 toggle`><status></action>"
-                                        , "-w"          , "3"
-                                        , "--"
-                                        , "-c"          , "#d14548"
-                                        , "-o"          , "\xf026<volume>%"
-                                        , "-C"          , "#d2c5bc"
-                                        , "-O"          , "\xf028<volume>%"
-                                        ] 1
-                    , Run UnsafeStdinReader
-                    , Run Mail [("  \xf01c ", "~/mail/gmail/INBOX")] "gmail"
-                    , Run Mail [("  \xf0e0 ", "~/.mail/tsystems/INBOX")] "tsystems"
-                    -- , Run MPD ["-t", "<action=`mpc toggle`><statei></action> \
-                    --                  \<action=`urxvt -e ncmpcpp`><artist> \
-                    --                  \- <title></action> [<flags>]"
-                    --           , "--"
-                    --           , "-P", "<fc=#8abeb7>\xf04b</fc>"
-                    --           , "-Z", "\xf04c"
-                    --           , "-S", "\xf04d"] 10
+       , commands = [ Run UnsafeStdinReader
+                    , Run CommandReader "/bin/bash -c 'yags ~/.config/yags/xmobar.yml'" "yags"
                     ]
-       , sepChar = "%"
+       , sepChar = "`"
        , alignSep = "}{"
        }

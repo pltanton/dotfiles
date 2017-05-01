@@ -39,5 +39,7 @@ alias winmv='convmv -f cp1252 -t cp850 * --notest  && convmv -f cp866 -t utf-8 *
 alias vpn-kaliwe='sudo openvpn ~/.openvpn/kaliwe.ovpn'
 alias qutebrowser-we='qutbrowser --backend webengine'
 alias sup='rvm 2.3.3 do sup' # sup mua
+alias def='dict -d gcide'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
