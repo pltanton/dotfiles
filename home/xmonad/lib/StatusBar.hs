@@ -14,10 +14,9 @@ import GHC.IO.Handle.Types
 import Colors
 
 -- Xmobar
-xmobarLogHook :: Handle -> X ()
-xmobarLogHook xmproc = dynamicLogWithPP $ xmobarPP
-    { ppOutput          = hPutStrLn xmproc
-    , ppCurrent         = xmobarColor myBlue myBlack
+myXmobarPP :: PP
+myXmobarPP = xmobarPP
+    { ppCurrent         = xmobarColor myBlue myBlack
     , ppHiddenNoWindows = xmobarColor myDarkGray myBlack
     , ppUrgent          = xmobarColor myDarkGray myDarkRed
     , ppVisible         = xmobarColor "#90a959" "#151515"

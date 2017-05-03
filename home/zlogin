@@ -1,6 +1,13 @@
-if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-    exec startx
+#if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+    #exec startx
     #/scripts/run_sway.sh
-fi
+#fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+export GOPATH=$HOME/go
+
+export PATH="$PATH:\
+/bin:$GOPATH/bin:/usr/local/sbin:\
+/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl\
+:/usr/bin/core_perl:$HOME/.cabal/bin:/scripts:$HOME/.local/bin"

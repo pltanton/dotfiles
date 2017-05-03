@@ -1,0 +1,7 @@
+kbdd &
+touchpad.sh -d &
+compton &
+xsetroot -cursor_name left_ptr &
+/scripts/wallaper.sh &
+xautolock -time 10 -locker 'i3lock-fancy' &
+twmnd &

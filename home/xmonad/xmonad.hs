@@ -5,6 +5,7 @@ import XMonad.Config.Desktop
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.DynamicLog
 
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
@@ -30,16 +31,15 @@ myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 
 -- Run xmonad with all the defaults we set up.
 main :: IO ()
-main = do
-    status <- spawnPipe myXmobar
-    xmonad $ withNavigation2DConfig myNavigation2DConfig
-           $ defaults status
+main = xmonad =<< statusBar myXmobar myXmobarPP toggleStrutsKey myConfig
   where
     myNavigation2DConfig = def {
         defaultTiledNavigation = centerNavigation
     }
 
-    defaults xmproc = desktopConfig
+    toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+
+    myConfig = desktopConfig
         { terminal           = myTerminal
         , focusFollowsMouse  = myFocusFollowsMouse
         , clickJustFocuses   = myClickJustFocuses
@@ -52,7 +52,6 @@ main = do
         , layoutHook         = mkToggle (single NBFULL) $ avoidStruts myLayout
         , manageHook         = myManageHook <+> manageHook desktopConfig
         , handleEventHook    = myEventHook
-        , logHook            = xmobarLogHook xmproc
         , startupHook        = docksStartupHook <+> setWMName "LG3D"
         } `additionalKeysP` myKeys
 
