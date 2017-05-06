@@ -1,3 +1,5 @@
+echo test >> ~/test
+kbd.sh -d &
 kbdd &
 touchpad.sh -d &
 compton &

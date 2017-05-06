@@ -1,6 +1,11 @@
-"======================================================================
-" Vim settings
-"======================================================================
+" TODO:
+"  - snipptes plugin
+"  - TODO, and other tag words support (hilighting easy tagging)
+"  - deal with LLDB
+
+"==============================================================================
+"=== Vim settings
+"==============================================================================
 
 syntax on
 set background=dark
@@ -56,9 +61,9 @@ nnoremap <leader>p      :bp<cr>
 nnoremap j gj
 nnoremap k gk
 
-"======================================================================
-" SPECIAL VIM MAGIC
-"======================================================================
+"==============================================================================
+"=== SPECIAL VIM MAGIC
+"==============================================================================
 
 " Switch to US layout on normal mode
 let g:layout='dvorak'
@@ -102,9 +107,9 @@ vnoremap > >gv
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
-"======================================================================
-" Plugins
-"======================================================================
+"==============================================================================
+"=== Plugins
+"==============================================================================
 
 " Install dein if not exists
 let conf_dir = '~/.config/nvim/'
@@ -120,19 +125,18 @@ call dein#begin(conf_dir)
 call dein#add('Shougo/dein')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 
-" Better feeling
-call dein#add('easymotion/vim-easymotion')      " Fast navigation using shortcuts
-call dein#add('godlygeek/tabular')              " Easy aligning
-call dein#add('vim-airline/vim-airline')        " Fancy status line as fuck
-call dein#add('vim-airline/vim-airline-themes') " Fancy themes for fancy status line
-call dein#add('Raimondi/delimitMate')           " Auto close quotes and etc.
-call dein#add('SirVer/ultisnips')               " Ultisnippets configuration
-call dein#add('lilydjwg/colorizer')             " Hilight hex colors
+"=== Editor improvements
+call dein#add('godlygeek/tabular')
+call dein#add('Raimondi/delimitMate')
+call dein#add('neomake/neomake')
+call dein#add('tpope/vim-surround')
+call dein#add('scrooloose/nerdtree')
+call dein#add('junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' })
+call dein#add('majutsushi/tagbar')
+call dein#add('scrooloose/nerdcommenter')
 
-" Themes
-call dein#add('squarefrog/tomorrow-night.vim')
 
-" Deoplete as comletion engine
+"=== Deoplete as completion engine
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
@@ -141,28 +145,39 @@ call dein#add('zchee/deoplete-jedi')
 call dein#add('fishbullet/deoplete-ruby')
 call dein#add('zchee/deoplete-go', { 'do': 'make'})
 
-" Languages extensions
-call dein#add('neomake/neomake')                    " Advanced linter
-call dein#add('eagletmt/ghcmod-vim')                " Haskell
-call dein#add('eagletmt/neco-ghc')                  " Haskell completion
-call dein#add('jvirtanen/vim-octave')               " Octave completion support
-call dein#add('vim-scripts/dbext.vim')              " Databases support
-call dein#add('lervag/vimtex')                      " LaTeX
-call dein#add('vim-ruby/vim-ruby')                  " Ruby
-call dein#add('tpope/vim-rails')                    " Ruby on Rails support
-call dein#add('tpope/vim-endwise')                  " wisely add 'end' in ruby
-call dein#add('kchmck/vim-coffee-script')           " Support of Coffee script
-call dein#add('cakebaker/scss-syntax.vim')          " Sass syntax files
-call dein#add('mattn/emmet-vim')                    " Make HTML usable
-call dein#add('fatih/vim-go')                       " Full feature GO support
-call dein#add('slim-template/vim-slim')             " Slim for vim
-call dein#add('yosssi/vim-ace')
+"=== Debug
 call dein#add('critiqjo/lldb.nvim')
-call dein#add('othree/yajs.vim')                    " New javascript ES6
-call dein#add('hail2u/vim-css3-syntax')             " CSS3 support
-call dein#add('joukevandermaas/vim-ember-hbs')      " Handlebars
-call dein#add('elzr/vim-json')
 
+"=== Language extensions
+" Go
+call dein#add('fatih/vim-go')
+" Haskell
+call dein#add('eagletmt/ghcmod-vim')
+call dein#add('eagletmt/neco-ghc')
+" Octave
+call dein#add('jvirtanen/vim-octave')
+" Databases
+call dein#add('vim-scripts/dbext.vim')
+" LaTeX
+call dein#add('lervag/vimtex')
+" Ruby
+call dein#add('vim-ruby/vim-ruby')
+call dein#add('tpope/vim-rails')
+call dein#add('tpope/vim-endwise')
+" Slim
+call dein#add('slim-template/vim-slim')
+" CoffeScript
+call dein#add('kchmck/vim-coffee-script')
+" CSS
+call dein#add('cakebaker/scss-syntax.vim')
+call dein#add('hail2u/vim-css3-syntax')
+" HTML
+call dein#add('mattn/emmet-vim')
+" JavaScript
+call dein#add('mxw/vim-jsx')
+" Json
+call dein#add('elzr/vim-json')
+" Markdown
 function! BuildComposer(info)
   if a:info.status != 'unchanged' || a:info.force
     !cargo build --release
@@ -170,16 +185,17 @@ function! BuildComposer(info)
 endfunction
 call dein#add('euclio/vim-markdown-composer', { 'do': function('BuildComposer') })
 
-" Navigation
-call dein#add('scrooloose/nerdtree') " File explorer
-call dein#add('junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' })
+"=== Git
+call dein#add('airblade/vim-gitgutter')
+call dein#add('Xuyuanp/nerdtree-git-plugin')
 
-" Uncategorized
-call dein#add('airblade/vim-gitgutter')          " Git command supports
-call dein#add('bronson/vim-trailing-whitespace') " Removes useless whitespaces
-call dein#add('tpope/vim-surround')              " Surround quotes, tags and other
-call dein#add('scrooloose/nerdcommenter')        " Comment tool
-call dein#add('Xuyuanp/nerdtree-git-plugin')     " Git support for NERDTree
+"=== Visual improvements
+call dein#add('squarefrog/tomorrow-night.vim')
+call dein#add('vim-airline/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
+call dein#add('lilydjwg/colorizer')
+call dein#add('ryanoasis/vim-devicons')
+call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
 
 call dein#end()
 
@@ -189,44 +205,32 @@ filetype indent on
 filetype plugin on
 filetype plugin indent on
 syntax enable
+
 colorscheme tomorrow-night
 
-"======================================================================
-" Filetype related
-"======================================================================
+"==============================================================================
+"=== Languages configuration
+"==============================================================================
 
+"=== Json
 autocmd Filetype json setlocal ts=2 sts=2 sw=2
+
+"=== Ruby
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_rails = 1
+
+"=== Coffee
 autocmd Filetype coffee setlocal ts=2 sts=2 sw=2
+
+"=== JavaScript
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+
+"=== Slim
 autocmd Filetype slim setlocal ts=2 sts=2 sw=2
 
-"======================================================================
-" EasyAlign
-"======================================================================
-
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
-
-nmap s <Plug>(easymotion-overwin-f2)
-
-" Move to line
-map <Leader>L <Plug>(easymotion-bd-jk)
-nmap <Leader>L <Plug>(easymotion-overwin-line)
-
-" Move to word
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
-
-"======================================================================
-" FZF
-"======================================================================
-
-nmap <leader><tab> :FZF<CR>
-
-"=====================================================================
-" Vimtex
-"=====================================================================
+"=== LaTeX
+autocmd Filetype tex setlocal ts=2 sts=2 sw=2
 
 let g:vimtex_view_method='zathura'
 let g:vimtex_latexmk_progname='nvr'
@@ -236,90 +240,9 @@ let g:vimtex_motion_matchparen=0
 let g:vimtex_quickfix_open_on_warning=0
 let g:vimtex_quickfix_mode=1
 
-"autocmd FileType tex let b:vimtex_main = 'main.tex'
 let g:tex_flavor = 'latex'
 
-if !exists('g:deoplete#omni_patterns')
-      let g:deoplete#omni_patterns = {}
-  endif
-let g:deoplete#omni_patterns.tex =
-    \ '\v\\%('
-    \ . '\a*cite\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-    \ . '|\a*ref%(\s*\{[^}]*|range\s*\{[^,}]*%(}\{)?)'
-    \ . '|hyperref\s*\[[^]]*'
-    \ . '|includegraphics\*?%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-    \ . '|%(include%(only)?|input)\s*\{[^}]*'
-    \ . '|\a*(gls|Gls|GLS)(pl)?\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-    \ . '|includepdf%(\s*\[[^]]*\])?\s*\{[^}]*'
-    \ . '|includestandalone%(\s*\[[^]]*\])?\s*\{[^}]*'
-    \ . ')\m'
-
-"======================================================================
-" Deoplete
-"======================================================================
-
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_delay = 100
-
-set completeopt-=preview
-
-"======================================================================
-" UltiSnips
-"======================================================================
-
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-"======================================================================
-" Neomake
-"======================================================================
-
-autocmd! BufWritePost * Neomake
-
-"======================================================================
-" NERDTree
-"======================================================================
-
-nmap <leader>m :NERDTreeToggle<CR>
-let  NERDTreeHighlightCursorline=1
-let  NERDTreeIgnore=['.yardoc', 'pkg']
-
-"======================================================================
-" Golang
-"======================================================================
-
-let g:go_term_mode = "split"
-let g:go_term_enabled = 1
-
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_interfaces = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-
-"======================================================================
-" Ruby
-"======================================================================
-
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_rails = 1
-
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
-let g:deoplete#sources#omni#input_patterns = {
-\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-\}
-
-"======================================================================
-" Haskell
-"======================================================================
-
-let g:neomake_haskell_enabled_makers = ['ghcmod']
-
+"=== Haskell
 " Add extra source directory if editing xmonad files
 autocmd BufRead,BufNewFile */xmonad/*.hs call s:add_xmonad_path()
 function! s:add_xmonad_path()
@@ -336,11 +259,67 @@ function! s:add_xmonad_path()
     let b:neomake_haskell_ghcmod_maker = cur
 endfunction
 
-"======================================================================
-" Airline
-"======================================================================
-set laststatus=2
+"=== Golang
+let g:go_term_mode = "split"
+let g:go_term_enabled = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_interfaces = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
 
+
+"==============================================================================
+" Plugins configuration
+"==============================================================================
+
+"=== FZF
+nmap <leader><tab> :FZF<CR>
+set completeopt-=preview
+
+"=== Deoplete
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_delay = 100
+
+" LaTeX
+if !exists('g:deoplete#omni_patterns')
+      let g:deoplete#omni_patterns = {}
+  endif
+let g:deoplete#omni_patterns.tex =
+    \ '\v\\%('
+    \ . '\a*cite\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+    \ . '|\a*ref%(\s*\{[^}]*|range\s*\{[^,}]*%(}\{)?)'
+    \ . '|hyperref\s*\[[^]]*'
+    \ . '|includegraphics\*?%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+    \ . '|%(include%(only)?|input)\s*\{[^}]*'
+    \ . '|\a*(gls|Gls|GLS)(pl)?\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+    \ . '|includepdf%(\s*\[[^]]*\])?\s*\{[^}]*'
+    \ . '|includestandalone%(\s*\[[^]]*\])?\s*\{[^}]*'
+    \ . ')\m'
+
+" Golang
+let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+
+" Ruby
+let g:deoplete#sources#omni#input_patterns = {
+\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+\}
+
+"=== Neomake
+autocmd! BufWritePost * Neomake
+" Haskell
+let g:neomake_haskell_enabled_makers = ['ghcmod']
+
+"=== NERDTree
+
+nmap <leader>m :NERDTreeToggle<CR>
+let  NERDTreeHighlightCursorline=1
+let  NERDTreeIgnore=['.yardoc', 'pkg']
+
+"=== Airline
+set laststatus=2
 
 let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts = 1
@@ -353,11 +332,8 @@ let g:airline_symbols.space = "\ua0"
 
 set showcmd
 
-"======================================================================
-" Tabularize
-"======================================================================
-
-inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+"=== Tabularize
+inoremap <silent> <Bar> <Bar><Esc>:call <SID>align()<CR>a
 
 function! s:align()
   let p = '^\s*|\s.*\s|\s*$'
@@ -369,4 +345,7 @@ function! s:align()
     call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
   endif
 endfunction
+
+"=== Tagbar
+nmap <F8> :TagbarToggle<CR>
 
