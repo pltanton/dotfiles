@@ -12,22 +12,20 @@ set background=dark
 set shell=/bin/zsh
 set encoding=utf-8
 set spelllang=en_us,ru_ru
-set showcmd                " Shows which command is printed yet
-set mouse=a                " Adds a mouse support to
-set number                 " Displays line numbers
-set incsearch              " Incremental search feature
-set nohlsearch             " Prevent highlighting search results
+set showcmd                
+set mouse=a
+set incsearch
+set nohlsearch
 set ignorecase
-set smartcase              " Smart case in search sequence
-set wrap                   " Wraps text
-set autoread               " Autoread file if it was changed outside vim
-set scrolljump=4           " Minimal number of lines to scroll whet the cursor gets off the screen
-set scrolloff=4            " Minimal number of screen lines to keep above and below the cursor
-set ruler                  " Shows the line and column number of cursor position
+set smartcase
+set wrap
+set autoread
+set ruler
 set hidden
-set colorcolumn=80         " Column to prevent long lines in code
+set colorcolumn=80
 set modeline
 set modelines=5
+set relativenumber
 
 let mapleader="\<Space>"
 
@@ -45,14 +43,19 @@ set undodir=~/.config/nvim/undodir
 set undolevels=1000
 set undoreload=10000
 
-" Buffers
+" Windows
 nmap <leader>s<left>   :leftabove  vnew<cr>
 nmap <leader>s<right>  :rightbelow vnew<cr>
 nmap <leader>s<up>     :leftabove  new<cr>
 nmap <leader>s<down>   :rightbelow new<cr>
 
-noremap <tab> <c-w><c-w>
+map <leader>h :wincmd h<CR>
+map <leader>j :wincmd j<CR>
+map <leader>k :wincmd k<CR>
+map <leader>l :wincmd l<CR>
 
+
+" Buffers
 nnoremap <leader>x      :bp <bar> bd #<cr>
 nnoremap <leader>n      :bn<cr>
 nnoremap <leader>p      :bp<cr>
@@ -134,7 +137,7 @@ call dein#add('scrooloose/nerdtree')
 call dein#add('junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' })
 call dein#add('majutsushi/tagbar')
 call dein#add('scrooloose/nerdcommenter')
-
+call dein#add('tpope/vim-repeat')
 
 "=== Deoplete as completion engine
 function! DoRemote(arg)
@@ -174,7 +177,7 @@ call dein#add('hail2u/vim-css3-syntax')
 " HTML
 call dein#add('mattn/emmet-vim')
 " JavaScript
-call dein#add('mxw/vim-jsx')
+call dein#add('neoclide/vim-jsx-improve')
 " Json
 call dein#add('elzr/vim-json')
 " Markdown
@@ -194,8 +197,8 @@ call dein#add('squarefrog/tomorrow-night.vim')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
 call dein#add('lilydjwg/colorizer')
-call dein#add('ryanoasis/vim-devicons')
-call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
+"call dein#add('ryanoasis/vim-devicons')
+"call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
 
 call dein#end()
 
@@ -222,9 +225,6 @@ let g:rubycomplete_rails = 1
 
 "=== Coffee
 autocmd Filetype coffee setlocal ts=2 sts=2 sw=2
-
-"=== JavaScript
-autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 
 "=== Slim
 autocmd Filetype slim setlocal ts=2 sts=2 sw=2
@@ -308,13 +308,17 @@ let g:deoplete#sources#omni#input_patterns = {
 \}
 
 "=== Neomake
-autocmd! BufWritePost * Neomake
+autocmd! BufWritePost * Neomake!
 " Haskell
 let g:neomake_haskell_enabled_makers = ['ghcmod']
+" JavaScript
+" JSX
+let g:neomake_javascript_jsx_enabled_makers = ['eslint']
 
 "=== NERDTree
 
 nmap <leader>m :NERDTreeToggle<CR>
+nmap <F10> :NERDTreeToggle<CR>
 let  NERDTreeHighlightCursorline=1
 let  NERDTreeIgnore=['.yardoc', 'pkg']
 
