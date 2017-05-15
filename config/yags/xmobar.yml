@@ -5,6 +5,7 @@ format: "{gmail} {volume} {wifi} {bat1} {time} {layout}"
 plugins:
   volume:
     path: "$GOPATH/src/github.com/pltanton/yags-volume/volume.so"
+    sink: "/org/pulseaudio/core1/sink0"
     high: " {vol}%"
     medium: " {vol}%"
     low: " {vol}%"
