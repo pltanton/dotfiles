@@ -1,7 +1,7 @@
 -- vim: syntax=haskell
-Config { font = "xft:xos4 Terminus:size=8,FontAwesome:size=10"
-       , bgColor =      "#1d1f21"
-       , fgColor =      "#c5c8c6"
+Config { font = "xft:xos4 Terminus:size=11,FontAwesome:size=11"
+       , bgColor =      "#2b303b"
+       , fgColor =      "#c0c5ce"
        , position =     TopP 4 4
        --, position =     TopSize C 100 25
        , iconRoot =     ".xmonad/icons/"

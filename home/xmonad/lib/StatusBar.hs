@@ -17,9 +17,9 @@ import Colors
 myXmobarPP :: PP
 myXmobarPP = xmobarPP
     { ppCurrent         = xmobarColor myBlue myBlack
-    , ppHiddenNoWindows = xmobarColor myDarkGray myBlack
+    , ppHiddenNoWindows = xmobarColor myGray myBlack
     , ppUrgent          = xmobarColor myDarkGray myDarkRed
-    , ppVisible         = xmobarColor "#90a959" myBlack
+    , ppVisible         = xmobarColor myGreen myBlack
     , ppSep             = " : "
     , ppLayout          = xmobarColor myLighterGray ""
     , ppOrder           = \(ws:l:t:_) -> [" " ++ l,ws,t]

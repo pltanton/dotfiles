@@ -1,9 +1,3 @@
-echo test >> ~/test
-kbd.sh -d &
-kbdd &
-touchpad.sh -d &
-compton &
-xsetroot -cursor_name left_ptr &
-/scripts/wallaper.sh &
-xautolock -time 10 -locker 'i3lock-fancy' &
-twmnd &
+xssproxy &
+xautolock -time 10 -locker 'i3lock-next' &
+exec xmonad 2> ~/err

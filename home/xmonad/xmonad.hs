@@ -25,6 +25,7 @@ import Layouts
 import Manage
 import StatusBar
 import Colors
+import Autorun
 
 myEventHook :: Event -> X Data.Monoid.All
 myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
@@ -33,13 +34,13 @@ myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 main :: IO ()
 main = xmonad =<< statusBar myXmobar myXmobarPP toggleStrutsKey myConfig
   where
-    myNavigation2DConfig = def {
-        defaultTiledNavigation = centerNavigation
-    }
+    myNavigation2DConfig = def 
+        { defaultTiledNavigation = hybridNavigation
+        }
 
     toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
-    myConfig = desktopConfig
+    myConfig = withNavigation2DConfig myNavigation2DConfig $ desktopConfig
         { terminal           = myTerminal
         , focusFollowsMouse  = myFocusFollowsMouse
         , clickJustFocuses   = myClickJustFocuses
@@ -52,6 +53,6 @@ main = xmonad =<< statusBar myXmobar myXmobarPP toggleStrutsKey myConfig
         , layoutHook         = mkToggle (single NBFULL) $ avoidStruts myLayout
         , manageHook         = myManageHook <+> manageHook desktopConfig
         , handleEventHook    = myEventHook
-        , startupHook        = docksStartupHook <+> setWMName "LG3D"
+        , startupHook        = autorunHook >> setWMName "LG3D"
         } `additionalKeysP` myKeys
 

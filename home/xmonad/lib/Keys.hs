@@ -15,6 +15,8 @@ import XMonad.Util.WorkspaceCompare
 
 import XMonad.Actions.WindowGo
 import XMonad.Actions.Navigation2D
+import XMonad.Actions.GridSelect
+import XMonad.Actions.FloatKeys
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
@@ -37,12 +39,19 @@ myKeys =
     -- Navigation
     , ("M-h",        moveTo Prev $ WSIs notSP)
     , ("M-l",        moveTo Next $ WSIs notSP)
-    , ("M-<Left>",   moveTo Prev $ WSIs notSP)
-    , ("M-<Right>",  moveTo Next $ WSIs notSP)
     , ("M-p",        prevNonEmptyWS)
     , ("M-n",        nextNonEmptyWS)
     , ("M-S-h",      shiftTo Prev (WSIs notSP) >> moveTo Prev (WSIs notSP))
     , ("M-S-l",      shiftTo Next (WSIs notSP) >> moveTo Next (WSIs notSP))
+
+    , ("M-S-<Left>",   withFocused (keysResizeWindow (-10, 0) (1/2, 1/2)))
+    , ("M-S-<Right>",  withFocused (keysResizeWindow (10, 0) (1/2, 1/2)))
+    , ("M-S-<Up>",     withFocused (keysResizeWindow (0, 10) (1/2, 1/2)))
+    , ("M-S-<Down>",   withFocused (keysResizeWindow (0, -10) (1/2, 1/2)))
+    , ("M-<Left>",     withFocused (keysMoveWindow (-15, 0)))
+    , ("M-<Right>",    withFocused (keysMoveWindow (15, 0)))
+    , ("M-<Up>",       withFocused (keysMoveWindow (0, -15)))
+    , ("M-<Down>",     withFocused (keysMoveWindow (0, 15)))
 
     , ("M1-<Tab>",    windows W.focusDown >> windows W.shiftMaster)
     , ("M1-S-<Tab>",  windows W.focusUp >> windows W.shiftMaster)
@@ -50,6 +59,7 @@ myKeys =
     , ("M1-k",        windowGo U False)
     , ("M1-h",        windowGo L False)
     , ("M1-l",        windowGo R False)
+    , ("M1-f",        switchLayer)
 
     , ("M1-S-j",  windowSwap D False)
     , ("M1-S-k",  windowSwap U False)
@@ -60,6 +70,8 @@ myKeys =
     , ("M1-<Right>",  sendMessage Expand)
     , ("M1-<Down>",   sendMessage MirrorShrink)
     , ("M1-<Up>",     sendMessage MirrorExpand)
+
+    , ("M-g", goToSelected def)
 
     -- Run applications
     , ("M-<Return>",        spawn "dmenu.sh")

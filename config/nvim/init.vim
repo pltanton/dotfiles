@@ -26,6 +26,9 @@ set colorcolumn=80
 set modeline
 set modelines=5
 set relativenumber
+set termguicolors
+set splitbelow
+set splitright
 
 let mapleader="\<Space>"
 
@@ -49,10 +52,10 @@ nmap <leader>s<right>  :rightbelow vnew<cr>
 nmap <leader>s<up>     :leftabove  new<cr>
 nmap <leader>s<down>   :rightbelow new<cr>
 
-map <leader>h :wincmd h<CR>
-map <leader>j :wincmd j<CR>
-map <leader>k :wincmd k<CR>
-map <leader>l :wincmd l<CR>
+nnoremap <C-H> <C-W><C-H> 
+nnoremap <C-J> <C-W><C-J> 
+nnoremap <C-K> <C-W><C-K> 
+nnoremap <C-L> <C-W><C-L> 
 
 
 " Buffers
@@ -69,14 +72,14 @@ nnoremap k gk
 "==============================================================================
 
 " Switch to US layout on normal mode
-let g:layout='dvorak'
+let g:layout='dvp'
 function! SetUsLayout()
     let g:layout=system('xkblayout-state print %v')
     silent ! xkblayout-state set 0
 endfunction
 
 function! RestoreLayout()
-    if g:layout != 'dvorak'
+    if g:layout != 'dvp'
         silent ! xkblayout-state set 1
     endif
 endfunction
@@ -133,11 +136,18 @@ call dein#add('godlygeek/tabular')
 call dein#add('Raimondi/delimitMate')
 call dein#add('neomake/neomake')
 call dein#add('tpope/vim-surround')
-call dein#add('scrooloose/nerdtree')
-call dein#add('junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' })
+
+call dein#add('Shougo/denite.nvim')
+call dein#add('Shougo/unite.vim')
+call dein#add('Shougo/vimfiler.vim')
+call dein#add('Shougo/neomru.vim')
+
 call dein#add('majutsushi/tagbar')
 call dein#add('scrooloose/nerdcommenter')
 call dein#add('tpope/vim-repeat')
+call dein#add('sbdchd/neoformat')
+call dein#add('itchyny/vim-cursorword')
+call dein#add('mbbill/undotree')
 
 "=== Deoplete as completion engine
 function! DoRemote(arg)
@@ -149,9 +159,13 @@ call dein#add('fishbullet/deoplete-ruby')
 call dein#add('zchee/deoplete-go', { 'do': 'make'})
 
 "=== Debug
-call dein#add('critiqjo/lldb.nvim')
+call dein#add('dbgx/lldb.nvim')
+call dein#add('jodosha/vim-godebug')
 
 "=== Language extensions
+" Java
+"call dein#add('artur-shaik/vim-javacomplete2')
+"call dein#add('dansomething/vim-eclim')
 " Go
 call dein#add('fatih/vim-go')
 " Haskell
@@ -190,15 +204,14 @@ call dein#add('euclio/vim-markdown-composer', { 'do': function('BuildComposer') 
 
 "=== Git
 call dein#add('airblade/vim-gitgutter')
-call dein#add('Xuyuanp/nerdtree-git-plugin')
 
 "=== Visual improvements
 call dein#add('squarefrog/tomorrow-night.vim')
+call dein#add('chriskempson/base16-vim')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
 call dein#add('lilydjwg/colorizer')
 "call dein#add('ryanoasis/vim-devicons')
-"call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
 
 call dein#end()
 
@@ -209,11 +222,17 @@ filetype plugin on
 filetype plugin indent on
 syntax enable
 
-colorscheme tomorrow-night
+colorscheme base16-ocean
 
 "==============================================================================
 "=== Languages configuration
 "==============================================================================
+
+"=== JavaScript
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+
+"=== Java
+autocmd Filetype java setlocal ts=2 sts=2 sw=2
 
 "=== Json
 autocmd Filetype json setlocal ts=2 sts=2 sw=2
@@ -281,6 +300,8 @@ set completeopt-=preview
 "=== Deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 100
+let g:deoplete#omni#input_patterns = {}
+let g:deoplete#omni#input_patterns.java = '[^. *\t]\.\w*'
 
 " LaTeX
 if !exists('g:deoplete#omni_patterns')
@@ -308,19 +329,59 @@ let g:deoplete#sources#omni#input_patterns = {
 \}
 
 "=== Neomake
-autocmd! BufWritePost * Neomake!
+autocmd! BufWritePost * Neomake
 " Haskell
 let g:neomake_haskell_enabled_makers = ['ghcmod']
 " JavaScript
-" JSX
-let g:neomake_javascript_jsx_enabled_makers = ['eslint']
+let g:neomake_javascript_eslint_exe = $PWD .'/node_modules/.bin/eslint'
+let g:neomake_javascript_enabled_makers = ['eslint']
+" Java
+"let g:neomake_java_javac_delete_output = 0
+"let g:neomake_java_enabled_makers = ['checkstyle']
 
-"=== NERDTree
+"=== Syntastic
+let g:syntastic_error_symbol = '×'
+let g:syntastic_style_error_symbol = '✗'
+let g:syntastic_warining_symbol = '⚠'
+let g:syntastic_style_warining_symbol = '≈'
 
-nmap <leader>m :NERDTreeToggle<CR>
-nmap <F10> :NERDTreeToggle<CR>
-let  NERDTreeHighlightCursorline=1
-let  NERDTreeIgnore=['.yardoc', 'pkg']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" Java
+let g:syntastic_java_javac_config_file_enabled = 1
+let g:syntastic_java_checkstyle_classpath = '/usr/share/checkstyle/checkstyle.jar'
+let g:syntastic_java_checkstyle_conf_file = '/usr/share/checkstyle/google_checks.xml'
+let g:syntastic_java_checkers = ['javac', 'checkstyle']
+
+"=== vimfiler
+
+let g:vimfiler_as_default_explorer = 1
+nmap <silent><F10> :VimFilerExplorer<CR>
+
+"=== Denite
+
+nmap <leader>ff :Denite file_rec<CR>
+nmap <leader>fb :Denite buffer<CR>
+
+call denite#custom#var('file_rec', 'command',
+     \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+call denite#custom#option('default', 'prompt', '>')
+
+
+call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+      \ [ '.git/', '.ropeproject/', '__pycache__/', 'node_modules/',
+      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/', '*.png',
+      \   '*.jpg', '*.png' ])
+
+"=== Undotree
+
+nmap <silent><F5> :UndotreeToggle<CR>
 
 "=== Airline
 set laststatus=2
@@ -328,6 +389,7 @@ set laststatus=2
 let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts = 1
 let g:Powerline_symbols='unicode'
+let g:airline_theme='base16_ocean'
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -352,4 +414,9 @@ endfunction
 
 "=== Tagbar
 nmap <F8> :TagbarToggle<CR>
+
+"=== Javacomplete2
+"autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+
 
