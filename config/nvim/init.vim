@@ -213,6 +213,11 @@ call dein#add('vim-airline/vim-airline-themes')
 call dein#add('lilydjwg/colorizer')
 "call dein#add('ryanoasis/vim-devicons')
 
+"=== Some service fietures
+" Vim dispatch feature
+call dein#add('tpope/vim-dispatch')
+call dein#add('radenling/vim-dispatch-neovim')
+
 call dein#end()
 
 syntax on
@@ -252,7 +257,7 @@ autocmd Filetype slim setlocal ts=2 sts=2 sw=2
 autocmd Filetype tex setlocal ts=2 sts=2 sw=2
 
 let g:vimtex_view_method='zathura'
-let g:vimtex_latexmk_progname='nvr'
+"let g:vimtex_latexmk_progname='nvr'
 let g:vimtex_view_general_viewer='zathura'
 let g:vimtex_fold_manual=1
 let g:vimtex_motion_matchparen=0

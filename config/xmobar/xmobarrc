@@ -1,19 +1,19 @@
 -- vim: syntax=haskell
-Config { font = "xft:xos4 Terminus:size=11,FontAwesome:size=11"
-       , bgColor =      "#2b303b"
-       , fgColor =      "#c0c5ce"
-       , position =     TopP 4 4
-       --, position =     TopSize C 100 25
-       , iconRoot =     ".xmonad/icons/"
-       , allDesktops = True
+Config { font             = "xft:xos4 Terminus:size = 12,FontAwesome:size = 11"
+       , textOffset       = 16
+       , bgColor          = "#2b303b"
+       , fgColor          = "#c0c5ce"
+       , position         = TopP 4 4
+       , iconRoot         = ".xmonad/icons/"
+       , allDesktops      = True
        , overrideRedirect = True
-       , pickBroadest = False
+       , pickBroadest     = False
 
        , template = "`UnsafeStdinReader` }{ `yags` "
+       , sepChar  = "`"
+       , alignSep = "}{"
 
        , commands = [ Run UnsafeStdinReader
                     , Run CommandReader "/bin/bash -c 'yags ~/.config/yags/xmobar.yml'" "yags"
                     ]
-       , sepChar = "`"
-       , alignSep = "}{"
        }
