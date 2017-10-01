@@ -28,6 +28,12 @@ for file in $(ls $HOME/.openvpn); do
     alias_name="vpn-${file%.*}"
     alias $alias_name="sudo openvpn $HOME/.openvpn/$file"
 done
+for file in $(ls /etc/openvpn/client); do
+    vpn_name="${file%.conf}"
+    alias vpn-${vpn_name}="sudo systemctl start openvpn-client@$vpn_name"
+    alias vpn-${vpn_name}-status="systemctl status openvpn-client@$vpn_name"
+    alias vpn-${vpn_name}-stop="sudo systemctl stop openvpn-client@$vpn_name"
+done
 
 # Aliaces
 alias winmv='convmv -f cp1252 -t cp850 * --notest  && convmv -f cp866 -t utf-8 * --notest'
