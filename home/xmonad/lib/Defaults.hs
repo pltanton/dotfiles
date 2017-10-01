@@ -17,7 +17,7 @@ myModMask :: KeyMask
 myModMask = mod4Mask
 
 myBrowser :: String
-myBrowser = "qutebrowser-we"
+myBrowser = "qutebrowser"
 
 myBrowserClass :: String
 myBrowserClass = "qutebrowser"

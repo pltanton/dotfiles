@@ -23,9 +23,14 @@ source ~/.profile
 # Importh path for systemd
 systemctl --user set-environment PATH=$PATH
 
+# Vpn connections
+for file in $(ls $HOME/.openvpn); do
+    alias_name="vpn-${file%.*}"
+    alias $alias_name="sudo openvpn $HOME/.openvpn/$file"
+done
+
 # Aliaces
 alias winmv='convmv -f cp1252 -t cp850 * --notest  && convmv -f cp866 -t utf-8 * --notest'
-alias vpn-kaliwe='sudo openvpn ~/.openvpn/kaliwe.ovpn'
 alias sup='rvm 2.3.3 do sup' # sup mua
 alias def='dict -d gcide'
 
