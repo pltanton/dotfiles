@@ -26,7 +26,7 @@ iconFont :: String
 iconFont = "FontAwesome:size=9"
 
 defaultFont :: String
-defaultFont  = "xos4 Terminus:size=8"
+defaultFont  = "xft:xos4 Terminus:size=12"
 
 icoFont :: String -> String
 icoFont      = (++ "^fn()") . (++) ("^fn(" ++ iconFont ++ ")")

@@ -39,6 +39,8 @@ myKeys =
     -- Navigation
     , ("M-h",        moveTo Prev $ WSIs notSP)
     , ("M-l",        moveTo Next $ WSIs notSP)
+    , ("M-j",        prevEmptyWS)
+    , ("M-k",        nextEmptyWS)
     , ("M-p",        prevNonEmptyWS)
     , ("M-n",        nextNonEmptyWS)
     , ("M-S-h",      shiftTo Prev (WSIs notSP) >> moveTo Prev (WSIs notSP))
@@ -55,8 +57,10 @@ myKeys =
 
     , ("M1-<Tab>",    windows W.focusDown >> windows W.shiftMaster)
     , ("M1-S-<Tab>",  windows W.focusUp >> windows W.shiftMaster)
-    , ("M1-j",        windowGo D False)
-    , ("M1-k",        windowGo U False)
+    -- , ("M1-j",        windowGo D False)
+    -- , ("M1-k",        windowGo U False)
+    , ("M1-j",        windows W.focusDown)
+    , ("M1-k",        windows W.focusUp)
     , ("M1-h",        windowGo L False)
     , ("M1-l",        windowGo R False)
     , ("M1-f",        switchLayer)
@@ -123,6 +127,12 @@ myKeys =
         >>= \t -> windows . W.view $ t
     prevNonEmptyWS =
         findWorkspace getSortByIndexNoSP Prev HiddenNonEmptyWS 1
+        >>= \t -> windows . W.view $ t
+    nextEmptyWS =
+        findWorkspace getSortByIndexNoSP Next HiddenEmptyWS 1
+        >>= \t -> windows . W.view $ t
+    prevEmptyWS =
+        findWorkspace getSortByIndexNoSP Prev HiddenEmptyWS 1
         >>= \t -> windows . W.view $ t
     getSortByIndexNoSP =
         fmap (.namedScratchpadFilterOutWorkspace) getSortByIndex

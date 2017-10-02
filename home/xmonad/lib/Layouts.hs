@@ -12,6 +12,11 @@ import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Gaps
+import XMonad.Layout.Decoration
+import XMonad.Layout.Simplest
+
+import Colors
+import Defaults
 
 layoutIcon :: String -> String
 layoutIcon name = "^i(/home/anton/.xmonad/icons/" ++ name ++ ".xpm)"
@@ -21,15 +26,23 @@ myLayout =
     named "T" tiled |||
     named "M" (Mirror tiled) |||
     named "G" grid |||
-    named "B" tabbed
+    named "B" myTabbed
   where
-    tabbed  = gapsed simpleTabbed
-    tiled   = spaces $ ResizableTall nmaster delta ratio []
-    grid    = spaces $ Grid
-    spaces  = spacing 4
-    gapsed  = gaps $ zip [U, D, R, L] [2..]
-    full    = spaces Full
-    nmaster = 1
-    ratio   = 1/2
-    delta   = 3/100
+    myTabbed :: ModifiedLayout Gaps (ModifiedLayout (Decoration TabbedDecoration DefaultShrinker) Simplest) Window
+    myTabbed = gapsed $ tabbed shrinkText tabConfig
+    tiled  = spaces $ ResizableTall nmaster delta ratio []
+    grid   = spaces $ Grid
+
+    tabConfig = def { activeColor         = myDarkGray
+                    , inactiveColor       = myBlack 
+                    , fontName            = defaultFont
+                    , activeBorderColor   = myDarkGray 
+                    , inactiveBorderColor = myBlack 
+                    , decoHeight          = 28 }
+    spaces    = spacing 4
+    gapsed    = gaps [(U,4), (D,4), (R,4), (L,4)]
+    full      = spaces Full
+    nmaster   = 1
+    ratio     = 1/2
+    delta     = 3/100
 
