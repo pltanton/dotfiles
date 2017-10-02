@@ -1,3 +1,2 @@
 xssproxy &
-xautolock -time 10 -locker 'i3lock-next' &
 exec xmonad 2> ~/err

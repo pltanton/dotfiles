@@ -6,6 +6,7 @@ import XMonad.Util.SpawnOnce
 autorunHook = do
     -- Uncomment after xmonad 0.14 release and change spawn to spawnOnce
     -- spawnOnce "/scripts/monitor-hotplug.sh"
+    spawn "xautolock -time 10 -locker 'i3lock-next'"
     spawn "/scripts/wallaper.sh"
     spawn "/scripts/kbd.sh -d"
     spawn "/scripts/touchpad.sh -d"
@@ -15,5 +16,4 @@ autorunHook = do
     spawn "dunst"
     spawnOnce "echo nothing"
     -- spawnOnce "xssproxy"
-    -- spawnOnce "xautolock -time 10 -locker 'i3lock-next'"
 
