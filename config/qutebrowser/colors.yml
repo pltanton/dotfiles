@@ -1,0 +1,32 @@
+colors:
+  tabs:
+    indicator.system: rgb
+    even.bg: '#1d1f21'
+    even.fg: '#c5c8c6'
+    odd.bg: '#282a2e'
+    odd.fg: '#c5c8c6'
+    selected:
+      even.bg: '#696869'
+      even.fg: white
+      odd.bg: '#696869'
+      odd.fg: white
+  webpage.bg: white
+
+  completion:
+    fg: '#c5c8c6'
+    odd.bg: '#2b303b'
+    even.bg: '#2b303b'
+    category.bg: '#1b1d23'
+    category.border.top: '#1b1d23'
+    category.border.bottom: '#1b1d23'
+    item.selected.fg: '#1d1f21'
+    item.selected.bg: '#969896'
+    item.selected.border.top: '#969896'
+    item.selected.border.bottom: '#969896'
+
+    match.fg: '#cc6666'
+    scrollbar.bg: '#969896'
+
+  statusbar:
+    normal.fg: '#c5c8c6'
+    normal.bg: '#1d1f21'
