@@ -18,4 +18,4 @@ rofi.yoffset:           0
 rofi.xoffset:           0
 rofi.width:             100
 rofi.lines:             25
-rofi.monitor            1
+rofi.monitor:           -4

@@ -78,7 +78,7 @@ myKeys =
     , ("M-g", goToSelected def)
 
     -- Run applications
-    , ("M-<Return>",        spawn "rofi -show drun")
+    , ("M-<Return>",        spawn "~/.local/bin/rofi -show drun")
     , ("M-a",               runOrRaise myBrowser (className =? myBrowserClass))
     , ("<XF86HomePage>",    runOrRaise myBrowser (className =? myBrowserClass))
     , ("M-e",               spawn "spacefm")
