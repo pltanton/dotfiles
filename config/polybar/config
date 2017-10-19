@@ -1,0 +1,105 @@
+[colors]
+red         = ${xrdb:color2}
+grey        = #131721
+bg          = #00383c4a
+fg          = #EEEEEE
+
+;###############################
+;########## TOP BAR ############
+;###############################
+
+[bar/top]
+width = 1920
+height = 23
+offset-x = 3
+offset-y = 2
+;bottom = true
+
+background = #00383c4a
+foreground = #EEEEEE
+
+line-size = 2 
+line-color = #E6D3DAE3
+
+padding-left = 2
+padding-right = 2
+padding-top = 0
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = Hack:size=12;3
+font-1 = FontAwesome:size=12;3
+font-2 = siji:pixelsize=8;2
+
+modules-left = date xwindow
+modules-center = xmonad
+modules-right = yags powermenu
+
+#tray-position =  
+#tray-offset-y = 1
+#tray-offset-x = 0
+#tray-maxsize = 14
+
+;#############################
+;########## MODULES ##########
+;#############################
+
+;########## XMONAD ##########
+[module/xmonad]
+type = internal/xworkspaces
+
+label-active-overline = #D3DAE3
+label-active = " %name% "
+label-empty =  " %name% "
+label-urgent =  " %name% "
+
+;########## XWINDOW ##########
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:50:...%
+label-padding = 3
+
+;########## DATE/TIME ##########
+[module/date]
+type = internal/date
+
+; Seconds to sleep between updates
+interval = 1.0
+
+; See "man date" for details on how to format the date string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+date = %a %b %d,
+
+; Optional time format
+time = %H:%M
+
+; if `date-alt` or `time-alt` is defined, clicking
+; the module will toggle between formats
+date-alt = %A, %d %B %Y
+time-alt = %H:%M:%S
+
+label = %date% %time%
+format = <label>
+
+;########## YAGS ##########
+[module/yags]
+type = custom/script
+
+exec = yags ~/.config/yags/polybar.yml
+tail = true
+
+;########## POWER ##########
+[module/powermenu]
+type = custom/menu
+
+label-open = ""
+label-close = 
+label-separator = " "
+
+menu-0-0 = "Logout"
+menu-0-0-exec = kill -9 -1
+menu-0-1 = "Reboot"
+menu-0-1-exec = systemctl reboot -i
+menu-0-2 = "Power off"
+menu-0-2-exec = systemctl poweroff -i
+menu-0-3 = "Cancel"

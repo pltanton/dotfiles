@@ -1,0 +1,38 @@
+# vim: ts=2:sw=2
+
+varSeps: "{}"
+format: "{volume} {wifi} {bat1} {layout}"
+plugins:
+  volume:
+    path: "$GOPATH/src/github.com/pltanton/yags-volume/yags-volume.so"
+    sink: "/org/pulseaudio/core1/sink0"
+    high: " {vol}"
+    medium: " {vol}"
+    low: " {vol}"
+    muted: " {vol}"
+  bat1:
+    path: "$GOPATH/src/github.com/pltanton/yags-battery/yags-battery.so"
+    name: "BAT1"
+    high: " {lvl}"
+    medium: " {lvl}"
+    low: " {lvl}"
+    empty: " {lvl}"
+    ac: " {lvl}"
+  time:
+    path: "$GOPATH/src/github.com/pltanton/yags-timer/time/time.so"
+    # timeFormat: "Jan 2 15:04:05" # default
+    # pause: 1000 # default
+  layout:
+    path: "$GOPATH/src/github.com/pltanton/yags-kbdd/yags-kbdd.so"
+    names: ["en", "ru"]
+  wifi:
+    path: "$GOPATH/src/github.com/pltanton/yags-timer/wifi/wifi.so"
+    connected: " {lvl}"
+    disconnected: " N/A"
+    interface: "wlp4s0"
+    pause: 2000
+  #gmail:
+    #path: "$GOPATH/src/github.com/pltanton/yags-maildir/yags-maildir.so"
+    #dir: "/home/anton/mail/gmail/INBOX/"
+    #filled: "<fc=#81a2be></fc> {new}"
+    #empty: "<fc=#65737e> {new}</fc>"
