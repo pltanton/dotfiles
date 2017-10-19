@@ -160,11 +160,10 @@ call dein#add('zchee/deoplete-go', { 'do': 'make'})
 
 "=== Debug
 call dein#add('dbgx/lldb.nvim')
-call dein#add('jodosha/vim-godebug')
 
 "=== Language extensions
 " Java
-"call dein#add('artur-shaik/vim-javacomplete2')
+call dein#add('artur-shaik/vim-javacomplete2')
 "call dein#add('dansomething/vim-eclim')
 " Go
 call dein#add('fatih/vim-go')
@@ -201,6 +200,8 @@ function! BuildComposer(info)
   endif
 endfunction
 call dein#add('euclio/vim-markdown-composer', { 'do': function('BuildComposer') })
+" Python
+call dein#add('davidhalter/jedi-vim')
 
 "=== Git
 call dein#add('airblade/vim-gitgutter')
@@ -367,6 +368,23 @@ let g:syntastic_java_checkers = ['javac', 'checkstyle']
 "=== vimfiler
 
 let g:vimfiler_as_default_explorer = 1
+call vimfiler#custom#profile('default', 'context', {
+            \ 'explorer' : 1,
+            \ 'winwidth' : 30,
+            \ 'winminwidth' : 30,
+            \ 'toggle' : 1,
+            \ 'columns' : 'type',
+            \ 'auto_expand': 1,
+            \ 'direction' : 'topleft',
+            \ 'parent': 0,
+            \ 'explorer_columns' : 'type',
+            \ 'status' : 1,
+            \ 'safe' : 0,
+            \ 'split' : 1,
+            \ 'hidden': 1,
+            \ 'no_quit' : 1,
+            \ 'force_hide' : 0,
+            \ })
 nmap <silent><F10> :VimFilerExplorer<CR>
 
 "=== Denite

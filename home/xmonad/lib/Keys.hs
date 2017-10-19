@@ -78,7 +78,7 @@ myKeys =
     , ("M-g", goToSelected def)
 
     -- Run applications
-    , ("M-<Return>",        spawn "dmenu.sh")
+    , ("M-<Return>",        spawn "rofi -show drun")
     , ("M-a",               runOrRaise myBrowser (className =? myBrowserClass))
     , ("<XF86HomePage>",    runOrRaise myBrowser (className =? myBrowserClass))
     , ("M-e",               spawn "spacefm")
@@ -86,7 +86,7 @@ myKeys =
     , ("<XF86MyComputer>",  spawn $ myTerminal ++ " -e ranger")
     , ("M-o",               spawn $ myTerminal ++ " -e nvim")
     , ("M-'",               namedScratchpadAction myScratchPads "terminal")
-    , ("M-q",               namedScratchpadAction myScratchPads "torrent")
+    , ("M-q",               namedScratchpadAction myScratchPads "evolution")
     , ("M-<Tab>",           namedScratchpadAction myScratchPads "telegram")
 
     -- MPD

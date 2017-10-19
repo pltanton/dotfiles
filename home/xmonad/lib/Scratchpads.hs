@@ -18,14 +18,14 @@ myScratchPads =
          runScratchpadTerminal
          (resource =? "scratchpad")
          floatingTerm
-    , NS "torrent"
-         connectToRt
-         (resource =? "torrent")
-         floatingTerm
     , NS "telegram"
          "telegram-desktop"
          (resource =? "telegram-desktop")
          floatingRight
+    , NS "evolution"
+         "evolution"
+         (resource =? "evolution")
+         floatingCenter
     ]
   where
     floatingTerm = customFloating $ W.RationalRect l t w h
@@ -40,3 +40,10 @@ myScratchPads =
         w = 0.3
         t = 1 - h
         l = 1 - w
+    floatingCenter = customFloating $ W.RationalRect l t w h
+      where
+        offset = 0.03
+        h = 1 - offset * 2
+        w = 1 - offset * 2
+        t = offset
+        l = offset

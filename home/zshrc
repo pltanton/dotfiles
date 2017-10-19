@@ -14,8 +14,8 @@ zmodload zsh/terminfo
 bindkey "\e[A" history-substring-search-up
 bindkey "\e[B" history-substring-search-down
 
-export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-export LESS=' -R '
+export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
+export LESS='-R '
 export EDITOR='nvim'
 
 source ~/.profile

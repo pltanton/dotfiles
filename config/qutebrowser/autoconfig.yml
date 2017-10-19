@@ -21,3 +21,4 @@ global:
   fonts.web.family.sans_serif: PT Sans
   fonts.web.family.serif: PT Serif
   fonts.web.family.standard: PT Sans
+  url.auto_search: dns

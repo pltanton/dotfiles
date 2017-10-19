@@ -1,7 +1,7 @@
 # vim: ts=2:sw=2
 
 varSeps: "{}"
-format: "{gmail} {volume} {wifi} {bat1} {time} {layout}"
+format: "{volume} {wifi} {bat1} {bat2} {time} {layout}"
 plugins:
   volume:
     path: "$GOPATH/src/github.com/pltanton/yags-volume/yags-volume.so"
@@ -18,6 +18,14 @@ plugins:
     low: " {lvl}%"
     empty: "<fc=#bf616a> {lvl}%</fc>"
     ac: "<fc=#a3be8c> {lvl}%</fc>"
+  bat2:
+    path: "$GOPATH/src/github.com/pltanton/yags-battery/yags-battery.so"
+    name: "BAT0"
+    high: " {lvl}%"
+    medium: " {lvl}%"
+    low: " {lvl}%"
+    empty: "<fc=#bf616a> {lvl}%</fc>"
+    ac: "<fc=#a3be8c> {lvl}%</fc>"
   time:
     path: "$GOPATH/src/github.com/pltanton/yags-timer/time/time.so"
     # timeFormat: "Jan 2 15:04:05" # default
@@ -29,10 +37,10 @@ plugins:
     path: "$GOPATH/src/github.com/pltanton/yags-timer/wifi/wifi.so"
     connected: " {lvl}%"
     disconnected: " N/A"
-    interface: "wlp4s0"
+    interface: "wlp58s0"
     pause: 2000
-  gmail:
-    path: "$GOPATH/src/github.com/pltanton/yags-maildir/yags-maildir.so"
-    dir: "/home/anton/mail/gmail/INBOX/"
-    filled: "<fc=#81a2be></fc> {new}"
-    empty: "<fc=#65737e> {new}</fc>"
+  #gmail:
+    #path: "$GOPATH/src/github.com/pltanton/yags-maildir/yags-maildir.so"
+    #dir: "/home/anton/mail/gmail/INBOX/"
+    #filled: "<fc=#81a2be></fc> {new}"
+    #empty: "<fc=#65737e> {new}</fc>"
