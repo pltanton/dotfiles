@@ -1,3 +1,5 @@
+; vim: filetype=dosini
+
 [colors]
 red         = ${xrdb:color2}
 grey        = #131721
@@ -9,9 +11,8 @@ fg          = #EEEEEE
 ;###############################
 
 [bar/top]
-width = 1920
+width = 100%
 height = 23
-offset-x = 3
 offset-y = 2
 ;bottom = true
 
@@ -35,10 +36,11 @@ modules-left = date xwindow
 modules-center = xmonad
 modules-right = yags powermenu
 
-#tray-position =  
+tray-position = right
 #tray-offset-y = 1
-#tray-offset-x = 0
-#tray-maxsize = 14
+tray-detached = true
+tray-offset-x = -270
+tray-padding = 10
 
 ;#############################
 ;########## MODULES ##########
@@ -48,15 +50,22 @@ modules-right = yags powermenu
 [module/xmonad]
 type = internal/xworkspaces
 
-label-active-overline = #D3DAE3
-label-active = " %name% "
-label-empty =  " %name% "
-label-urgent =  " %name% "
+label-active-overline     = #D3DAE3
+label-active-foreground   = #D3DAE3
+label-active              = " %name% "
+
+label-empty               = " %name% "
+label-empty-foreground    = #C0C5CE
+
+label-occupied            = " %name% "
+label-occupied-foreground = #D3DAE3
+
+label-urgent              = " %name% "
 
 ;########## XWINDOW ##########
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:50:...%
+label = %title:0:40:...%
 label-padding = 3
 
 ;########## DATE/TIME ##########
