@@ -13,11 +13,16 @@ plugins:
   bat1:
     path: "$GOPATH/src/github.com/pltanton/yags-battery/yags-battery.so"
     name: "BAT1"
-    high: " {lvl}"
-    medium: " {lvl}"
-    low: " {lvl}"
-    empty: " {lvl}"
-    ac: " {lvl}"
+    format: "{icon} {lvl}"
+    acFormat: "%{F#a3be8c}{icon} {lvl}%{F-}"
+    animationTick: 1000ms
+    full: 99
+    icons:
+      - 
+      - 
+      - 
+      - 
+      - 
   time:
     path: "$GOPATH/src/github.com/pltanton/yags-timer/time/time.so"
     # timeFormat: "Jan 2 15:04:05" # default
