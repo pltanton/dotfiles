@@ -11,10 +11,10 @@ offset-y = 2
 ;bottom = true
 
 background = #00383c4a
-foreground = #EEEEEE
+foreground = #2b303b
 
 line-size = 2 
-line-color = #E6D3DAE3
+line-color = #E6D3DA
 
 padding-left = 2
 padding-right = 2
@@ -22,7 +22,7 @@ padding-top = 0
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = Hack:size=12;3
+font-0 = Hack:size=13;2
 font-1 = FontAwesome:size=12;3
 font-2 = siji:pixelsize=8;2
 
@@ -44,15 +44,15 @@ tray-padding = 10
 [module/xmonad]
 type = internal/xworkspaces
 
-label-active-overline     = #D3DAE3
-label-active-foreground   = #D3DAE3
+label-active-overline     = #2b303b
+label-active-foreground   = #2b303b
 label-active              = " %name% "
 
 label-empty               = " %name% "
-label-empty-foreground    = #C0C5CE
+label-empty-foreground    = #2b303b
 
 label-occupied            = " %name% "
-label-occupied-foreground = #D3DAE3
+label-occupied-foreground = #2b303b
 
 label-urgent              = " %name% "
 
