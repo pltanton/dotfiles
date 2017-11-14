@@ -16,7 +16,9 @@ set $right l
 # Your preferred terminal emulator
 set $term termite
 # Your preferred application launcher
-set $menu rofi -show drun
+set $menu /scripts/dmenu.sh
+
+set $lock /scripts/swaylock.sh
 
 ### Output configuration
 #
@@ -51,13 +53,13 @@ output eDP-1 scale 1
 # Basics:
 #
     # start a terminal
-    bindsym $mod+Return exec $term
+    bindsym $mod+Shift+Return exec $term
 
     # kill focused window
     bindsym $mod+Shift+c kill
 
     # start your launcher
-    bindsym $mod+d exec $menu
+    bindsym $mod+Return exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -71,6 +73,8 @@ output eDP-1 scale 1
 
     # exit sway (logs you out of your wayland session)
     bindsym $mod+Shift+q exit
+
+    bindsym $mod+F12 exec $lock
 #
 # Media keys
 #
@@ -145,6 +149,9 @@ output eDP-1 scale 1
     bindcode $mod+Shift+20 move container to workspace $w10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
+
+    bindsym $mod+n workspace next
+    bindsym $mod+p workspace prev
 #
 # Layout stuff:
 #
@@ -238,13 +245,4 @@ bar {
     gaps 4
     new_window pixel 3
 
-
-###################################################################################################
-# Quick terminal
-###################################################################################################
-exec --no-startup-id termite --title scratchpad_termite
-bindsym $mod+SHIFT+o exec --no-startup-id termite --title=scratchpad_termite
-# the actual conf for the dropdown terminal size
-for_window [title="scratchpad_termite"] move to scralchpad; floating enable
-# bind mod+o key to show (add yours)
-bindsym $mod+e [title="scratchpad_termite"] scratchpad show
+    assign [class="telegram.*"] move to workspace 9
