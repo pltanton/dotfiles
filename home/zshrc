@@ -18,6 +18,8 @@ export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
 export LESS='-R '
 export EDITOR='nvim'
 
+export SWEETHOME3D_JAVA3D=1.5
+
 source ~/.profile
 
 # Importh path for systemd
