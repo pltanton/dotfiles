@@ -24,7 +24,7 @@ myManageHook = composeAll
     , className =? "gnuplot_qt"         --> doFloat
     , className =? "Octave-gui"         --> doFloat
     , className =? "NeercGame"          --> doFloat
-    , className =? "TelegramDesktop"    --> doFloat <+> doShift "NSP"
+    , className =? "TelegramDesktop" <&&> (isDialog >>= return . not)  --> doFloat <+> doShift "NSP"
     , className =? "mpv"                --> doFloat
     , isDialog                          --> doCenterFloat
     , resource  =? "desktop_window"     --> doIgnore

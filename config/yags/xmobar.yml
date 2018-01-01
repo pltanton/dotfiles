@@ -1,7 +1,7 @@
 # vim: ts=2:sw=2
 
 varSeps: "{}"
-format: "{volume} {wifi} {bat1} {bat2} {time} {layout}"
+format: "volume {wifi} bat1 {time} {layout}"
 plugins:
   volume:
     path: "$GOPATH/src/github.com/pltanton/yags-volume/yags-volume.so"
@@ -11,21 +11,17 @@ plugins:
     low: " {vol}%"
     muted: "<fc=#65737e> {vol}%</fc>"
   bat1:
-    path: "$GOPATH/src/github.com/pltanton/yags-battery/yags-battery.so"
     name: "BAT1"
-    high: " {lvl}%"
-    medium: " {lvl}%"
-    low: " {lvl}%"
-    empty: "<fc=#bf616a> {lvl}%</fc>"
-    ac: "<fc=#a3be8c> {lvl}%</fc>"
-  bat2:
-    path: "$GOPATH/src/github.com/pltanton/yags-battery/yags-battery.so"
-    name: "BAT0"
-    high: " {lvl}%"
-    medium: " {lvl}%"
-    low: " {lvl}%"
-    empty: "<fc=#bf616a> {lvl}%</fc>"
-    ac: "<fc=#a3be8c> {lvl}%</fc>"
+    format: "{icon} {lvl}"
+    acFormat: "<fc=#a3be8c>{icon} {lvl}</fc>"
+    animationTick: 1000ms
+    full: 99
+    icons:
+      - 
+      - 
+      - 
+      - 
+      - 
   time:
     path: "$GOPATH/src/github.com/pltanton/yags-timer/time/time.so"
     # timeFormat: "Jan 2 15:04:05" # default

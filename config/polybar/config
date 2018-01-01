@@ -28,7 +28,7 @@ font-2 = siji:pixelsize=8;2
 
 modules-left = date xwindow
 modules-center = xmonad
-modules-right = yags powermenu
+modules-right = powermenu
 
 tray-position = right
 #tray-offset-y = 1
@@ -88,7 +88,7 @@ format = <label>
 [module/yags]
 type = custom/script
 
-exec = yags ~/.config/yags/polybar.yml
+exec = ~/go/bin/yags ~/.config/yags/polybar.yml
 tail = true
 
 ;########## POWER ##########

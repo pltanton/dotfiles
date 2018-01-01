@@ -2,6 +2,7 @@ module Scratchpads (myScratchPads) where
 
 import XMonad
 import XMonad.Util.NamedScratchpad
+import XMonad.Hooks.ManageHelpers
 import qualified XMonad.StackSet as W
 
 runScratchpadTerminal :: String
@@ -20,7 +21,7 @@ myScratchPads =
          floatingTerm
     , NS "telegram"
          "telegram-desktop"
-         (resource =? "telegram-desktop")
+         (resource =? "telegram-desktop" <&&> (isDialog >>= return . not))
          floatingRight
     , NS "evolution"
          "evolution"

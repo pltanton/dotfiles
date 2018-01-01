@@ -32,7 +32,7 @@ myKeys =
     [ ("M-f",      sendMessage $ Toggle NBFULL)
     , ("M-m",      sendMessage ToggleStruts)
     , ("M1-<F4>",  kill)
-    , ("M-r",      spawn "/scripts/xmonad-restart.sh")
+    , ("M-r",      spawn "xmonad --recompile && xmonad --restart")
     , ("M-<F12>",  spawn "xautolock -locknow")
     , ("M-<F11>",  spawn "/scripts/monitor-hotplug.rb")
 
@@ -78,7 +78,7 @@ myKeys =
     , ("M-g", goToSelected def)
 
     -- Run applications
-    , ("M-<Return>",        spawn "~/.local/bin/rofi -show drun")
+    , ("M-<Return>",        spawn "rofi -show drun")
     , ("M-a",               runOrRaise myBrowser (className =? myBrowserClass))
     , ("<XF86HomePage>",    runOrRaise myBrowser (className =? myBrowserClass))
     , ("M-e",               spawn "spacefm")
@@ -98,8 +98,8 @@ myKeys =
     -- Media keys
     , ("<Print>",                  spawn "/scripts/screenshot.sh")
     , ("M-<Print>",                spawn "/scripts/screenshot.sh -e")
-    , ("<XF86MonBrightnessUp>",    spawn "light -A 10")
-    , ("<XF86MonBrightnessDown>",  spawn "light -U 10")
+    , ("<XF86MonBrightnessUp>",    spawn "xbacklight -inc 10")
+    , ("<XF86MonBrightnessDown>",  spawn "xbacklight -dec 10")
     , ("<XF86AudioRaiseVolume>",   spawn "pamixer -i 2")
     , ("<XF86AudioLowerVolume>",   spawn "pamixer -d  2")
     , ("<XF86AudioMute>",          spawn "pamixer -t")

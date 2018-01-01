@@ -9,9 +9,6 @@ import XMonad.Util.NamedScratchpad
 
 -- Haskell imports
 import GHC.IO.Handle.Types
-import qualified DBus as D
-import qualified DBus.Client as D
-import qualified Codec.Binary.UTF8.String as UTF8
 
 -- My imports
 import Colors
@@ -57,31 +54,3 @@ myLemonBar =
     " -g $(/scripts/geometry-for-lemonbar.sh)" ++
     " -u 3"
 
--- Polybar
-bg1       = "#3c3836"
-bg2       = "#504945"
-red       = "#fb4934"
-
-myPolybar :: D.Client -> PP
-myPolybar dbus = def
-    { ppOutput = dbusOutput dbus
-    , ppCurrent = wrap ("%{B" ++ bg2 ++ "} ") " %{B-}"
-    , ppVisible = wrap ("%{B" ++ bg1 ++ "} ") " %{B-}"
-    , ppUrgent = wrap ("%{F" ++ red ++ "} ") " %{F-}"
-    , ppHidden = wrap " " " "
-    , ppWsSep = ""
-    , ppSep = " : "
-    , ppTitle = shorten 40
-    }
-
--- Emit a DBus signal on log updates
-dbusOutput :: D.Client -> String -> IO ()
-dbusOutput dbus str = do
-    let signal = (D.signal objectPath interfaceName memberName) {
-            D.signalBody = [D.toVariant $ UTF8.decodeString str]
-        }
-    D.emit dbus signal
-  where
-    objectPath = D.objectPath_ "/org/xmonad/Log"
-    interfaceName = D.interfaceName_ "org.xmonad.Log"
-    memberName = D.memberName_ "Update"

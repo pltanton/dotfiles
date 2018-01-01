@@ -9,7 +9,7 @@
 
 syntax on
 set background=dark
-set shell=/bin/zsh
+set shell=/bin/sh
 set encoding=utf-8
 set spelllang=en_us,ru_ru
 set showcmd                
@@ -117,109 +117,202 @@ vmap <C-v> <Plug>(expand_region_shrink)
 "=== Plugins
 "==============================================================================
 
+call plug#begin('~/.local/share/nvim/plugged')
+    "=== Editor improvements
+    Plug 'godlygeek/tabular'
+    Plug 'Raimondi/delimitMate'
+    Plug 'neomake/neomake'
+    Plug 'tpope/vim-surround'
+
+    Plug 'Shougo/denite.nvim'
+    Plug 'Shougo/unite.vim'
+    Plug 'Shougo/vimfiler.vim'
+    Plug 'Shougo/neomru.vim'
+
+    Plug 'majutsushi/tagbar'
+    Plug 'scrooloose/nerdcommenter'
+    Plug 'tpope/vim-repeat'
+    Plug 'sbdchd/neoformat'
+    Plug 'itchyny/vim-cursorword'
+    Plug 'mbbill/undotree'
+
+    "=== Language extensions
+    " Java
+    Plug 'artur-shaik/vim-javacomplete2'
+    "call dein#add('dansomething/vim-eclim')
+    " Go
+    Plug 'fatih/vim-go'
+    " Haskell
+    Plug 'eagletmt/ghcmod-vim'
+    Plug 'eagletmt/neco-ghc'
+    " Octave
+    Plug 'jvirtanen/vim-octave'
+    " Databases
+    Plug 'vim-scripts/dbext.vim'
+    " LaTeX
+    Plug 'lervag/vimtex'
+    "call dein#add('donRaphaco/neotex')
+    "call dein#add('xuhdev/vim-latex-live-preview')
+    " Ruby
+    Plug 'vim-ruby/vim-ruby'
+    Plug 'tpope/vim-rails'
+    Plug 'tpope/vim-endwise'
+    " Slim
+    Plug 'slim-template/vim-slim'
+    " CoffeScript
+    Plug 'kchmck/vim-coffee-script'
+    " CSS
+    Plug 'cakebaker/scss-syntax.vim'
+    Plug 'hail2u/vim-css3-syntax'
+    " HTML
+    Plug 'mattn/emmet-vim'
+    " JavaScript
+    Plug 'neoclide/vim-jsx-improve'
+    " Json
+    Plug 'elzr/vim-json'
+    "" Markdown
+    "function! BuildComposer(info)
+      "if a:info.status != 'unchanged' || a:info.force
+        "!cargo build --release
+      "endif
+    "endfunction
+    "call dein#add('euclio/vim-markdown-composer', { 'do': function('BuildComposer') })
+    " Python
+    "call dein#add('davidhalter/jedi-vim')
+
+    "=== Git
+    Plug 'airblade/vim-gitgutter'
+
+    
+    "=== Visual improvements
+    Plug 'squarefrog/tomorrow-night.vim'
+    Plug 'chriskempson/base16-vim'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'lilydjwg/colorizer'
+
+    "=== Some service fietures
+    " Vim dispatch feature
+    Plug 'tpope/vim-dispatch'
+    Plug 'radenling/vim-dispatch-neovim'
+call plug#end()
+
+
+
 " Install dein if not exists
-let conf_dir = '~/.config/nvim/'
-let dein_path = conf_dir . 'repos/' . 'github.com/Shougo/dein.vim'
-if empty(glob(dein_path))
-  silent execute '!curl
-\ https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh |
-\ bash -s' conf_dir
-endif
-exe 'set rtp+=' . dein_path
+"let conf_dir = '~/.config/nvim/'
+"let dein_path = '~/.config/nvim/repos/github.com/Shougo/dein.vim'
 
-call dein#begin(conf_dir)
-call dein#add('Shougo/dein')
-call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+"set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim
 
-"=== Editor improvements
-call dein#add('godlygeek/tabular')
-call dein#add('Raimondi/delimitMate')
-call dein#add('neomake/neomake')
-call dein#add('tpope/vim-surround')
+"if dein#load_state(conf_dir)
+    "call dein#begin(conf_dir)
 
-call dein#add('Shougo/denite.nvim')
-call dein#add('Shougo/unite.vim')
-call dein#add('Shougo/vimfiler.vim')
-call dein#add('Shougo/neomru.vim')
+    "call dein#add(dein_path)
+    "if !has('nvim')
+        "call dein#add('roxma/nvim-yarp')
+        "call dein#add('roxma/vim-hug-neovim-rpc')
+    "endif
 
-call dein#add('majutsushi/tagbar')
-call dein#add('scrooloose/nerdcommenter')
-call dein#add('tpope/vim-repeat')
-call dein#add('sbdchd/neoformat')
-call dein#add('itchyny/vim-cursorword')
-call dein#add('mbbill/undotree')
+    ""=== Editor improvements
+    "call dein#add('godlygeek/tabular')
+    "call dein#add('Raimondi/delimitMate')
+    "call dein#add('neomake/neomake')
+    "call dein#add('tpope/vim-surround')
 
-"=== Deoplete as completion engine
-function! DoRemote(arg)
-  UpdateRemotePlugins
-endfunction
-call dein#add('Shougo/deoplete.nvim', { 'do': function('DoRemote') })
-call dein#add('zchee/deoplete-jedi')
-call dein#add('fishbullet/deoplete-ruby')
-call dein#add('zchee/deoplete-go', { 'do': 'make'})
+    "call dein#add('Shougo/denite.nvim')
+    "call dein#add('Shougo/unite.vim')
+    "call dein#add('Shougo/vimfiler.vim')
+    "call dein#add('Shougo/neomru.vim')
 
-"=== Debug
-call dein#add('dbgx/lldb.nvim')
+    "call dein#add('majutsushi/tagbar')
+    "call dein#add('scrooloose/nerdcommenter')
+    "call dein#add('tpope/vim-repeat')
+    "call dein#add('sbdchd/neoformat')
+    "call dein#add('itchyny/vim-cursorword')
+    "call dein#add('mbbill/undotree')
 
-"=== Language extensions
-" Java
-call dein#add('artur-shaik/vim-javacomplete2')
-"call dein#add('dansomething/vim-eclim')
-" Go
-call dein#add('fatih/vim-go')
-" Haskell
-call dein#add('eagletmt/ghcmod-vim')
-call dein#add('eagletmt/neco-ghc')
-" Octave
-call dein#add('jvirtanen/vim-octave')
-" Databases
-call dein#add('vim-scripts/dbext.vim')
-" LaTeX
-call dein#add('lervag/vimtex')
-" Ruby
-call dein#add('vim-ruby/vim-ruby')
-call dein#add('tpope/vim-rails')
-call dein#add('tpope/vim-endwise')
-" Slim
-call dein#add('slim-template/vim-slim')
-" CoffeScript
-call dein#add('kchmck/vim-coffee-script')
-" CSS
-call dein#add('cakebaker/scss-syntax.vim')
-call dein#add('hail2u/vim-css3-syntax')
-" HTML
-call dein#add('mattn/emmet-vim')
-" JavaScript
-call dein#add('neoclide/vim-jsx-improve')
-" Json
-call dein#add('elzr/vim-json')
-" Markdown
-function! BuildComposer(info)
-  if a:info.status != 'unchanged' || a:info.force
-    !cargo build --release
-  endif
-endfunction
-call dein#add('euclio/vim-markdown-composer', { 'do': function('BuildComposer') })
-" Python
-call dein#add('davidhalter/jedi-vim')
+    ""=== Deoplete as completion engine
+    "function! DoRemote(arg)
+      "UpdateRemotePlugins
+    "endfunction
+    "call dein#add('Shougo/deoplete.nvim')
+    "if !has('nvim')
+      "call dein#add('roxma/nvim-yarp')
+      "call dein#add('roxma/vim-hug-neovim-rpc')
+    "endif
+    "call dein#add('zchee/deoplete-jedi')
+    "call dein#add('fishbullet/deoplete-ruby')
+    ""call dein#add('zchee/deoplete-go', { 'do': 'make'})
 
-"=== Git
-call dein#add('airblade/vim-gitgutter')
+    ""=== Debug
+    ""call dein#add('dbgx/lldb.nvim')
 
-"=== Visual improvements
-call dein#add('squarefrog/tomorrow-night.vim')
-call dein#add('chriskempson/base16-vim')
-call dein#add('vim-airline/vim-airline')
-call dein#add('vim-airline/vim-airline-themes')
-call dein#add('lilydjwg/colorizer')
-"call dein#add('ryanoasis/vim-devicons')
+    ""=== Language extensions
+    "" Java
+    "call dein#add('artur-shaik/vim-javacomplete2')
+    ""call dein#add('dansomething/vim-eclim')
+    "" Go
+    "call dein#add('fatih/vim-go')
+    "" Haskell
+    "call dein#add('eagletmt/ghcmod-vim')
+    "call dein#add('eagletmt/neco-ghc')
+    "" Octave
+    "call dein#add('jvirtanen/vim-octave')
+    "" Databases
+    "call dein#add('vim-scripts/dbext.vim')
+    "" LaTeX
+    "call dein#add('lervag/vimtex')
+    ""call dein#add('donRaphaco/neotex')
+    ""call dein#add('xuhdev/vim-latex-live-preview')
+    "" Ruby
+    "call dein#add('vim-ruby/vim-ruby')
+    "call dein#add('tpope/vim-rails')
+    "call dein#add('tpope/vim-endwise')
+    "" Slim
+    "call dein#add('slim-template/vim-slim')
+    "" CoffeScript
+    "call dein#add('kchmck/vim-coffee-script')
+    "" CSS
+    "call dein#add('cakebaker/scss-syntax.vim')
+    "call dein#add('hail2u/vim-css3-syntax')
+    "" HTML
+    "call dein#add('mattn/emmet-vim')
+    "" JavaScript
+    "call dein#add('neoclide/vim-jsx-improve')
+    "" Json
+    "call dein#add('elzr/vim-json')
+    """ Markdown
+    ""function! BuildComposer(info)
+      ""if a:info.status != 'unchanged' || a:info.force
+        ""!cargo build --release
+      ""endif
+    ""endfunction
+    ""call dein#add('euclio/vim-markdown-composer', { 'do': function('BuildComposer') })
+    "" Python
+    ""call dein#add('davidhalter/jedi-vim')
 
-"=== Some service fietures
-" Vim dispatch feature
-call dein#add('tpope/vim-dispatch')
-call dein#add('radenling/vim-dispatch-neovim')
+    ""=== Git
+    "call dein#add('airblade/vim-gitgutter')
 
-call dein#end()
+    ""=== Visual improvements
+    "call dein#add('squarefrog/tomorrow-night.vim')
+    "call dein#add('chriskempson/base16-vim')
+    "call dein#add('vim-airline/vim-airline')
+    "call dein#add('vim-airline/vim-airline-themes')
+    "call dein#add('lilydjwg/colorizer')
+    ""call dein#add('ryanoasis/vim-devicons')
+
+    ""=== Some service fietures
+    "" Vim dispatch feature
+    "call dein#add('tpope/vim-dispatch')
+    "call dein#add('radenling/vim-dispatch-neovim')
+
+  "call dein#end()
+
+
+  "call dein#save_state()
+"endif
 
 syntax on
 filetype on
@@ -441,5 +534,7 @@ nmap <F8> :TagbarToggle<CR>
 "=== Javacomplete2
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
+"=== Python
+let g:deoplete#sources#jedi#python_path = system('which python')
 
 

@@ -32,7 +32,7 @@ myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 
 -- Run xmonad with all the defaults we set up.
 main :: IO ()
-main = xmonad $ ewmh $ myConfig 
+main = xmonad =<< statusBar "xmobar" myXmobarPP toggleStrutsKey myConfig 
   where
     myNavigation2DConfig = def 
         { defaultTiledNavigation = hybridNavigation
@@ -42,7 +42,7 @@ main = xmonad $ ewmh $ myConfig
 
     myConfig = withNavigation2DConfig myNavigation2DConfig $ desktopConfig
         { terminal           = myTerminal
-        , logHook            = ewmhDesktopsLogHookCustom init
+        , logHook            = dynamicLogWithPP myXmobarPP
         , focusFollowsMouse  = myFocusFollowsMouse
         , clickJustFocuses   = myClickJustFocuses
         , borderWidth        = 2
@@ -54,6 +54,6 @@ main = xmonad $ ewmh $ myConfig
         , layoutHook         = mkToggle (single NBFULL) $ avoidStruts myLayout
         , manageHook         = myManageHook <+> manageHook desktopConfig
         , handleEventHook    = myEventHook
-        , startupHook        = autorunHook >> setWMName "LG3D" >> spawn "/scripts/restart-polybar.sh"
+        , startupHook        = autorunHook >> setWMName "LG3D"
         } `additionalKeysP` myKeys
 
