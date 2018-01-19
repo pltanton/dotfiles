@@ -16,7 +16,7 @@ Config { font             = "xft:Terminus:size=15,FontAwesome:size=14"
 
        , commands = [ Run UnsafeStdinReader
                     , Run Date "%b %d %H:%M:%S" "date" 10
-                    , Run BatteryP ["BAT1"] 
+                    , Run BatteryP ["BAT1", "BAT0"] 
                                    ["-t", "<acstatus> <left>%",
                                     "--",
                                     "-O", "",
