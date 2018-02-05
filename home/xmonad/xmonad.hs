@@ -14,6 +14,8 @@ import XMonad.Util.Run
 import XMonad.Util.EZConfig
 
 import XMonad.Actions.Navigation2D
+import XMonad.Actions.UpdatePointer
+
 
 -- Haskell imports
 import Data.Monoid
@@ -42,7 +44,8 @@ main = xmonad =<< statusBar "xmobar" myXmobarPP toggleStrutsKey myConfig
 
     myConfig = withNavigation2DConfig myNavigation2DConfig $ desktopConfig
         { terminal           = myTerminal
-        , logHook            = dynamicLogWithPP myXmobarPP
+        , logHook            = dynamicLogWithPP myXmobarPP >> 
+                               updatePointer (0.5, 0.5) (0, 0)
         , focusFollowsMouse  = myFocusFollowsMouse
         , clickJustFocuses   = myClickJustFocuses
         , borderWidth        = 2

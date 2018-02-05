@@ -22,6 +22,7 @@ global:
   fonts.web.family.serif: PT Serif
   fonts.web.family.standard: PT Sans
   qt.force_platform: xcb
+  scrolling.smooth: false
   statusbar.hide: false
   tabs.show: always
   url.auto_search: dns

@@ -79,6 +79,7 @@ myKeys =
 
     -- Run applications
     , ("M-<Return>",        spawn "rofi -show drun")
+    , ("<F12>",        spawn "rofi-pass")
     , ("M-a",               runOrRaise myBrowser (className =? myBrowserClass))
     , ("<XF86HomePage>",    runOrRaise myBrowser (className =? myBrowserClass))
     , ("M-e",               spawn "spacefm")
