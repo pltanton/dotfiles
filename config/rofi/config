@@ -7,3 +7,13 @@ fix_layout=true
 layout_cmd () {
   setxkbmap us dvp
 }
+
+rofi.theme: custom.rasi
+
+autotype="Alt+&"
+type_user="Alt+["
+type_pass="Alt+{"
+type_url="Alt+}"
+
+
+
