@@ -113,5 +113,6 @@
 }
 #prompt {
     spacing:    0;
+    padding:    0 10 0 0;
     text-color: @normal-foreground;
 }
