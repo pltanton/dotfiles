@@ -3,6 +3,9 @@
 
 config_version: 1
 global:
+  bindings.commands:
+    normal:
+      ;;: spawn --userscript ~/.config/qutebrowser/password_fill
   fonts.completion.category: bold 10pt monospace
   fonts.completion.entry: 10pt monospace
   fonts.debug_console: 10pt monospace
