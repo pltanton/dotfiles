@@ -97,15 +97,15 @@ myKeys =
     , ("C-M1-<Right>",  spawn "mpc next")
 
     -- Media keys
-    , ("<Print>",                  spawn "/scripts/screenshot.sh")
-    , ("M-<Print>",                spawn "/scripts/screenshot.sh -e")
+    , ("<Print>",                  spawn "~/.xmonad/scripts/screenshot.sh")
+    , ("M-<Print>",                spawn "~/.xmonad/scripts/screenshot.sh -e")
     , ("<XF86MonBrightnessUp>",    spawn "xbacklight -inc 10")
     , ("<XF86MonBrightnessDown>",  spawn "xbacklight -dec 10")
     , ("<XF86AudioRaiseVolume>",   spawn "pamixer -i 2")
     , ("<XF86AudioLowerVolume>",   spawn "pamixer -d  2")
     , ("<XF86AudioMute>",          spawn "pamixer -t")
-    , ("<XF86Explorer>",           spawn "touchpad.sh -t")
-    , ("<XF86LaunchA>",            spawn "kbd.sh -t")
+    , ("<XF86Explorer>",           spawn "~/.xmonad/scripts/touchpad.sh -t")
+    , ("<XF86LaunchA>",            spawn "~/.xmonad/scripts/kbd.sh -t")
     ]
 
     ++
