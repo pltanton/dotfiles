@@ -6,6 +6,7 @@ global:
   bindings.commands:
     normal:
       ;;: spawn --userscript ~/.config/qutebrowser/password_fill
+  content.plugins: true
   fonts.completion.category: bold 10pt monospace
   fonts.completion.entry: 10pt monospace
   fonts.debug_console: 10pt monospace
@@ -24,6 +25,7 @@ global:
   fonts.web.family.sans_serif: PT Sans
   fonts.web.family.serif: PT Serif
   fonts.web.family.standard: PT Sans
+  input.insert_mode.plugins: true
   qt.force_platform: xcb
   scrolling.smooth: false
   statusbar.hide: false
