@@ -1,6 +1,11 @@
 module Defaults where
 
 import XMonad
+import XMonad.Prompt
+
+import Data.List (isInfixOf)
+
+import Colors
 
 myTerminal :: String
 myTerminal = "termite"
@@ -42,3 +47,15 @@ myWorkspaces = [ "\xf0ac" -- Globus icon
                , "8"
                , "\xf26c" -- TV icon
                ]
+
+myXPConfig :: XPConfig
+myXPConfig = def { font = "xft:Terminus:size=15:autohint=true"
+                 , searchPredicate = isInfixOf
+                 , bgColor = myBlack
+                 , fgColor = myWhite
+                 , bgHLight = myGray
+                 , fgHLight = myWhite
+                 , height = 29
+                 , borderColor = myDarkestGray
+                 , promptBorderWidth = 5
+                 }

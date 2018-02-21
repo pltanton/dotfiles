@@ -18,6 +18,9 @@ import XMonad.Actions.Navigation2D
 import XMonad.Actions.GridSelect
 import XMonad.Actions.FloatKeys
 
+import XMonad.Prompt
+import XMonad.Prompt.Pass
+
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import qualified XMonad.Actions.FlexibleResize as Flex
@@ -79,7 +82,7 @@ myKeys =
 
     -- Run applications
     , ("M-<Return>",        spawn "rofi -show drun")
-    , ("<F12>",             spawn "rofi-pass")
+    --, ("<F12>",             spawn "rofi-pass")
     , ("M-a",               runOrRaise myBrowser (className =? myBrowserClass))
     , ("<XF86HomePage>",    runOrRaise myBrowser (className =? myBrowserClass))
     , ("M-e",               spawn "spacefm")
@@ -95,6 +98,10 @@ myKeys =
     , ("C-M1-<Down>",   spawn "mpc stop")
     , ("C-M1-<Left>",   spawn "mpc prev")
     , ("C-M1-<Right>",  spawn "mpc next")
+
+    -- Prompts
+    , ("<F12>",         passPrompt myXPConfig)
+    
 
     -- Media keys
     , ("<Print>",                  spawn "~/.xmonad/scripts/screenshot.sh")
