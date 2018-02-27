@@ -4,7 +4,6 @@ module Keys (myKeys, myMouseBindings) where
 import XMonad
 
 import XMonad.Hooks.ManageDocks
-import XMonad.Actions.CycleWS
 
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.MultiToggle
@@ -17,9 +16,12 @@ import XMonad.Actions.WindowGo
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.GridSelect
 import XMonad.Actions.FloatKeys
+import XMonad.Actions.CycleWS
+import XMonad.Actions.CopyWindow
 
 import XMonad.Prompt
 import XMonad.Prompt.Pass
+import XMonad.Prompt.RunOrRaise
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
@@ -37,7 +39,7 @@ myKeys =
     , ("M1-<F4>",  kill)
     , ("M-r",      spawn "xmonad --recompile && xmonad --restart")
     , ("M-<F12>",  spawn "xautolock -locknow")
-    , ("M-<F11>",  spawn "/scripts/monitor-hotplug.rb")
+    , ("M-<F11>",  spawn "autorandr --change")
 
     -- Navigation
     , ("M-h",        moveTo Prev $ WSIs notSP)
@@ -60,13 +62,13 @@ myKeys =
 
     , ("M1-<Tab>",    windows W.focusDown >> windows W.shiftMaster)
     , ("M1-S-<Tab>",  windows W.focusUp >> windows W.shiftMaster)
-    -- , ("M1-j",        windowGo D False)
-    -- , ("M1-k",        windowGo U False)
     , ("M1-j",        windows W.focusDown)
     , ("M1-k",        windows W.focusUp)
     , ("M1-h",        windowGo L False)
     , ("M1-l",        windowGo R False)
     , ("M1-f",        switchLayer)
+    , ("M-v",         windows copyToAll)
+    , ("M-S-v",       killAllOtherCopies)
 
     , ("M1-S-j",  windowSwap D False)
     , ("M1-S-k",  windowSwap U False)
@@ -81,7 +83,6 @@ myKeys =
     , ("M-g", goToSelected def)
 
     -- Run applications
-    , ("M-<Return>",        spawn "rofi -show drun")
     --, ("<F12>",             spawn "rofi-pass")
     , ("M-a",               runOrRaise myBrowser (className =? myBrowserClass))
     , ("<XF86HomePage>",    runOrRaise myBrowser (className =? myBrowserClass))
@@ -101,6 +102,7 @@ myKeys =
 
     -- Prompts
     , ("<F12>",         passPrompt myXPConfig)
+    , ("M-<Return>",    runOrRaisePrompt myXPConfig)
     
 
     -- Media keys

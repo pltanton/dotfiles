@@ -537,4 +537,3 @@ nmap <F8> :TagbarToggle<CR>
 "=== Python
 let g:deoplete#sources#jedi#python_path = system('which python')
 
-

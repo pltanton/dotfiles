@@ -11,7 +11,8 @@ autorunHook = do
     spawn "/scripts/touchpad.sh -d"
     spawn "xsetroot -cursor_name left_ptr"
     spawn "compton"
-    spawn "kbdd"
-    spawn "dunst"
-    spawnOnce "echo nothing"
+    spawn "telegram-desktop"
+    spawnOnce "kbdd"
+    spawnOnce "dunst"
+    spawnOnce "xbanish"
 

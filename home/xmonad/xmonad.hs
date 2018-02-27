@@ -32,9 +32,11 @@ import Autorun
 myEventHook :: Event -> X Data.Monoid.All
 myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 
+
 -- Run xmonad with all the defaults we set up.
 main :: IO ()
-main = xmonad =<< statusBar "xmobar" myXmobarPP toggleStrutsKey myConfig 
+main = do
+    xmonad =<< statusBar "xmobar" myXmobarPP toggleStrutsKey myConfig 
   where
     myNavigation2DConfig = def 
         { defaultTiledNavigation = hybridNavigation
