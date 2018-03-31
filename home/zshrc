@@ -20,8 +20,6 @@ export EDITOR='nvim'
 
 export SWEETHOME3D_JAVA3D=1.5
 
-source ~/.profile
-
 # Importh path for systemd
 systemctl --user set-environment PATH=$PATH
 

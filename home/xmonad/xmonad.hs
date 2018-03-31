@@ -19,6 +19,8 @@ import XMonad.Actions.UpdatePointer
 
 -- Haskell imports
 import Data.Monoid
+import Data.Text.Encoding
+import Data.Text
 
 -- My imports
 import Defaults
@@ -27,7 +29,9 @@ import Layouts
 import Manage
 import StatusBar
 import Colors
-import Autorun
+
+import Data.Maybe
+
 
 myEventHook :: Event -> X Data.Monoid.All
 myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
@@ -59,6 +63,6 @@ main = do
         , layoutHook         = mkToggle (single NBFULL) $ avoidStruts myLayout
         , manageHook         = myManageHook <+> manageHook desktopConfig
         , handleEventHook    = myEventHook
-        , startupHook        = autorunHook >> setWMName "LG3D"
+        , startupHook        = setWMName "LG3D"
         } `additionalKeysP` myKeys
 

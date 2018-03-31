@@ -102,7 +102,8 @@ myKeys =
 
     -- Prompts
     , ("<F12>",         passPrompt myXPConfig)
-    , ("M-<Return>",    runOrRaisePrompt myXPConfig)
+    --, ("M-<Return>",    runOrRaisePrompt myXPConfig)
+    , ("M-<Return>",    spawn "rofi -show drun -modi drun")
     
 
     -- Media keys

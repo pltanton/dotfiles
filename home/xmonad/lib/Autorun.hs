@@ -8,7 +8,7 @@ autorunHook = do
     -- spawnOnce "/scripts/monitor-hotplug.sh"
     spawn "feh --bg-fill /home/anton/.xmonad/wall.png"
     spawn "/scripts/kbd.sh -d"
-    spawn "/scripts/touchpad.sh -d"
+    -- spawn "/scripts/touchpad.sh -d"
     spawn "xsetroot -cursor_name left_ptr"
     spawn "compton"
     spawn "telegram-desktop"

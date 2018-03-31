@@ -1,20 +1,18 @@
 !---------------------------------------------------------------------
 ! Urxvt
-!URxvt*font:                 xft:terminus:size=12
-URxvt*font:                 xft:Hack:style=regular:size=9:antialias=true
-URxvt*iconFile:             /usr/share/icons/Faenza/apps/32/terminal.png
-URxvt*scrollBar:            false
-URxvt*perl-ext:             default,url-select
-URxvt*keysym.M-u:           perl:url-select:select_next
-URxvt*url-select.launcher:  /usr/bin/xdg-open
-URxvt*url-select.underline: true
-URxvt.letterSpace:          -1
+!URxvt*font:                 xft:Hack:size=14
+! URxvt*iconFile:             /usr/share/icons/Faenza/apps/32/terminal.png
+!URxvt*scrollBar:            false
+!URxvt*perl-ext:             default,url-select
+! URxvt*keysym.M-u:           perl:url-select:select_next
+! URxvt*url-select.launcher:  /usr/bin/xdg-open
+! URxvt*url-select.underline: true
+! URxvt.letterSpace:          -1
 #URxvt*fading:               15
 
 !---------------------------------------------------------------------
 ! Xterm
 
-Xterm*saveLines: 4096
 XTerm*termName: xterm-256color
 XTerm*locale: true
 !XTerm*metaSendsEscape: true

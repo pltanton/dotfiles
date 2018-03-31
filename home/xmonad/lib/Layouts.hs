@@ -15,6 +15,8 @@ import XMonad.Layout.Gaps
 import XMonad.Layout.Decoration
 import XMonad.Layout.Simplest
 
+import XMonad.Util.Themes
+
 import Colors
 import Defaults
 

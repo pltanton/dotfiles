@@ -1,16 +1,1 @@
-_rofi () {
-    rofi -i -no-auto-select "$@"
-}
-
-fix_layout=true
-
-layout_cmd () {
-  setxkbmap us dvp
-}
-
-rofi.theme: custom.rasi
-
-autotype="Alt+&"
-type_user="Alt+["
-type_pass="Alt+{"
-type_url="Alt+}"
+/nix/store/2za9vpbs8ggfznngwi346p579crmy1j8-home-manager-files/.config/rofi/config
