@@ -1,0 +1,44 @@
+-- vim: syntax=haskell
+Config { font             = "xft:Terminus:size=15,FontAwesome:size=14"
+       , textOffset       = 19
+       , bgColor          = "#2b303b"
+       , fgColor          = "#c0c5ce"
+       --, position         = TopP 8 8
+       , position         = Static { xpos = 8 , ypos = 8, width = 1904, height = 25 }
+       , iconRoot         = ".xmonad/icons/"
+       , allDesktops      = True
+       , overrideRedirect = True
+       , pickBroadest     = False
+
+       , template = "`UnsafeStdinReader` }{ `default:Master` `wlp4s0wi` `bright` `battery` `date` `kbd` "
+       , sepChar  = "`"
+       , alignSep = "}{"
+
+       , commands = [ Run UnsafeStdinReader
+                    , Run Date "%b %d %H:%M:%S" "date" 10
+                    , Run BatteryP ["BAT1", "BAT0"] 
+                                   ["-t", "<acstatus> <left>%",
+                                    "--",
+                                    "-O", "",
+                                    "-i", "",
+                                    "-o", "",
+                                    "-l", "#bf616a"] 
+                                   40
+                    , Run Volume "default" 
+                                 "Master" 
+                                 ["-t", "<status> <volume>%",
+                                  "--",
+                                  "-O", "", "-C", "#c0c5ce",
+                                  "-o", "", "-c", "#bf616a"]
+                                 1
+                    , Run Kbd [("us(dvp)", "us"), ("ru(diktor)", "ru")]
+                    , Run Brightness ["-t", " <percent>%",
+                                      "--",
+                                      "-D", "intel_backlight"]
+                                      10
+                    , Run Wireless "wlp4s0"
+                                   ["-t", " <quality>%"]
+                                   10
+                    -- , Run CommandReader "/run/current-system/sw/bin/bash -c '~/go/bin/yags ~/.config/yags/xmobar.yml'" "yags"
+                    ]
+       }
