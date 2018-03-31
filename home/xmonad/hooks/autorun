@@ -1,0 +1,10 @@
+/scripts/wallaper.sh &
+/scripts/kbd.sh -d &
+/scripts/touchpad.sh -d &
+xsetroot -cursor_name left_ptr &
+compton &
+kbdd &
+xssproxy &
+xautolock -time 10 -locker 'i3lock-next &
+dunst &
+
