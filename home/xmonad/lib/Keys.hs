@@ -38,7 +38,7 @@ myKeys =
     , ("M-m",      sendMessage ToggleStruts)
     , ("M1-<F4>",  kill)
     , ("M-r",      spawn "xmonad --recompile && xmonad --restart")
-    , ("M-<F12>",  spawn "xautolock -locknow")
+    , ("M-<F12>",  spawn "loginctl lock-session")
     , ("M-<F11>",  spawn "autorandr --change")
 
     -- Navigation
