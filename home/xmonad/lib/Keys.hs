@@ -83,7 +83,7 @@ myKeys =
     , ("M-g", goToSelected def)
 
     -- Run applications
-    --, ("<F12>",             spawn "rofi-pass")
+    , ("<F12>",             spawn "rofi-pass")
     , ("M-a",               runOrRaise myBrowser (className =? myBrowserClass))
     , ("<XF86HomePage>",    runOrRaise myBrowser (className =? myBrowserClass))
     , ("M-e",               spawn "spacefm")
@@ -101,9 +101,9 @@ myKeys =
     , ("C-M1-<Right>",  spawn "mpc next")
 
     -- Prompts
-    , ("<F12>",         passPrompt myXPConfig)
+    --, ("<F12>",         passPrompt myXPConfig)
     --, ("M-<Return>",    runOrRaisePrompt myXPConfig)
-    , ("M-<Return>",    spawn "rofi -show drun -modi drun")
+    , ("M-<Return>",    spawn "rofi -columns 2 -show-icons -show drun -modi drun")
     
 
     -- Media keys
