@@ -38,7 +38,7 @@ myKeys =
     , ("M-m",      sendMessage ToggleStruts)
     , ("M1-<F4>",  kill)
     , ("M-r",      spawn "xmonad --recompile && xmonad --restart")
-    , ("M-<F12>",  spawn "xautolock -locknow")
+    , ("M-<F12>",  spawn "loginctl lock-session")
     , ("M-<F11>",  spawn "autorandr --change && systemctl --user restart random-background")
 
     -- Navigation
@@ -103,7 +103,11 @@ myKeys =
     -- Prompts
     --, ("<F12>",         passPrompt myXPConfig)
     --, ("M-<Return>",    runOrRaisePrompt myXPConfig)
+<<<<<<< HEAD
     , ("M-<Return>",    spawn "rofi -columns 2 -show-icons -show drun -modi drun")
+=======
+    , ("M-<Return>",    spawn "rofi -show drun -modi drun")
+>>>>>>> ec01de896f49f2d630eceb4f250c2f2870af09cd
     , ("M-C-<Return>",  spawn "rofi -show run")
     
 
