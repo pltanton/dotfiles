@@ -39,7 +39,7 @@ myKeys =
     , ("M1-<F4>",  kill)
     , ("M-r",      spawn "xmonad --recompile && xmonad --restart")
     , ("M-<F12>",  spawn "xautolock -locknow")
-    , ("M-<F11>",  spawn "autorandr --change")
+    , ("M-<F11>",  spawn "autorandr --change && systemctl --user restart random-background")
 
     -- Navigation
     , ("M-h",        moveTo Prev $ WSIs notSP)
@@ -104,6 +104,7 @@ myKeys =
     --, ("<F12>",         passPrompt myXPConfig)
     --, ("M-<Return>",    runOrRaisePrompt myXPConfig)
     , ("M-<Return>",    spawn "rofi -columns 2 -show-icons -show drun -modi drun")
+    , ("M-C-<Return>",  spawn "rofi -show run")
     
 
     -- Media keys
