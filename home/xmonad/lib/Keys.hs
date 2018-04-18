@@ -103,11 +103,7 @@ myKeys =
     -- Prompts
     --, ("<F12>",         passPrompt myXPConfig)
     --, ("M-<Return>",    runOrRaisePrompt myXPConfig)
-<<<<<<< HEAD
     , ("M-<Return>",    spawn "rofi -columns 2 -show-icons -show drun -modi drun")
-=======
-    , ("M-<Return>",    spawn "rofi -show drun -modi drun")
->>>>>>> ec01de896f49f2d630eceb4f250c2f2870af09cd
     , ("M-C-<Return>",  spawn "rofi -show run")
     
 
