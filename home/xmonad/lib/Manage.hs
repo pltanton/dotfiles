@@ -28,5 +28,6 @@ myManageHook = composeAll
     , className =? "mpv"                --> doFloat
     , isDialog                          --> doCenterFloat
     , resource  =? "desktop_window"     --> doIgnore
+    , className =? "jetbrains-idea" <&&> isDialog --> doIgnore
     , className =? "steam"              --> doShift (myWorkspaces !! 6)
     , isFullscreen                      --> doFullFloat]
