@@ -12,6 +12,7 @@ import XMonad.Util.NamedScratchpad
 -- My imports
 import Defaults
 import Scratchpads
+import Data.List
 
 myManageHook :: ManageHook
 myManageHook = composeAll
@@ -28,6 +29,6 @@ myManageHook = composeAll
     , className =? "mpv"                --> doFloat
     , isDialog                          --> doCenterFloat
     , resource  =? "desktop_window"     --> doIgnore
-    , className =? "jetbrains-idea" <&&> isDialog --> doIgnore
+    , isPrefixOf "win" <$> title        --> doIgnore
     , className =? "steam"              --> doShift (myWorkspaces !! 6)
     , isFullscreen                      --> doFullFloat]

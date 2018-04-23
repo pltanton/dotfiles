@@ -50,8 +50,8 @@ main = do
 
     myConfig = withNavigation2DConfig myNavigation2DConfig $ desktopConfig
         { terminal           = myTerminal
-        , logHook            = dynamicLogWithPP myXmobarPP -- >> 
-                               -- updatePointer (0.5, 0.5) (0, 0)
+        , logHook            = dynamicLogWithPP myXmobarPP >> 
+                               updatePointer (0.5, 0.5) (0, 0)
         , focusFollowsMouse  = myFocusFollowsMouse
         , clickJustFocuses   = myClickJustFocuses
         , borderWidth        = 2
