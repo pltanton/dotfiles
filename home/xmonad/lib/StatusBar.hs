@@ -23,7 +23,7 @@ myXmobarPP = xmobarPP
     , ppSep             = " : "
     , ppLayout          = xmobarColor myLighterGray ""
     , ppOrder           = \(ws:l:t:_) -> [" " ++ l,ws,t]
-    , ppTitle           = xmobarColor myLighterGray "" . shorten 140
+    , ppTitle           = xmobarColor myLighterGray "" . shorten 70 
     , ppSort            = (. namedScratchpadFilterOutWorkspace) <$> ppSort def
     }
 
