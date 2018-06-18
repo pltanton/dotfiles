@@ -1,84 +1,96 @@
+-- -*- mode:haskell -*-
 module Main where
 
-import System.Information.CPU 
-import System.Information.Memory
 import System.Taffybar
-import System.Taffybar.FreedesktopNotifications
-import System.Taffybar.MPRIS
-import System.Taffybar.SimpleClock
-import System.Taffybar.TaffyPager
-import System.Taffybar.Pager
-import System.Taffybar.Weather
+import System.Taffybar.Hooks
+import System.Taffybar.Information.CPU
+import System.Taffybar.Information.Memory
+import System.Taffybar.SimpleConfig
+import System.Taffybar.Widget
+import System.Taffybar.Widget.Generic.PollingGraph
+import System.Taffybar.Widget.Generic.PollingLabel
+import System.Taffybar.Widget.Util
+import System.Taffybar.Widget.Workspaces
+import System.Taffybar.Widget.SNITray
+import System.Taffybar.Widget.XDGMenu.MenuWidget
 
-import System.Taffybar.WorkspaceSwitcher
-import System.Taffybar.WindowSwitcher
-import System.Taffybar.LayoutSwitcher
-import System.Taffybar.Systray
-import System.Taffybar.Battery
-import System.Taffybar.Text.CPUMonitor
-import System.Taffybar.Text.MemoryMonitor
-import System.Taffybar.WorkspaceHUD
-import System.Taffybar.Widgets.PollingBar
-import System.Taffybar.Widgets.PollingGraph
-import System.Taffybar.Widgets.PollingLabel
+transparent = (0.0, 0.0, 0.0, 0.0)
+yellow1 = (0.9453125, 0.63671875, 0.2109375, 1.0)
+yellow2 = (0.9921875, 0.796875, 0.32421875, 1.0)
+green1 = (0, 1, 0, 1)
+green2 = (1, 0, 1, 0.5)
+taffyBlue = (0.129, 0.588, 0.953, 1)
 
-import Graphics.UI.Gtk
+myGraphConfig =
+  defaultGraphConfig
+  { graphPadding = 0
+  , graphBorderWidth = 0
+  , graphWidth = 75
+  , graphBackgroundColor = transparent
+  }
 
-import Text.Printf
---import Data.Tuple.Select
+netCfg = myGraphConfig
+  { graphDataColors = [yellow1, yellow2]
+  , graphLabel = Just "net"
+  }
 
+memCfg = myGraphConfig
+  { graphDataColors = [taffyBlue]
+  , graphLabel = Just "mem"
+  }
 
+cpuCfg = myGraphConfig
+  { graphDataColors = [green1, green2]
+  , graphLabel = Just "cpu"
+  }
+
+memCallback :: IO [Double]
 memCallback = do
   mi <- parseMeminfo
   return [memoryUsedRatio mi]
 
 cpuCallback = do
-  (userLoad, systemLoad, totalLoad) <- cpuLoad
+  (_, systemLoad, totalLoad) <- cpuLoad
   return [totalLoad, systemLoad]
 
-showWidget :: IO Widget -> IO Widget
-showWidget widget = do
-    w <- widget
-    widgetShowAll w
-    return w
-
-showWorkspace :: Workspace -> Bool
-showWorkspace wspace = all (\x -> x wspace) conditions
-    where
-    conditions :: [Workspace -> Bool]
-    conditions = [ \w -> case workspaceState w of
-                       Empty         -> False
-                       otherwise     -> True
-                 , (/= "NSP") . workspaceName
-                 ]
 
 main = do
-  let memCfg = defaultGraphConfig { graphDataColors = [(0.56, 0.63, 0.7, 1)]
-                                  , graphLabel = Just "mem"
-                                  , graphBorderWidth = 0
-                                  , graphBackgroundColor = (0.17, 0.19, 0.23)
-                                  }
-      cpuCfg = defaultGraphConfig { graphDataColors = [ (0, 1, 0, 1)
-                                                      , (1, 0, 1, 0.5)
-                                                      ]
-                                  , graphLabel = Just "cpu"
-                                  , graphBorderWidth = 0
-                                  , graphBackgroundColor = (0.17, 0.19, 0.23)
-                                  }
-  let clock = textClockNew Nothing "<span fgcolor='orange'>%a %b %_d %H:%M</span>" 1
-      pager = taffyPagerHUDNew defaultPagerConfig defaultWorkspaceHUDConfig {
-          showWorkspaceFn = showWorkspace
-      }
-
-      tray = systrayNew
-      wea = weatherNew (defaultWeatherConfig "KMSN") 10
-      mem = pollingGraphNew memCfg 1 memCallback
+  let myWorkspacesConfig =
+        defaultWorkspacesConfig
+        { minIcons = 1
+        , widgetGap = 0
+        , showWorkspaceFn = \w -> 
+            foldr (&&) True $ map ($ w) [
+              hideEmpty, 
+              ("NSP" /=) . workspaceName
+            ]
+        }
+      workspaces = workspacesNew myWorkspacesConfig
       cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
-      bat = batteryBarNew defaultBatteryConfig 3
-  defaultTaffybar defaultTaffybarConfig 
-    { startWidgets = [ pager ]
-    , endWidgets   = [ bat, clock, mem, cpu, tray ]
-    , barHeight    = 25
-    , System.Taffybar.barPadding   = 8
-    }
-
+      mem = pollingGraphNew memCfg 1 memCallback
+      -- net = networkGraphNew netCfg Nothing
+      clock = textClockNew Nothing "%a %b %_d %r" 1
+      layout = layoutNew defaultLayoutConfig
+      windows = windowsNew defaultWindowsConfig
+          -- See https://github.com/taffybar/gtk-sni-tray#statusnotifierwatcher
+          -- for a better way to set up the sni tray
+      tray = sniTrayThatStartsWatcherEvenThoughThisIsABadWayToDoIt
+      myConfig = defaultSimpleTaffyConfig
+        { startWidgets = 
+            workspaces : map (>>= buildContentsBox) [ layout, windows ]
+        , endWidgets = map (>>= buildContentsBox)
+          [ batteryIconNew
+          , clock
+          , tray
+          , cpu
+          , mem
+          --, net
+          , mpris2New
+          ]
+        , barPosition = Top
+        , barPadding = 8 
+        , barHeight = 20
+        , widgetSpacing = 0
+        }
+  dyreTaffybar $ withBatteryRefresh $ withLogServer $ withToggleServer $
+               toTaffyConfig myConfig
