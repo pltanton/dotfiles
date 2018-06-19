@@ -42,6 +42,7 @@ myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 -- Run xmonad with all the defaults we set up.
 main :: IO ()
 main = xmonad $ pagerHints $ myConfig
+  where
     myNavigation2DConfig = def 
         { defaultTiledNavigation = hybridNavigation
         }
