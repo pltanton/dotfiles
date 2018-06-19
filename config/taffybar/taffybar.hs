@@ -55,6 +55,7 @@ cpuCallback = do
 
 
 main = do
+  let menu = menuWidgetNew Nothing
   let myWorkspacesConfig =
         defaultWorkspacesConfig
         { minIcons = 1
@@ -66,10 +67,7 @@ main = do
             ]
         }
       workspaces = workspacesNew myWorkspacesConfig
-      cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
-      mem = pollingGraphNew memCfg 1 memCallback
-      -- net = networkGraphNew netCfg Nothing
-      clock = textClockNew Nothing "%a %b %_d %r" 1
+      clock = textClockNew Nothing "%a %b %_d %X" 1
       layout = layoutNew defaultLayoutConfig
       windows = windowsNew defaultWindowsConfig
           -- See https://github.com/taffybar/gtk-sni-tray#statusnotifierwatcher
@@ -82,10 +80,6 @@ main = do
           [ batteryIconNew
           , clock
           , tray
-          , cpu
-          , mem
-          --, net
-          , mpris2New
           ]
         , barPosition = Top
         , barPadding = 8 

@@ -19,7 +19,7 @@
 
 .taffy-box {
 	border-radius: 0px;
-	background-color: rgba(0.0, 0.0, 0.0, 0.6);
+	background-color: #2b303b;
 }
 
 .inner-pad {
@@ -63,8 +63,8 @@
    This will actually affect all widgets, (not just the workspace icons), but
    that is what we want since we want the icons to look the same. */
 .auto-size-image, .sni-tray {
-	padding-top: 3px;
-	padding-bottom: 3px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .window-icon-container.active {
