@@ -16,8 +16,6 @@ import XMonad.Util.EZConfig
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.UpdatePointer
 
-import System.Taffybar.Support.PagerHints (pagerHints)
-
 
 -- Haskell imports
 import Data.Monoid
@@ -41,7 +39,8 @@ myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 
 -- Run xmonad with all the defaults we set up.
 main :: IO ()
-main = xmonad $ ewmh $ pagerHints $ myConfig
+main = do
+    xmonad =<< statusBar "xmobar" myXmobarPP toggleStrutsKey myConfig 
   where
     myNavigation2DConfig = def 
         { defaultTiledNavigation = hybridNavigation
@@ -51,7 +50,8 @@ main = xmonad $ ewmh $ pagerHints $ myConfig
 
     myConfig = withNavigation2DConfig myNavigation2DConfig $ desktopConfig
         { terminal           = myTerminal
-        , logHook            = updatePointer (0.5, 0.5) (0, 0)
+        , logHook            = dynamicLogWithPP myXmobarPP >> 
+                               updatePointer (0.5, 0.5) (0, 0)
         , focusFollowsMouse  = myFocusFollowsMouse
         , clickJustFocuses   = myClickJustFocuses
         , borderWidth        = 2
