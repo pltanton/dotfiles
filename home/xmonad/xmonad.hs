@@ -40,7 +40,7 @@ myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 -- Run xmonad with all the defaults we set up.
 main :: IO ()
 main = do
-    xmonad =<< statusBar "xmobar" myXmobarPP toggleStrutsKey myConfig 
+    xmonad myConfig 
   where
     myNavigation2DConfig = def 
         { defaultTiledNavigation = hybridNavigation
@@ -48,7 +48,7 @@ main = do
 
     toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
-    myConfig = withNavigation2DConfig myNavigation2DConfig $ desktopConfig
+    myConfig = ewmh $ withNavigation2DConfig myNavigation2DConfig $ desktopConfig
         { terminal           = myTerminal
         , logHook            = dynamicLogWithPP myXmobarPP >> 
                                updatePointer (0.5, 0.5) (0, 0)
