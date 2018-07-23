@@ -32,7 +32,7 @@ main = do
       windows = windowsNew defaultWindowsConfig
           -- See https://github.com/taffybar/gtk-sni-tray#statusnotifierwatcher
           -- for a better way to set up the sni tray
-      tray = sniTrayThatStartsWatcherEvenThoughThisIsABadWayToDoIt
+      tray = sniTrayNew
       myConfig = defaultSimpleTaffyConfig
         { startWidgets = 
             workspaces : map (>>= buildContentsBox) [ layout, windows ]
