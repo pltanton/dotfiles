@@ -161,7 +161,7 @@ myMouseBindings XConfig {XMonad.modMask = modm} =
         ]
 
 
-myGSConfig = defaultGSConfig { gs_cellwidth = 25
+myGSConfig = defaultGSConfig { gs_cellwidth = 250
                              , gs_cellpadding = 5
                              }
 
