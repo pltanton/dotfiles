@@ -3,14 +3,14 @@ Config { font             = "xft:Terminus:size=15,FontAwesome:size=14"
        , textOffset       = 19
        , bgColor          = "#2b303b"
        , fgColor          = "#c0c5ce"
-       --, position         = TopP 8 8
-       , position         = Static { xpos = 8 , ypos = 8, width = 1904, height = 25 }
+       , position         = TopP 8 8
+       --, position         = Static { xpos = 8 , ypos = 8, width = 1904, height = 25 }
        , iconRoot         = ".xmonad/icons/"
        , allDesktops      = True
        , overrideRedirect = True
        , pickBroadest     = False
 
-       , template = "`UnsafeStdinReader` }{ `default:Master` `wlp4s0wi` `bright` `battery` `date` `kbd` "
+       , template = "`UnsafeStdinReader` }{ <action='pavucontrol'>`default:Master`</action> <action='nm-connection-editor'>`wlp58s0wi`</action> `bright` `battery` `date` `kbd` "
        , sepChar  = "`"
        , alignSep = "}{"
 
@@ -36,7 +36,7 @@ Config { font             = "xft:Terminus:size=15,FontAwesome:size=14"
                                       "--",
                                       "-D", "intel_backlight"]
                                       10
-                    , Run Wireless "wlp4s0"
+                    , Run Wireless "wlp58s0"
                                    ["-t", " <quality>%"]
                                    10
                     -- , Run CommandReader "/run/current-system/sw/bin/bash -c '~/go/bin/yags ~/.config/yags/xmobar.yml'" "yags"

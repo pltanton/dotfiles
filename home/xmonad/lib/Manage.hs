@@ -9,6 +9,8 @@ import XMonad.Layout.Fullscreen
 
 import XMonad.Util.NamedScratchpad
 
+import XMonad.Actions.UpdatePointer
+
 -- My imports
 import Defaults
 import Scratchpads
@@ -19,16 +21,17 @@ myManageHook = composeAll
     [ manageDocks
     , fullscreenManageHook
     , namedScratchpadManageHook myScratchPads
-    , isFullscreen                      --> doFullFloat
-    , className =? myBrowser            --> doShift (head myWorkspaces)
-    , className =? "Plugin-container"   --> doFloat
-    , className =? "gnuplot_qt"         --> doFloat
-    , className =? "Octave-gui"         --> doFloat
-    , className =? "NeercGame"          --> doFloat
+    , isFullscreen                        --> doFullFloat
+    , className =? myBrowser              --> doShift (head myWorkspaces)
+    , className =? "Plugin-container"     --> doFloat
+    , className =? "gnuplot_qt"           --> doFloat
+    , className =? "Octave-gui"           --> doFloat
     , className =? "TelegramDesktop" <&&> (isDialog >>= return . not)  --> doFloat <+> doShift "NSP"
-    , className =? "mpv"                --> doFloat
-    , isDialog                          --> doCenterFloat
-    , resource  =? "desktop_window"     --> doIgnore
-    , isPrefixOf "win" <$> title        --> doIgnore
-    , className =? "steam"              --> doShift (myWorkspaces !! 6)
-    , isFullscreen                      --> doFullFloat]
+    , className =? "mpv"                  --> doFloat
+    , isDialog                            --> doCenterFloat
+    , resource  =? "desktop_window"       --> doIgnore
+    , className =? "steam"                --> doShift (myWorkspaces !! 6)
+    , isFullscreen                        --> doFullFloat
+    , className =? "Nm-connection-editor" --> doCenterFloat
+    , className =? "Pavucontrol"          --> doCenterFloat
+    ]

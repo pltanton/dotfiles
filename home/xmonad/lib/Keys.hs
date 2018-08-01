@@ -80,7 +80,7 @@ myKeys =
     , ("M1-<Down>",   sendMessage MirrorShrink)
     , ("M1-<Up>",     sendMessage MirrorExpand)
 
-    , ("M-g", goToSelected def)
+    , ("M-g", goToSelected myGSConfig)
 
     -- Run applications
     , ("<F12>",             spawn "rofi-pass")
@@ -159,3 +159,9 @@ myMouseBindings XConfig {XMonad.modMask = modm} =
         , ((modm, button2), \w -> focus w >> windows W.shiftMaster)
         , ((modm, button3), \w -> focus w >> Flex.mouseResizeWindow w)
         ]
+
+
+myGSConfig = defaultGSConfig { gs_cellwidth = 25
+                             , gs_cellpadding = 5
+                             }
+

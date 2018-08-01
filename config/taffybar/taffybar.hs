@@ -25,6 +25,7 @@ main = do
               hideEmpty, 
               ("NSP" /=) . workspaceName
             ]
+        --, getWindowIconPixbuf = scaledWindowIconPixbufGetter getWindowIconPixbufFromEWMH
         }
       workspaces = workspacesNew myWorkspacesConfig
       clock = textClockNew Nothing "%a %b %_d %X" 1
@@ -46,5 +47,5 @@ main = do
         , barHeight = 20
         , widgetSpacing = 0
         }
-  dyreTaffybar $ withBatteryRefresh $ withLogServer $ withToggleServer $
+  dyreTaffybar $ withBatteryRefresh $ withLogServer $
                toTaffyConfig myConfig
