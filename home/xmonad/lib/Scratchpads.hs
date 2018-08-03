@@ -6,12 +6,10 @@ import XMonad.Hooks.ManageHelpers
 import qualified XMonad.StackSet as W
 
 runScratchpadTerminal :: String
-runScratchpadTerminal =
-    "termite --name 'scratchpad' -e \
-    \ 'sh -c \"tmux a -t scratchpad || tmux new -s scratchpad\"'"
-
-connectToRt :: String
-connectToRt = "termite --name 'torrent' -e 'sh -c \"tmux -L rt attach -t rt\"'"
+runScratchpadTerminal = "kitty --name scratchpad"
+--runScratchpadTerminal =
+--    "termite --name 'scratchpad' -e \
+--    \ 'sh -c \"tmux a -t scratchpad || tmux new -s scratchpad\"'"
 
 myScratchPads :: [NamedScratchpad]
 myScratchPads =
@@ -37,9 +35,9 @@ myScratchPads =
         l = 1 - w
     floatingRight = customFloating $ W.RationalRect l t w h
       where
-        h = 1
+        h = 0.95
         w = 0.3
-        t = 1 - h
+        t = (1 - h) / 2
         l = 1 - w
     floatingCenter = customFloating $ W.RationalRect l t w h
       where

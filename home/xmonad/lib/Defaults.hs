@@ -8,7 +8,7 @@ import Data.List (isInfixOf)
 import Colors
 
 myTerminal :: String
-myTerminal = "termite"
+myTerminal = "kitty"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
