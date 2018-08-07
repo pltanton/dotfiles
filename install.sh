@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DIR=$(readlink -f "$(dirname "$0")") # Path of dotfiles
 OLDDIR=~/.dotfiles_old # Path where to store dotfiles copy
@@ -23,17 +23,16 @@ backup_and_link() {
             rm -rf "$w_file"
         fi
         # Finally creating symlink
-        ln -s "$d_file" "$w_file"
+        ln -s "$d_file" "$w_file" && echo "Link: $d_file -> $w_file"
     done
 }
 
 mkdir -p $OLDDIR # Directory to store old config backup
 mkdir -p ~/.config # Needed on fresh installed system
 
-echo -n "Going to $DIR ..."
-(cd "$DIR" || exit) && echo "done"
+(cd "$DIR" || exit)
 
 for cur_dir in $WORKDIRS; do
-    mkdir "$OLDDIR/$cur_dir"
+    mkdir -p "$OLDDIR/$cur_dir"
     backup_and_link "$cur_dir"
 done

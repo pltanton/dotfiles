@@ -1,7 +1,7 @@
 -- vim: syntax=haskell
 Config { font             = "xft:Terminus:size=15,FontAwesome:size=14"
        , textOffset       = 19
-       , bgColor          = "#2b303b"
+       , bgColor          = "#1B2B34"
        , fgColor          = "#c0c5ce"
        , position         = TopP 8 8
        --, position         = Static { xpos = 8 , ypos = 8, width = 1904, height = 25 }

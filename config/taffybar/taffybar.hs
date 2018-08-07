@@ -38,8 +38,8 @@ main = do
         { startWidgets = 
             workspaces : map (>>= buildContentsBox) [ layout, windows ]
         , endWidgets = map (>>= buildContentsBox)
-          [ batteryIconNew
-          , clock
+          [ -- batteryIconNew
+            clock
           , tray
           ]
         , barPosition = Top
@@ -47,5 +47,5 @@ main = do
         , barHeight = 20
         , widgetSpacing = 0
         }
-  dyreTaffybar $ withBatteryRefresh $ withLogServer $
+  dyreTaffybar $ withLogServer $
                toTaffyConfig myConfig
