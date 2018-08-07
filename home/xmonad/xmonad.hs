@@ -44,26 +44,26 @@ myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 main :: IO ()
 main = do
     -- xmonad myConfig 
-    n <- countScreens
-    xmprocs <- mapM (\i -> spawnPipe $ "xmobar" ++ " -x " ++ show i) [0..n-1]
-    xmonad $ myConfig xmprocs
+    -- n <- countScreens
+    -- xmprocs <- mapM (\i -> spawnPipe $ "xmobar" ++ " -x " ++ show i) [0..n-1]
+    xmonad $ myConfig -- xmprocs
   where
 
     myNavigation2DConfig = def { defaultTiledNavigation = hybridNavigation }
 
     toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
-    xmobarHook = 
-        mapM_ (\handle -> dynamicLogWithPP $ 
-        myXmobarPP { ppOutput = System.IO.hPutStrLn handle })
+    --xmobarHook = 
+    --    mapM_ (\handle -> dynamicLogWithPP $ 
+    --    myXmobarPP { ppOutput = System.IO.hPutStrLn handle })
 
-    myConfig xmprocs = ewmh $ 
+    myConfig = ewmh $ 
         pagerHints $ 
         withNavigation2DConfig myNavigation2DConfig $ 
         desktopConfig
             { terminal           = myTerminal
             --, logHook            = dynamicLogWithPP myXmobarPP >> 
-            , logHook            = xmobarHook xmprocs
+            --, logHook            = xmobarHook xmprocs
             , focusFollowsMouse  = myFocusFollowsMouse
             , clickJustFocuses   = myClickJustFocuses
             , borderWidth        = 2

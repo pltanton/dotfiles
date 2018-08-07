@@ -1,51 +1,51 @@
 module Colors where
 
 myBlack :: String
-myBlack = "#2b303b"
+myBlack = "#1B2B34"
 
 myDarkestGray :: String
-myDarkestGray = "#373a42"
+myDarkestGray = "#343D46"
 
 myDarkGray :: String
-myDarkGray = "#373b41"
+myDarkGray = "#4F5B66"
 
 myGray :: String
-myGray = "#65737e"
+myGray = "#65737E"
 
 myLightGray :: String
-myLightGray = "#c0c5ce"
+myLightGray = "#A7ADBA"
 
 myLighterGray :: String
-myLighterGray = "#eff1f5"
+myLighterGray = "#C0C5CE"
 
 myLighterstGray :: String
-myLighterstGray = "#c0c5ce"
+myLighterstGray = "#CDD3DE"
 
 myWhite :: String
-myWhite = "#c0c5ce"
+myWhite = "#D8DEE9"
 
 myRed :: String
-myRed = "#bf616a"
+myRed = "#EC5f67"
 
 myOrange :: String
-myOrange = "#de935f"
+myOrange = "#F99157"
 
 myYellow :: String
-myYellow = "#ebcb8b"
+myYellow = "#FAC863"
 
 myGreen :: String
-myGreen = "#a3be8c"
+myGreen = "#99C794"
 
 myLemon :: String
-myLemon = "#96b5b4"
+myLemon = "#5FB3B3"
 
 myBlue :: String
-myBlue = "#8fa1b3"
+myBlue = "#6699CC"
 
 myPurple :: String
-myPurple = "#b48ead"
+myPurple = "#C594C5"
 
 myDarkRed :: String
-myDarkRed = "#a3685a"
+myDarkRed = "#AB7967"
 
 
