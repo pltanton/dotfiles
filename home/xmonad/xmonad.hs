@@ -1,3 +1,4 @@
+
 -- XMonad imports
 import XMonad
 import XMonad.Config.Desktop
@@ -32,6 +33,7 @@ import Layouts
 import Manage
 import StatusBar
 import Colors
+import PolybarLog
 
 import Data.Maybe
 
@@ -39,31 +41,23 @@ import Data.Maybe
 myEventHook :: Event -> X Data.Monoid.All
 myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 
-
--- Run xmonad with all the defaults we set up.
 main :: IO ()
 main = do
-    -- xmonad myConfig 
-    n <- countScreens
-    xmprocs <- mapM (\i -> spawnPipe $ "xmobar" ++ " -x " ++ show i) [0..n-1]
-    xmonad $ myConfig xmprocs
+    xmonad $ myConfig
   where
 
     myNavigation2DConfig = def { defaultTiledNavigation = hybridNavigation }
 
     toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
-    xmobarHook = 
-        mapM_ (\handle -> dynamicLogWithPP $ 
-        myXmobarPP { ppOutput = System.IO.hPutStrLn handle })
-
-    myConfig xmprocs = ewmh $ 
+    myConfig = ewmh $ 
         pagerHints $ 
         withNavigation2DConfig myNavigation2DConfig $ 
         desktopConfig
             { terminal           = myTerminal
             --, logHook            = dynamicLogWithPP myXmobarPP >> 
-            , logHook            = xmobarHook xmprocs
+            --, logHook            = xmobarHook xmprocs
+            , logHook            = polybarLogHook
             , focusFollowsMouse  = myFocusFollowsMouse
             , clickJustFocuses   = myClickJustFocuses
             , borderWidth        = 2
@@ -77,4 +71,5 @@ main = do
             , handleEventHook    = myEventHook
             , startupHook        = setWMName "LG3D"
             } `additionalKeysP` myKeys
+
 
