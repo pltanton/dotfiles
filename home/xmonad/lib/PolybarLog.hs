@@ -2,6 +2,7 @@ module PolybarLog where
 
 import XMonad
 
+import XMonad.Util.NamedScratchpad
 import XMonad.Util.NamedWindows
 import qualified XMonad.StackSet as W
 
@@ -13,19 +14,22 @@ import Control.Monad (forM_, join)
 
 import System.IO
 
+import Colors
+
 polybarLogHook = do
-  winset <- gets windowset
-  title <- maybe (return "") (fmap show . getName) . W.peek $ winset
-  let currWs = W.currentTag winset
-  let visible = map W.tag $ W.visible winset
-  let wss = map W.tag $ W.workspaces winset
-  let wsStr = join $ map (fmt currWs visible) $ sort' wss
+  ws <- gets windowset
+  title <- maybe (return "") (fmap show . getName) . W.peek $ ws
+  let curTag = W.currentTag ws
+  let visible = map W.tag $ map W.workspace $ W.visible ws
+  let wsStr = join $ map (fmt curTag visible) $ sort' $ namedScratchpadFilterOutWorkspace $ W.workspaces ws
 
   io $ appendFile "/tmp/.xmonad-title-log" (title ++ "\n")
   io $ appendFile "/tmp/.xmonad-workspace-log" (wsStr ++ "\n")
 
-  where fmt currWs visible ws
-          | currWs == ws = "[" ++ ws ++ "]"
-          | ws `elem` visible = "(" ++ ws ++ ")"
-          | otherwise    = " " ++ ws ++ " "
-        sort' = sortBy (compare `on` (!! 0))
+  where fmt curTag visible w
+          | curTag == W.tag w = "%{B"++base2++" u"++base13++" +u} " ++ W.tag w ++ " %{B- -u}"
+          | W.tag w `elem` visible = "%{u"++base11++" +u} " ++ W.tag w ++ " %{-u}"
+          | countWindows w > 0 = " %{u"++base10++" +u}" ++ W.tag w ++ "%{-u} "
+          | otherwise    = " " ++ W.tag w ++ " "
+        sort' = sortBy (compare `on` ((!! 0) . W.tag))
+        countWindows = length . W.integrate' . W.stack
