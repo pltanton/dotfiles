@@ -43,6 +43,7 @@ myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 
 main :: IO ()
 main = do
+    runPolybar
     xmonad $ myConfig
   where
 

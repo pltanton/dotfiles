@@ -37,7 +37,7 @@ myKeys =
     [ ("M-f",      sendMessage $ Toggle NBFULL)
     , ("M-m",      sendMessage ToggleStruts)
     , ("M1-<F4>",  kill)
-    , ("M-r",      spawn "xmonad --recompile && xmonad --restart")
+    , ("M-r",      spawn "xmonad --recompile && killall polybar && xmonad --restart")
     , ("M-<F12>",  spawn "loginctl lock-session")
     , ("M-<F11>",  spawn "autorandr --change && systemctl --user restart random-background")
 

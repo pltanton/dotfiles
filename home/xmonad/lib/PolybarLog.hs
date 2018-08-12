@@ -4,6 +4,7 @@ import XMonad
 
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.NamedWindows
+import XMonad.Util.Run
 import qualified XMonad.StackSet as W
 
 -- Haskell imports
@@ -15,6 +16,12 @@ import Control.Monad (forM_, join)
 import System.IO
 
 import Colors
+
+runPolybar :: IO ()
+runPolybar = do
+  out <- runProcessWithInput "polybar" ["--list-monitors"] "" 
+  let screens = map (takeWhile (/=':')) $ lines out
+  mapM_ (\s -> spawn $ "MONITOR="++s++" polybar --reload -q top") screens
 
 polybarLogHook = do
   ws <- gets windowset

@@ -1,0 +1,4 @@
+for m in $(polybar --list-monitors | cut -d":" -f1); do
+    MONITOR=$m polybar -q --reload top &
+done
+

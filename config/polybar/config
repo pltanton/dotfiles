@@ -1,17 +1,17 @@
 [colors]
-background = ${xrdb:backgroud:#222}
-foreground = ${xrdb:foreground:#222}
-foreground-alt = #555
-primary = #ffb52a
-secondary = #e60053
+background = ${xrdb:color0:#fff}
+foreground = ${xrdb:color7:#222}
+foreground-alt = ${xrdb:color8:#555}
+primary = ${xrdb:color10:#ffb52a}
+secondary = ${xrdb:color1:#e60053}
 alert = #bd2c40
 
 [bar/top]
-;monitor = ${env:MONITOR:DP1}
-width = 100%
-height = 27
-;offset-x = 1%
-;offset-y = 1%
+monitor = ${env:MONITOR:DP1}
+width = 100%:-16
+height = 25
+offset-x = 8 
+offset-y = 8
 fixed-center = false
 
 background = ${colors.background}
@@ -20,45 +20,21 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-border-size = 4
-border-color = #00000000
-
 padding-left = 0
-padding-right = 2
+padding-right = 3
 
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
+font-0 = Hack:pixelsize=10;1
+font-1 = siji:pixelsize=10;1
 
 modules-left = workspaces-xmonad
 modules-center = title-xmonad
-modules-right = filesystem xbacklight alsa xkeyboard memory cpu wlan eth battery temperature date powermenu
+modules-right = xbacklight alsa memory cpu temperature date battery xkeyboard
 
 tray-position = right
 tray-padding = 2
-;tray-transparent = true
-;tray-background = #0063ff
-
-;wm-restack = bspwm
-;wm-restack = i3
-
-;override-redirect = true
-
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
-
-cursor-click = pointer
-cursor-scroll = ns-resize
-
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:30:...%
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -75,16 +51,6 @@ label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
 label-indicator-underline = ${colors.secondary}
-
-[module/filesystem]
-type = internal/fs
-interval = 25
-
-mount-0 = /
-
-label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
-label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.foreground-alt}
 
 [module/workspaces-xmonad]
 type = custom/script
@@ -113,11 +79,6 @@ bar-empty = ─
 bar-empty-font = 2
 bar-empty-foreground = ${colors.foreground-alt}
 
-[module/backlight-acpi]
-inherit = module/xbacklight
-type = internal/backlight
-card = intel_backlight
-
 [module/cpu]
 type = internal/cpu
 interval = 2
@@ -133,44 +94,6 @@ format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #4bffdc
 label = %percentage_used%%
-
-[module/wlan]
-type = internal/network
-interface = net1
-interval = 3.0
-
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
-label-connected = %essid%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
-
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground-alt}
-
-[module/eth]
-type = internal/network
-interface = net0
-interval = 3.0
-
-format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/date]
 type = internal/date
@@ -188,37 +111,10 @@ format-underline = #0a6cf5
 
 label = %date% %time%
 
-[module/pulseaudio]
-type = internal/pulseaudio
-
-format-volume = <label-volume> <bar-volume>
-label-volume = VOL %percentage%%
-label-volume-foreground = ${root.foreground}
-
-label-muted = 🔇 muted
-label-muted-foreground = #666
-
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
-
 [module/alsa]
 type = internal/alsa
 
-format-volume = <label-volume> <bar-volume>
+format-volume = <label-volume>  <bar-volume>
 label-volume = VOL
 label-volume-foreground = ${root.foreground}
 
@@ -246,7 +142,7 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 [module/battery]
 type = internal/battery
 battery = BAT0
-adapter = ADP1
+adapter = ADP0
 full-at = 98
 
 format-charging = <animation-charging> <label-charging>
@@ -295,44 +191,7 @@ ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground-alt}
 
-[module/powermenu]
-type = custom/menu
-
-expand-right = true
-
-format-spacing = 1
-
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
-label-close-foreground = ${colors.secondary}
-label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
-
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
-
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
-
-menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
-
 [settings]
 screenchange-reload = true
-;compositing-background = xor
-;compositing-background = screen
-;compositing-foreground = source
-;compositing-border = over
-
-[global/wm]
-margin-top = 5
-margin-bottom = 5
 
 ; vim:ft=dosini
