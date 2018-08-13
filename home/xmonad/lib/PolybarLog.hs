@@ -6,6 +6,7 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Util.NamedWindows
 import XMonad.Util.Run
 import qualified XMonad.StackSet as W
+import XMonad.Hooks.DynamicLog (shorten)
 
 -- Haskell imports
 import Data.Monoid
@@ -30,7 +31,7 @@ polybarLogHook = do
   let visible = map W.tag $ map W.workspace $ W.visible ws
   let wsStr = join $ map (fmt curTag visible) $ sort' $ namedScratchpadFilterOutWorkspace $ W.workspaces ws
 
-  io $ appendFile "/tmp/.xmonad-title-log" (title ++ "\n")
+  io $ appendFile "/tmp/.xmonad-title-log" (shorten 120 title ++ "\n")
   io $ appendFile "/tmp/.xmonad-workspace-log" (wsStr ++ "\n")
 
   where fmt curTag visible w
