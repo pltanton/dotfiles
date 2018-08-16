@@ -15,11 +15,13 @@ import Data.Function (on)
 import Control.Monad (forM_, join)
 
 import System.IO
+import System.Posix.Unistd
 
 import Colors
 
 runPolybar :: IO ()
 runPolybar = do
+  runProcessWithInput "killall" ["polybar"] ""
   out <- runProcessWithInput "polybar" ["--list-monitors"] "" 
   let screens = map (takeWhile (/=':')) $ lines out
   mapM_ (\s -> spawn $ "MONITOR="++s++" polybar --reload -q top") screens
@@ -31,7 +33,7 @@ polybarLogHook = do
   let visible = map W.tag $ map W.workspace $ W.visible ws
   let wsStr = join $ map (fmt curTag visible) $ sort' $ namedScratchpadFilterOutWorkspace $ W.workspaces ws
 
-  io $ appendFile "/tmp/.xmonad-title-log" (shorten 120 title ++ "\n")
+  io $ appendFile "/tmp/.xmonad-title-log" (shorten 90 title ++ "\n")
   io $ appendFile "/tmp/.xmonad-workspace-log" (wsStr ++ "\n")
 
   where fmt curTag visible w

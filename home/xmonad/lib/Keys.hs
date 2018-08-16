@@ -37,7 +37,7 @@ myKeys =
     [ ("M-f",      sendMessage $ Toggle NBFULL)
     , ("M-m",      sendMessage ToggleStruts)
     , ("M1-<F4>",  kill)
-    , ("M-r",      spawn "xmonad --recompile && killall polybar && xmonad --restart")
+    , ("M-r",      spawn "xmonad --recompile && xmonad --restart")
     , ("M-<F12>",  spawn "loginctl lock-session")
     , ("M-<F11>",  spawn "autorandr --change && systemctl --user restart random-background")
 
@@ -83,7 +83,7 @@ myKeys =
     , ("M-g", goToSelected myGSConfig)
 
     -- Run applications
-    , ("<F12>",             spawn "rofi-pass")
+    , ("<F12>",             spawn "gopass ls --flat | rofi -dmenu | xargs --no-run-if-empty gopass show -f | head -n 1 | xdotool type --clearmodifiers --file -")
     , ("M-a",               runOrRaise myBrowser (className =? myBrowserClass))
     , ("<XF86HomePage>",    runOrRaise myBrowser (className =? myBrowserClass))
     , ("M-e",               spawn "spacefm")

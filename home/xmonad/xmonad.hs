@@ -58,7 +58,8 @@ main = do
             { terminal           = myTerminal
             --, logHook            = dynamicLogWithPP myXmobarPP >> 
             --, logHook            = xmobarHook xmprocs
-            , logHook            = polybarLogHook
+            , logHook            = polybarLogHook 
+                                   >> updatePointer (0.5, 0.5) (0, 0)
             , focusFollowsMouse  = myFocusFollowsMouse
             , clickJustFocuses   = myClickJustFocuses
             , borderWidth        = 2
