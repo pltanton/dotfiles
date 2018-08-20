@@ -116,7 +116,9 @@ myKeys =
     , ("<XF86AudioLowerVolume>",   spawn "pamixer -d  2")
     , ("<XF86AudioMute>",          spawn "pamixer -t")
     , ("<XF86Explorer>",           spawn "~/.xmonad/scripts/touchpad.sh -t")
-    , ("<XF86LaunchA>",            spawn "~/.xmonad/scripts/kbd.sh -t")
+
+    , ("<XF86LaunchA>",            spawn "xkb-toggle")
+    , ("M-<F9>",                   spawn "xkb-toggle")
     ]
 
     ++
