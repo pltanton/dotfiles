@@ -43,7 +43,7 @@ myEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 
 main :: IO ()
 main = do
-    runPolybar
+    --runPolybar
     xmonad $ myConfig
   where
 
@@ -58,8 +58,8 @@ main = do
             { terminal           = myTerminal
             --, logHook            = dynamicLogWithPP myXmobarPP >> 
             --, logHook            = xmobarHook xmprocs
-            , logHook            = polybarLogHook 
-                                   >> updatePointer (0.5, 0.5) (0, 0)
+            , logHook            = updatePointer (0.5, 0.5) (0, 0)
+                                   -- >> polybarLogHook 
             , focusFollowsMouse  = myFocusFollowsMouse
             , clickJustFocuses   = myClickJustFocuses
             , borderWidth        = 2
