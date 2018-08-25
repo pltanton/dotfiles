@@ -62,7 +62,7 @@ main = do
           ]
         , barPosition = Top
         , barPadding = 8 
-        , barHeight = 20
+        , barHeight = 24
         , widgetSpacing = 0
         }
   dyreTaffybar $ withLogServer $
