@@ -27,6 +27,24 @@ import Control.Monad.Trans.Class
 import Control.Monad.Trans.Reader
 
 
+cpuCallback = do
+  (_, systemLoad, totalLoad) <- cpuLoad
+  return [totalLoad, systemLoad]
+
+myGraphConfig =
+  defaultGraphConfig
+  { graphPadding = 0
+  , graphBorderWidth = 0
+  , graphWidth = 75
+  , graphBackgroundColor = (0.0, 0.0, 0.0, 0.0)
+}
+
+cpuCfg = myGraphConfig
+  { graphDataColors = [(0, 1, 0, 1), (1, 0, 1, 0.5)]
+  , graphLabel = Just "cpu "
+  }
+
+
 main = do
   let myWorkspacesConfig =
         defaultWorkspacesConfig
@@ -44,19 +62,19 @@ main = do
                 unscaledDefaultGetWindowIconPixbuf <|||>
                 (\size _ -> lift $ loadPixbufByName size "utilities-terminal")
 
-
       workspaces = workspacesNew myWorkspacesConfig
       clock = textClockNew Nothing "%a %b %_d %X" 1
       layout = layoutNew defaultLayoutConfig
-      windows = windowsNew defaultWindowsConfig
-          -- See https://github.com/taffybar/gtk-sni-tray#statusnotifierwatcher
-          -- for a better way to set up the sni tray
+      windows = windowsNew defaultWindowsConfig {
+        getMenuLabel = truncatedGetMenuLabel 120,
+        getActiveLabel = truncatedGetActiveLabel 120
+      }
       tray = sniTrayNew
       myConfig = defaultSimpleTaffyConfig
         { startWidgets = 
             workspaces : map (>>= buildContentsBox) [ layout, windows ]
         , endWidgets = map (>>= buildContentsBox)
-          [ -- batteryIconNew
+          [ --textBatteryNew "$percentage$%"
             clock
           , tray
           ]
