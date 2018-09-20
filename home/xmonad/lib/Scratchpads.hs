@@ -19,7 +19,7 @@ myScratchPads =
          floatingTerm
     , NS "telegram"
          "telegram-desktop"
-         (resource =? "telegram-desktop" <&&> (isDialog >>= return . not))
+         (resource =? "telegram-desktop" <&&> (fmap not isDialog) <&&> (fmap (/= "Media viewer") title))
          floatingRight
     , NS "evolution"
          "evolution"
