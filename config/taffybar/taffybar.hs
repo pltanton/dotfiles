@@ -15,6 +15,7 @@ import System.Taffybar.Widget.Util
 import System.Taffybar.Widget.Workspaces
 import System.Taffybar.Widget.SNITray
 import System.Taffybar.Widget.XDGMenu.MenuWidget
+import System.Taffybar.Widget.CommandRunner
 import System.Taffybar.Util
 
 import System.IO
@@ -44,6 +45,7 @@ cpuCfg = myGraphConfig
   , graphLabel = Just "cpu "
   }
 
+battery = commandRunnerNew 3 "/bin/sh" ["/home/anton/.config/taffybar/bat.sh" ] "N/A"
 
 main = do
   let myWorkspacesConfig =
@@ -73,11 +75,12 @@ main = do
       myConfig = defaultSimpleTaffyConfig
         { startWidgets = 
             workspaces : map (>>= buildContentsBox) [ layout, windows ]
-        , endWidgets = map (>>= buildContentsBox)
-          [ --textBatteryNew "$percentage$%"
-            clock
+        , endWidgets = (map (>>= buildContentsBox)
+          [-- textBatteryNew "$percentage$%"
+            battery
+          , clock
           , tray
-          ]
+          ])
         , barPosition = Top
         , barPadding = 8 
         , barHeight = 24
