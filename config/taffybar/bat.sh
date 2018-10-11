@@ -30,7 +30,7 @@ elif (( $BAT_PERCENTS < 26 )); then
 elif (( $BAT_PERCENTS < 51 )); then
     BAT_ICON=$BAT_HALF
 elif (( $BAT_PERCENTS < 76 )); then
-    BAT_ICON=$BAT_THREE_HALF
+    BAT_ICON=$BAT_THREE_QUATER
 else
     BAT_ICON=$BAT_FULL
 fi
