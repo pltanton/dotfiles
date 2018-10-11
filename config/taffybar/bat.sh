@@ -5,7 +5,7 @@ HIGH=0
 NOW=0
 
 for BAT in $(ls $BAT_PREFIX_PATH | grep BAT); do
-    CUR_HIGH=`cat $BAT_PREFIX_PATH/$BAT/energy_full_design`
+    CUR_HIGH=`cat $BAT_PREFIX_PATH/$BAT/energy_full`
     HIGH=$(($CUR_HIGH + $HIGH))
 
     CUR_NOW=`cat $BAT_PREFIX_PATH/$BAT/energy_now`
