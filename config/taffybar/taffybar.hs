@@ -45,7 +45,10 @@ cpuCfg = myGraphConfig
   , graphLabel = Just "cpu "
   }
 
+kbd = commandRunnerNew 1 "/bin/sh" ["/home/anton/.config/taffybar/layout.sh" ] "??"
+
 battery = commandRunnerNew 3 "/bin/sh" ["/home/anton/.config/taffybar/bat.sh" ] "N/A"
+
 
 main = do
   let myWorkspacesConfig =
@@ -65,7 +68,7 @@ main = do
                 (\size _ -> lift $ loadPixbufByName size "utilities-terminal")
 
       workspaces = workspacesNew myWorkspacesConfig
-      clock = textClockNew Nothing "%a %b %_d %X" 1
+      clock = textClockNew Nothing "%a %b %_d %R" 60 
       layout = layoutNew defaultLayoutConfig
       windows = windowsNew defaultWindowsConfig {
         getMenuLabel = truncatedGetMenuLabel 120,
@@ -78,6 +81,7 @@ main = do
         , endWidgets = (map (>>= buildContentsBox)
           [-- textBatteryNew "$percentage$%"
             battery
+          , kbd
           , clock
           , tray
           ])
