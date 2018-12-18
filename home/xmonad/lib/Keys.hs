@@ -90,7 +90,7 @@ myKeys =
     , ("M-u",               spawn $ myTerminal ++ " -e ranger")
     , ("<XF86MyComputer>",  spawn $ myTerminal ++ " -e ranger")
     , ("M-o",               spawn $ myTerminal ++ " -e nvim")
-    , ("M-'",               namedScratchpadAction myScratchPads "terminal")
+    , ("M-;",               namedScratchpadAction myScratchPads "terminal")
     , ("M-q",               namedScratchpadAction myScratchPads "evolution")
     , ("M-<Tab>",           namedScratchpadAction myScratchPads "telegram")
 
@@ -131,7 +131,7 @@ myKeys =
     ++
 
     [ (m ++ [key], screenWorkspace sc >>= flip whenJust (windows . f))
-    | (key, sc) <- zip ";,." [0..]
+    | (key, sc) <- zip "',." [0..]
     , (f, m) <- [(W.view, "M-"), (W.shift, "M-S-")]
     ]
   where

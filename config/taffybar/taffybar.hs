@@ -45,9 +45,8 @@ cpuCfg = myGraphConfig
   , graphLabel = Just "cpu "
   }
 
-kbd = commandRunnerNew 1 "/bin/sh" ["/home/anton/.config/taffybar/layout.sh" ] "??"
 
-battery = commandRunnerNew 3 "/bin/sh" ["/home/anton/.config/taffybar/bat.sh" ] "N/A"
+--battery = commandRunnerNew 3 "/bin/sh" ["/home/anton/.config/taffybar/bat.sh" ] "N/A"
 
 
 main = do
@@ -79,9 +78,9 @@ main = do
         { startWidgets = 
             workspaces : map (>>= buildContentsBox) [ layout, windows ]
         , endWidgets = (map (>>= buildContentsBox)
-          [-- textBatteryNew "$percentage$%"
-            battery
-          , kbd
+          [ textBatteryNew "$percentage$%"
+            --battery
+          --  batteryIconNew
           , clock
           , tray
           ])
